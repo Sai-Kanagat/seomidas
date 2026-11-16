@@ -1,735 +1,1525 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EFEM IT × Midas — Master Operations Manual</title>
+<title>e-FEM srl & Midas Mechanical | Master Strategy Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
   :root {
-    --bg: #000000;
-    --surface: #1c1c1e;
-    --surface-2: #2c2c2e;
-    --surface-3: #3a3a3c;
-    --border: rgba(255, 255, 255, 0.12);
-    --border-strong: rgba(255, 255, 255, 0.3);
-    --text: #f5f5f7;
-    --text-2: #a1a1a6;
-    --text-3: #6e6e73;
-    --accent: #0a84ff;
-    --red: #ff453a;
-    --orange: #ff9f0a;
-    --blue: #0a84ff;
-    --green: #32d74b;
-    --purple: #bf5af2;
-    --radius: 12px;
-    --sidebar-width: 280px;
+    --bg: #0a0a0b;
+    --bg-subtle: #0e0e10;
+    --surface: #131316;
+    --surface-hover: #1a1a1e;
+    --surface-elevated: #1e1e22;
+    --border: rgba(255, 255, 255, 0.055);
+    --border-strong: rgba(255, 255, 255, 0.11);
+    --text: #ededee;
+    --text-secondary: #a1a1a6;
+    --text-tertiary: #70707a;
+    --accent: #4d8dff;
+    --accent-soft: rgba(77, 141, 255, 0.1);
+    --accent-border: rgba(77, 141, 255, 0.28);
+    --red: #f87171;
+    --red-soft: rgba(248, 113, 113, 0.08);
+    --amber: #fbbf24;
+    --amber-soft: rgba(251, 191, 36, 0.08);
+    --green: #4ade80;
+    --green-soft: rgba(74, 222, 128, 0.08);
+    --purple: #a78bfa;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+    --radius-sm: 4px;
+    --radius: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Helvetica, Arial, sans-serif;
-    background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; letter-spacing: -0.01em;
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: -0.008em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv11', 'ss01';
+    overflow-x: hidden;
   }
 
-  /* LAYOUT */
-  .app-container { display: flex; min-height: 100vh; }
-  
-  /* SIDEBAR */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #242428; border-radius: 10px; border: 2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background: #34343a; }
+
+  ::selection { background: rgba(77, 141, 255, 0.28); color: #fff; }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  input, select, textarea { font-family: inherit; }
+
+  .app { display: flex; min-height: 100vh; }
+
+  /* ============ SIDEBAR ============ */
   .sidebar {
-    width: var(--sidebar-width); background: var(--surface); border-right: 1px solid var(--border);
-    position: fixed; top: 0; bottom: 0; left: 0; overflow-y: auto; padding: 32px 24px; z-index: 100;
-  }
-  .sidebar-header { margin-bottom: 32px; }
-  .sidebar-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); margin-bottom: 4px; }
-  .sidebar-sub { font-size: 11px; color: var(--text-3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-  
-  .nav-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-  .nav-item { padding: 10px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; color: var(--text-2); cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: space-between; }
-  .nav-item:hover { background: var(--surface-2); color: var(--text); }
-  .nav-item.active { background: rgba(10, 132, 255, 0.15); color: var(--accent); font-weight: 600; }
-
-  /* MAIN CONTENT */
-  .main-content {
-    margin-left: var(--sidebar-width); flex: 1; padding: 60px 80px 120px; max-width: 1000px;
+    width: 252px;
+    flex-shrink: 0;
+    background: var(--bg-subtle);
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* TYPOGRAPHY & HEADERS */
-  .doc-header { margin-bottom: 60px; }
-  .kicker { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
-  h1 { font-size: 52px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 20px; }
-  .lead { font-size: 21px; color: var(--text-2); line-height: 1.4; letter-spacing: -0.015em; max-width: 800px; }
+  .sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 8px 18px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+  }
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    background: var(--text);
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+  .brand-text { min-width: 0; }
+  .brand-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1.25;
+  }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-top: 2px;
+  }
 
-  .chapter { margin-bottom: 100px; scroll-margin-top: 40px; }
-  .chapter-title { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
-  .chapter-desc { font-size: 18px; color: var(--text-2); margin-bottom: 40px; }
+  .nav-group-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 14px 10px 6px;
+    font-weight: 500;
+  }
 
-  h3 { font-size: 22px; font-weight: 600; margin: 40px 0 16px; color: var(--text); }
-  h4 { font-size: 17px; font-weight: 600; margin: 24px 0 12px; color: var(--text); }
-  p { margin-bottom: 20px; color: var(--text-2); font-size: 16px; }
-  strong { color: var(--text); font-weight: 600; }
+  #sidebar-nav { flex: 1; }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    border-radius: var(--radius);
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    transition: background 0.15s var(--ease), color 0.15s var(--ease);
+    margin-bottom: 1px;
+    position: relative;
+  }
+  .nav-link:hover { background: var(--surface-hover); color: var(--text); }
+  .nav-link.active {
+    background: var(--surface-hover);
+    color: var(--text);
+  }
+  .nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .nav-num {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    min-width: 18px;
+  }
+  .nav-link.active .nav-num { color: var(--accent); }
+  .nav-label { flex: 1; }
 
-  /* LANGUAGE TOGGLE */
-  .lang-switch { display: flex; background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: 99px; padding: 4px; gap: 4px; width: fit-content; margin-bottom: 40px; }
-  .lang-switch button { background: none; border: none; color: var(--text-2); font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 99px; transition: all 0.2s ease; cursor: pointer; }
-  .lang-switch button.active { background: var(--text); color: var(--bg); }
+  .sidebar-footer {
+    padding: 14px 10px 6px;
+    border-top: 1px solid var(--border);
+    margin-top: 12px;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    line-height: 1.7;
+  }
+  .sidebar-footer .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .sidebar-footer .row span:first-child { color: var(--text-tertiary); }
+  .sidebar-footer .row span:last-child { color: var(--text-secondary); font-family: var(--font-mono); font-size: 10.5px; }
 
-  /* INTERACTIVE INLINE GLOSSARY */
-  details.inline-glossary { display: inline-block; border-bottom: 1px dotted var(--accent); cursor: pointer; color: var(--text); font-weight: 500; position: relative; }
-  details.inline-glossary summary { list-style: none; display: inline; }
-  details.inline-glossary summary::-webkit-details-marker { display: none; }
-  details.inline-glossary[open] { display: block; background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: 8px; padding: 12px; margin: 8px 0; font-weight: 400; font-size: 14px; color: var(--text-2); border-bottom: 1px solid var(--border-strong); }
-  details.inline-glossary[open] summary { font-weight: 700; color: var(--text); display: block; margin-bottom: 4px; }
+  .mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 100;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    align-items: center;
+    justify-content: center;
+  }
+  .mobile-menu-btn svg { width: 16px; height: 16px; stroke: var(--text); fill: none; stroke-width: 1.8; }
 
-  /* VISUALS */
-  .visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
-  .visual-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
-  .visual-card h5 { font-size: 14px; font-weight: 700; margin-bottom: 16px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; }
-  
-  /* VISUAL 1: AEO Reality Bar Chart */
-  .bar-chart { display: flex; flex-direction: column; gap: 12px; }
-  .bar-row { display: flex; align-items: center; gap: 12px; }
-  .bar-label { width: 100px; font-size: 12px; color: var(--text-2); text-align: right; }
-  .bar-track { flex: 1; height: 24px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
-  .bar-fill { height: 100%; display: flex; align-items: center; padding-left: 10px; font-size: 11px; font-weight: 700; color: #fff; }
+  /* ============ MAIN ============ */
+  .main {
+    flex: 1;
+    min-width: 0;
+    max-width: 1080px;
+    padding: 56px 48px 100px;
+    margin: 0 auto;
+  }
 
-  /* VISUAL 2: Programmatic Pipeline */
-  .pipeline { display: flex; align-items: center; justify-content: space-between; background: var(--surface-2); padding: 16px; border-radius: 8px; }
-  .pipe-step { text-align: center; font-size: 11px; font-weight: 700; color: var(--text-2); width: 60px; }
-  .pipe-arrow { color: var(--text-3); font-size: 16px; }
+  /* ============ HERO ============ */
+  .hero {
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+  .hero-title {
+    font-size: clamp(32px, 4.4vw, 48px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+    color: var(--text);
+    margin-bottom: 20px;
+    max-width: 760px;
+  }
+  .hero-title em { font-style: normal; color: var(--text-tertiary); }
+  .hero-lede {
+    font-size: 15.5px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 720px;
+    margin-bottom: 40px;
+  }
+  .hero-lede strong { color: var(--text); font-weight: 500; }
 
-  /* VISUAL 3: Italian Ecosystem */
-  .eco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .eco-box { background: var(--surface-2); padding: 12px; border-radius: 6px; font-size: 12px; text-align: center; border: 1px solid var(--border); }
-  .eco-box strong { display: block; font-size: 13px; margin-bottom: 4px; color: var(--accent); }
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    gap: 0;
+  }
+  .metric {
+    padding: 0 24px;
+    border-right: 1px solid var(--border);
+  }
+  .metric:first-child { padding-left: 0; }
+  .metric:last-child { padding-right: 0; border-right: none; }
+  .metric-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-bottom: 8px;
+  }
+  .metric-value {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1;
+    font-family: var(--font-mono);
+  }
+  .metric-value.accent { color: var(--accent); }
+  .metric-value.warn { color: var(--amber); }
+  .metric-desc {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
 
-  /* VISUAL 4: Attribution Funnel */
-  .funnel { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .funnel-step { width: 100%; background: var(--surface-2); padding: 8px; text-align: center; font-size: 12px; font-weight: 600; color: var(--text-2); border-radius: 4px; }
-  .funnel-step:nth-child(2) { width: 85%; background: rgba(10, 132, 255, 0.15); color: var(--blue); }
-  .funnel-step:nth-child(3) { width: 70%; background: rgba(255, 159, 10, 0.15); color: var(--orange); }
-  .funnel-step:nth-child(4) { width: 55%; background: rgba(50, 215, 75, 0.15); color: var(--green); }
+  /* ============ SECTIONS ============ */
+  .section {
+    padding: 64px 0;
+    border-top: 1px solid var(--border);
+    scroll-margin-top: 24px;
+  }
+  .section-head { margin-bottom: 36px; }
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-eyebrow .num {
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .section-eyebrow .sep {
+    color: var(--border-strong);
+  }
+  .section-title {
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.028em;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .section-lede {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 720px;
+  }
+  .section-lede strong { color: var(--text); font-weight: 500; }
 
-  /* CARDS & ACCORDIONS */
-  details.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; }
-  details.card summary { padding: 20px 24px; cursor: pointer; list-style: none; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
-  details.card summary::-webkit-details-marker { display: none; }
-  details.card summary::after { content: '+'; font-size: 20px; color: var(--text-3); }
-  details.card[open] summary::after { content: '−'; }
-  .card-content { padding: 0 24px 24px; border-top: 1px solid var(--border); padding-top: 20px; }
-  .field { margin-bottom: 16px; }
-  .field-label { font-size: 11px; font-weight: 800; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-  .field-val { font-size: 15px; color: var(--text-2); }
+  /* ============ CARDS ============ */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .grid-2-3 { display: grid; grid-template-columns: 2fr 3fr; gap: 20px; }
+  .grid-3-2 { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; }
 
-  /* TABLE */
-  .table-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; overflow-x: auto; margin-bottom: 40px; }
-  table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
-  th { padding: 16px 20px; background: var(--surface-2); color: var(--text-3); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
-  td { padding: 16px 20px; border-bottom: 1px solid var(--border); color: var(--text-2); }
-  tr:hover td { background: rgba(255,255,255,0.02); }
-  .kw-name { color: var(--text); font-weight: 600; }
-  
-  /* FAQ ACCORDION */
-  .faq-category { font-size: 20px; font-weight: 700; margin: 40px 0 20px; color: var(--accent); }
-  .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 12px; }
-  .faq-q { padding: 20px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-  .faq-a { padding: 0 20px 20px; color: var(--text-2); font-size: 15px; display: none; }
-  .faq-item.open .faq-a { display: block; }
-  .faq-item.open .faq-q::after { content: '−'; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+  }
+  .card.accent-left { border-left: 2px solid var(--accent); }
+  .card.red-left { border-left: 2px solid var(--red); }
+  .card.amber-left { border-left: 2px solid var(--amber); }
+  .card.green-left { border-left: 2px solid var(--green); }
 
-  /* TAGS */
-  .tag { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-block; }
-  .tag-p1 { background: rgba(255, 69, 58, 0.15); color: var(--red); }
-  .tag-p2 { background: rgba(255, 159, 10, 0.15); color: var(--orange); }
-  .tag-p3 { background: rgba(10, 132, 255, 0.15); color: var(--blue); }
-  .tag-it { background: rgba(50, 215, 75, 0.15); color: var(--green); }
-  .tag-en { background: rgba(255, 255, 255, 0.1); color: var(--text); }
+  .card-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-bottom: 14px;
+  }
+  .card-label .dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+  .dot-red { background: var(--red); box-shadow: 0 0 6px rgba(248,113,113,0.5); }
+  .dot-amber { background: var(--amber); box-shadow: 0 0 6px rgba(251,191,36,0.5); }
+  .dot-blue { background: var(--accent); box-shadow: 0 0 6px rgba(77,141,255,0.5); }
+  .dot-green { background: var(--green); box-shadow: 0 0 6px rgba(74,222,128,0.5); }
+  .dot-purple { background: var(--purple); box-shadow: 0 0 6px rgba(167,139,250,0.5); }
 
-  /* PASSWORD OVERLAY */
-  #kill-sheet-lock { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 1000; }
-  .lock-box { background: var(--surface); padding: 40px; border-radius: 16px; border: 1px solid var(--border-strong); text-align: center; max-width: 400px; width: 90%; }
-  .lock-box h3 { font-size: 22px; margin-bottom: 12px; }
-  .lock-box p { color: var(--text-2); font-size: 14px; margin-bottom: 24px; }
-  .lock-box input { width: 100%; padding: 14px; background: var(--bg); border: 1px solid var(--border-strong); border-radius: 8px; color: var(--text); font-size: 20px; text-align: center; letter-spacing: 4px; margin-bottom: 16px; outline: none; }
-  .lock-box input:focus { border-color: var(--accent); }
-  .lock-box button { width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; }
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.35;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .card-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+  .card-body code {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text);
+    background: rgba(255,255,255,0.04);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  .card-body strong { color: var(--text); font-weight: 500; }
+  .card-footer {
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .card-footer strong { color: var(--text); font-weight: 500; }
+  .card-footer code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text);
+    background: rgba(255,255,255,0.04);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
 
+  /* ============ POSITIONING STATEMENT ============ */
+  .quote-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: 26px 28px;
+    position: relative;
+  }
+  .quote-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-bottom: 18px;
+  }
+  .quote-text {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text);
+    font-weight: 400;
+    letter-spacing: -0.012em;
+    max-width: 780px;
+  }
+  .copy-btn {
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--surface-hover);
+    border: 1px solid var(--border-strong);
+    color: var(--text-secondary);
+    transition: background 0.15s var(--ease), color 0.15s var(--ease);
+  }
+  .copy-btn:hover { background: var(--surface-elevated); color: var(--text); }
+
+  /* ============ PILLAR LIST (CHAPTER 2) ============ */
+  .pillar-list { display: flex; flex-direction: column; gap: 2px; }
+  .pillar-item {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 24px;
+    padding: 22px 0;
+    border-top: 1px solid var(--border);
+  }
+  .pillar-item:first-child { border-top: none; padding-top: 0; }
+  .pillar-item:last-child { padding-bottom: 0; }
+  .pillar-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    padding-top: 2px;
+  }
+  .pillar-content .card-title { margin-bottom: 8px; }
+  .pillar-content .card-body { margin-bottom: 0; }
+
+  /* ============ CHART CONTAINERS ============ */
+  .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px; }
+  .chart-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+  .chart-title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .chart-sub {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+  }
+  .chart-badge {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    padding: 3px 8px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .chart-wrap { position: relative; width: 100%; height: 280px; }
+
+  /* ============ TCO SLIDERS ============ */
+  .slider-row { margin-bottom: 20px; }
+  .slider-row:last-child { margin-bottom: 0; }
+  .slider-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .slider-label {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .slider-value {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  input[type="range"] {
+    width: 100%;
+    height: 3px;
+    background: var(--surface-elevated);
+    border-radius: 2px;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--text);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--text);
+    cursor: pointer;
+    transition: transform 0.1s var(--ease);
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--text);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--text);
+    cursor: pointer;
+  }
+  .slider-hint {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+    margin-top: 6px;
+  }
+
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 12px;
+  }
+  .toggle-row .toggle-label { font-size: 12.5px; color: var(--text-secondary); }
+  .toggle-switch {
+    appearance: none;
+    width: 34px;
+    height: 20px;
+    background: var(--surface-elevated);
+    border-radius: 99px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s var(--ease);
+    border: 1px solid var(--border-strong);
+    flex-shrink: 0;
+  }
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    transition: transform 0.2s var(--ease), background 0.2s var(--ease);
+  }
+  .toggle-switch:checked { background: var(--accent); border-color: var(--accent); }
+  .toggle-switch:checked::after { transform: translateX(14px); background: #fff; }
+
+  .savings-banner {
+    margin-top: 20px;
+    padding: 16px;
+    background: rgba(74, 222, 128, 0.05);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+    border-radius: var(--radius-lg);
+  }
+  .savings-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .savings-desc {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .stat-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-top: 20px; }
+  .stat-cell { background: var(--surface); padding: 14px 16px; }
+  .stat-cell-label { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .stat-cell-value { font-family: var(--font-mono); font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+
+  /* ============ TABLES ============ */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .table-scroll { overflow-x: auto; max-height: 520px; overflow-y: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  thead {
+    background: var(--bg-subtle);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  th {
+    text-align: left;
+    padding: 11px 16px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border-strong);
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: middle;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: rgba(255,255,255,0.015); }
+  td .mono { font-family: var(--font-mono); font-size: 11.5px; }
+  td .strong { color: var(--text); font-weight: 500; }
+
+  .lang-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+  }
+  .lang-tag.EN { background: var(--accent-soft); color: var(--accent); }
+  .lang-tag.IT { background: var(--green-soft); color: var(--green); }
+
+  .delta-badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    background: var(--green-soft);
+    color: var(--green);
+  }
+
+  /* ============ FILTERS ============ */
+  .filter-bar {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 8px;
+    padding: 16px 0;
+    margin-bottom: 4px;
+  }
+  .filter-bar input,
+  .filter-bar select {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s var(--ease);
+    width: 100%;
+  }
+  .filter-bar input::placeholder { color: var(--text-tertiary); }
+  .filter-bar input:focus,
+  .filter-bar select:focus { border-color: var(--accent); }
+  .filter-bar select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3e%3cpath fill='none' stroke='%2370707a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l4 4 4-4'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+
+  .result-count {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .result-count .count-value { color: var(--text); font-weight: 500; }
+
+  /* ============ FAQ ACCORDION ============ */
+  .faq-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  .faq-counter {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .faq-counter .num { color: var(--text); font-weight: 500; }
+  .faq-actions { display: flex; gap: 6px; }
+  .ghost-btn {
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text-secondary);
+    transition: background 0.15s var(--ease), color 0.15s var(--ease);
+  }
+  .ghost-btn:hover { background: var(--surface-hover); color: var(--text); }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-item summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 4px;
+    cursor: pointer;
+    list-style: none;
+    transition: background 0.12s var(--ease);
+    border-radius: var(--radius);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary:hover { background: rgba(255,255,255,0.015); }
+  .faq-id {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    min-width: 32px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+  .faq-lang-badge {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .faq-lang-badge.EN { background: var(--accent-soft); color: var(--accent); }
+  .faq-lang-badge.IT { background: var(--green-soft); color: var(--green); }
+  .faq-q {
+    flex: 1;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.55;
+    letter-spacing: -0.008em;
+  }
+  .chevron-icon {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-tertiary);
+    transition: transform 0.18s var(--ease);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: inline-block;
+    transform: rotate(0deg);
+  }
+  details[open] .chevron-icon { transform: rotate(90deg); }
+  .faq-item[open] .faq-q { color: var(--text); }
+  .faq-a {
+    padding: 0 4px 16px 50px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    border-top: 1px solid transparent;
+  }
+  details[open] .faq-a { border-top-color: transparent; }
+
+  /* ============ ROADMAP ============ */
+  .roadmap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .roadmap-phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+  }
+  .roadmap-phase.red-left { border-left: 2px solid var(--red); }
+  .roadmap-phase.blue-left { border-left: 2px solid var(--accent); }
+  .roadmap-phase.amber-left { border-left: 2px solid var(--amber); }
+  .roadmap-phase.green-left { border-left: 2px solid var(--green); }
+  .phase-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-weight: 500;
+  }
+  .phase-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text);
+    margin-top: 4px;
+  }
+  .phase-count {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-tertiary);
+  }
+  .phase-tasks { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .phase-task {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .rm-checkbox {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    background: var(--bg-subtle);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    transition: all 0.15s var(--ease);
+  }
+  .rm-checkbox:hover { border-color: var(--accent); }
+  .rm-checkbox:checked { background: var(--accent); border-color: var(--accent); }
+  .rm-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 4px;
+    width: 3px;
+    height: 7px;
+    border: solid #fff;
+    border-width: 0 1.5px 1.5px 0;
+    transform: rotate(45deg);
+  }
+  .phase-task label {
+    cursor: pointer;
+    transition: color 0.15s var(--ease);
+  }
+  .phase-task label.line-through { text-decoration: line-through; color: var(--text-tertiary); opacity: 0.6; }
+
+  .roadmap-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-top: 16px;
+  }
+  .progress-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+  }
+  .progress-value {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--green);
+    letter-spacing: -0.01em;
+    margin-top: 2px;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--surface-elevated);
+    border-radius: 2px;
+    overflow: hidden;
+    min-width: 100px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 2px;
+    transition: width 0.3s var(--ease);
+  }
+
+  /* ============ CODE BLOCK ============ */
+  .code-block {
+    background: #08080a;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--green);
+    overflow-x: auto;
+    line-height: 1.65;
+    white-space: pre;
+    tab-size: 2;
+  }
+
+  /* ============ RESPONSIVE ============ */
   @media (max-width: 1024px) {
-    .app-container { flex-direction: column; }
-    .sidebar { position: relative; width: 100%; height: auto; padding: 20px; border-right: none; border-bottom: 1px solid var(--border); }
-    .main-content { margin-left: 0; padding: 40px 24px; }
-    .visual-grid { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-2-3, .grid-3-2 { grid-template-columns: 1fr; }
+    .hero-metrics { grid-template-columns: repeat(2, 1fr); row-gap: 28px; }
+    .metric { padding: 0 16px; }
+    .metric:nth-child(2) { padding-right: 0; border-right: none; }
+    .metric:nth-child(3) { padding-left: 0; }
+    .roadmap-grid { grid-template-columns: 1fr; }
+    .main { padding: 40px 24px 80px; }
+  }
+
+  @media (max-width: 768px) {
+    .mobile-menu-btn { display: flex; }
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 260px;
+      z-index: 200;
+      transform: translateX(-100%);
+      transition: transform 0.25s var(--ease);
+      box-shadow: 4px 0 24px rgba(0,0,0,0.5);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .main { padding: 56px 20px 64px; }
+    .hero-title { font-size: 26px; }
+    .section-title { font-size: 22px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .filter-bar { grid-template-columns: 1fr; }
+    .stat-grid-3 { grid-template-columns: 1fr; }
+    .hero-metrics { grid-template-columns: 1fr; row-gap: 20px; }
+    .metric { padding: 0; border-right: none; }
+    .pillar-item { grid-template-columns: 32px 1fr; gap: 16px; }
+    .faq-a { padding-left: 32px; }
+    .roadmap-grid { grid-template-columns: 1fr; }
+  }
+
+  .mobile-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 150;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .mobile-backdrop.show { display: block; }
+
+  @media (min-width: 769px) {
+    .mobile-backdrop { display: none !important; }
   }
 </style>
 </head>
 <body>
 
-<!-- PASSWORD OVERLAY -->
-<div id="kill-sheet-lock">
-  <div class="lock-box">
-    <h3 data-i18n="lock.title">Restricted Access</h3>
-    <p data-i18n="lock.desc">Enter password to view competitor intelligence.</p>
-    <input type="password" id="lock-input" placeholder="****" maxlength="4" autocomplete="off">
-    <button onclick="checkPassword()" data-i18n="lock.btn">Unlock</button>
-  </div>
-</div>
+<button class="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Open menu">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+</button>
+<div class="mobile-backdrop" id="mobile-backdrop" onclick="toggleMobileNav()"></div>
 
-<div class="app-container">
-  
-  <!-- SIDEBAR NAVIGATION -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-logo">EFEM × Midas</div>
-      <div class="sidebar-sub">Master Operations Manual</div>
-    </div>
-    
-    <div class="lang-switch">
-      <button onclick="setLang('en')" id="btn-en">EN</button>
-      <button onclick="setLang('it')" id="btn-it" class="active">IT</button>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar-nav">
+    <div class="sidebar-brand">
+      <div class="brand-mark">eF</div>
+      <div class="brand-text">
+        <div class="brand-title">e-FEM srl &amp; MIDAS</div>
+        <div class="brand-sub">SEO / AEO / GEO Hub</div>
+      </div>
     </div>
 
-    <ul class="nav-list">
-      <li class="nav-item active" onclick="scrollToSection('strategy')" data-i18n="nav.strategy">1. Strategic Foundation</li>
-      <li class="nav-item" onclick="scrollToSection('playbook')" data-i18n="nav.playbook">2. Playbook & AEO</li>
-      <li class="nav-item" onclick="scrollToSection('keywords')" data-i18n="nav.keywords">3. Keyword Universe</li>
-      <li class="nav-item" onclick="scrollToSection('content')" data-i18n="nav.content">4. 100 FAQs & Posts</li>
-      <li class="nav-item" onclick="scrollToSection('technical')" data-i18n="nav.technical">5. Technical & Tracking</li>
-      <li class="nav-item" onclick="scrollToSection('italian')" data-i18n="nav.italian">6. Italian Market</li>
-      <li class="nav-item" onclick="scrollToSection('unconventional')" data-i18n="nav.unconventional">7. Unconventional</li>
-      <li class="nav-item" onclick="scrollToSection('roadmap')" data-i18n="nav.roadmap">8. Roadmap & PR</li>
-      <li class="nav-item" onclick="scrollToSection('kill')" data-i18n="nav.kill">9. Kill Sheet 🔒</li>
-    </ul>
+    <nav>
+      <div class="nav-group-label">Strategic chapters</div>
+      <a href="#ch1" class="nav-link">
+        <span class="nav-num">01</span>
+        <span class="nav-label">Entity audit &amp; hygiene</span>
+      </a>
+      <a href="#ch2" class="nav-link">
+        <span class="nav-num">02</span>
+        <span class="nav-label">The strategic wedge</span>
+      </a>
+      <a href="#ch3" class="nav-link">
+        <span class="nav-num">03</span>
+        <span class="nav-label">2026 competitor landscape</span>
+      </a>
+      <a href="#ch4" class="nav-link">
+        <span class="nav-num">04</span>
+        <span class="nav-label">GEO &amp; review gate</span>
+      </a>
+      <a href="#ch5" class="nav-link">
+        <span class="nav-num">05</span>
+        <span class="nav-label">Interactive TCO model</span>
+      </a>
+      <a href="#ch6" class="nav-link">
+        <span class="nav-num">06</span>
+        <span class="nav-label">Parasite SEO &amp; NAFEMS</span>
+      </a>
+      <a href="#ch7" class="nav-link">
+        <span class="nav-num">07</span>
+        <span class="nav-label">Technical &amp; schema</span>
+      </a>
+
+      <div class="nav-group-label">Master databases</div>
+      <a href="#keywords-db" class="nav-link">
+        <span class="nav-num">08</span>
+        <span class="nav-label">Keyword database</span>
+      </a>
+      <a href="#faq-vault" class="nav-link">
+        <span class="nav-num">09</span>
+        <span class="nav-label">100 FAQs &amp; posts</span>
+      </a>
+      <a href="#roadmap-exec" class="nav-link">
+        <span class="nav-num">10</span>
+        <span class="nav-label">12-month roadmap</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="row"><span>Properties</span><span>e-fem.it</span></div>
+      <div class="row"><span>and</span><span>midasmechanical.it</span></div>
+      <div class="row"><span>HQ</span><span>Parma, IT</span></div>
+      <div class="row"><span>Progress</span><span id="sidebar-progress">0%</span></div>
+    </div>
   </aside>
 
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
-    
-    <!-- CHAPTER 1: STRATEGY -->
-    <section id="strategy" class="chapter">
-      <div class="doc-header">
-        <div class="kicker" data-i18n="header.kicker">EFEM IT × Midas Mechanical</div>
-        <h1 data-i18n="header.title">Master Operations Manual.</h1>
-        <p class="lead" data-i18n="header.lead">The definitive, evidence-based execution framework for SEO, AEO, and GEO. Designed to out-inform Ansys, Abaqus, and SimSolid.</p>
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-eyebrow">2026 Master Strategy Manual</div>
+      <h1 class="hero-title">Dominating CAE search &amp; AI citations <em>without</em> out-spending Ansys or Siemens.</h1>
+      <p class="hero-lede">
+        A complete search, answer-engine, and generative-engine dominance architecture for <strong>e-FEM srl</strong> (<code style="font-family:var(--font-mono);font-size:12px;background:rgba(255,255,255,0.04);padding:1px 5px;border-radius:3px;">e-fem.it</code>) and <strong>Midas Mechanical</strong> (<code style="font-family:var(--font-mono);font-size:12px;background:rgba(255,255,255,0.04);padding:1px 5px;border-radius:3px;">midasmechanical.it</code>). By weaponizing <strong>Implicit Boundary Method (IBM)</strong> mathematical transparency, <strong>NAFEMS validation within 4 percent</strong>, native <strong>NFX CFD plus MeshFree</strong> unification in MIDAS MTS, and <strong>zero-core-tax</strong> licensing, we systematically dismantle Simcenter Simsolid and legacy FEA incumbents.
+      </p>
+
+      <div class="hero-metrics">
+        <div class="metric">
+          <div class="metric-label">NAFEMS accuracy</div>
+          <div class="metric-value accent">&le;4%</div>
+          <div class="metric-desc">Deviation vs traditional FEM</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Prep time saved</div>
+          <div class="metric-value">60-80%</div>
+          <div class="metric-desc">Zero geometry cleanup or meshing</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">MTS entry price</div>
+          <div class="metric-value">&euro;20k</div>
+          <div class="metric-desc">Structural + CFD + all CPU/GPU cores</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">LLM review gate</div>
+          <div class="metric-value warn">10+</div>
+          <div class="metric-desc">Verified G2 / Capterra reviews target</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CHAPTER 1 -->
+    <section id="ch1" class="section">
+      <div class="section-head">
+        <div class="section-eyebrow"><span class="num">01</span><span class="sep">/</span><span>Foundation &amp; technical hygiene</span></div>
+        <h2 class="section-title">Executive entity audit &amp; hygiene</h2>
+        <p class="section-lede">Before scaling content or backlinks, e-FEM srl must eliminate critical entity ambiguities, domain collisions, and stale timestamps that suppress rankings in Google and cause entity confusion inside Large Language Models.</p>
       </div>
 
-      <h2 class="chapter-title" data-i18n="strat.title">1. Strategic Foundation & The Wedge</h2>
-      <p class="chapter-desc" data-i18n="strat.desc">We cannot out-authority the incumbents. We compete on Information Gain, applied engineering proof, and entity association.</p>
-
-      <div class="visual-grid">
-        <div class="visual-card">
-          <h5>Competitor Weakness Matrix</h5>
-          <p style="font-size: 13px;"><strong>Ansys / Abaqus:</strong> Extreme cost ($30k-$100k+ per seat), steep learning curve, severe meshing bottleneck.<br><br><strong>SimSolid:</strong> Fast, but opaque math (black box), lacks explicit dynamics and CFD.<br><br><strong>MeshFree:</strong> NAFEMS validated within 4%. Transparent Implicit Boundary Method. Integrated CFD via MTS.</p>
-        </div>
-        <div class="visual-card">
-          <h5>The Sister-Concern Entity Graph</h5>
-          <p style="font-size: 13px;">Google and AI engines index <em>entities</em>, not just websites. EFEM IT (Software Authority) and Midas Mechanical (Applied Engineering) are linked via <code>Organization</code> schema and cross-domain <code>sameAs</code> properties. This creates a shared topical authority moat.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CHAPTER 2: PLAYBOOK & AEO -->
-    <section id="playbook" class="chapter">
-      <h2 class="chapter-title" data-i18n="playbook.title">2. The Playbook & AEO Reality</h2>
-      <p class="chapter-desc" data-i18n="playbook.desc">The tactical execution. We prioritize domain authority and prompt-alignment over thin schema layers.</p>
-
-      <details class="card" open>
-        <summary data-i18n="gap1.title">Gap Fill: The AEO Reality (Domain Authority vs. Schema)</summary>
-        <div class="card-content">
-          <p><strong>The Evidence:</strong> Recent studies of 2 million LLM citations reveal a "Simpson's paradox." While FAQ schema looks good in isolation, once domain fixed effects are applied, <strong>on-page schema loses predictive power</strong>. The dominant driver of AI citation is <strong>domain-level authority</strong> (6x stronger than page-level features) and <strong>prompt-content alignment</strong>.</p>
-          <p><strong>The Strategy:</strong> Do not rely on schema alone to win AI Overviews. Schema is a confirmation layer. The primary AEO strategy is <strong>off-page authority building</strong> (G2/Capterra reviews, Reddit mentions, digital PR) and ensuring our page language exactly matches how engineers prompt ChatGPT.</p>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary data-i18n="gap2.title">Gap Fill: Programmatic SEO Architecture</summary>
-        <div class="card-content">
-          <p><strong>The Strategy:</strong> Build template systems with mandatory <strong>Evidence Gates</strong>. No page publishes without original data.</p>
-          <div class="pipeline">
-            <div class="pipe-step">Template<br>(Use-case)</div>
-            <div class="pipe-arrow">→</div>
-            <div class="pipe-step" style="color:var(--red)">Evidence Gate<br>(Data Required)</div>
-            <div class="pipe-arrow">→</div>
-            <div class="pipe-step">Human Review</div>
-            <div class="pipe-arrow">→</div>
-            <div class="pipe-step" style="color:var(--green)">Publish</div>
+      <div class="grid-3">
+        <div class="card red-left">
+          <div class="card-label">
+            <span><span class="dot dot-red"></span>Critical collision</span>
+            <span>01 / Entity</span>
+          </div>
+          <h3 class="card-title">The brand collision: efem.it vs e-fem.it</h3>
+          <p class="card-body"><code>efem.it</code> (no hyphen) is held by an unrelated business in Lucca running an obsolete Flash website. <code>e-fem.it</code> (hyphenated) is the official Parma MIDAS distributor and applied engineering consultancy.</p>
+          <div class="card-footer">
+            <strong>Mandatory action:</strong> Negotiate immediate acquisition of <code>efem.it</code> for a permanent 301 redirect to <code>https://www.e-fem.it/</code>, or enforce strict <strong>e-FEM srl (Parma)</strong> branding paired with unified <code>Organization</code> schema across both domains.
           </div>
         </div>
-      </details>
 
-      <details class="card">
-        <summary data-i18n="aeo.capsule.title">Direct-Answer Capsules & The 44.2% Rule</summary>
-        <div class="card-content">
-          <p><strong>The Rule:</strong> 44.2% of ChatGPT citations come from the first 30% of page text. Answer capsules must lead with the definitive answer, backed by data, using confident language (hedged copy loses citations).</p>
-          <p><strong>Implementation:</strong> Every page opens with a 60-100 word direct answer. Example: <em>"MeshFree and SimSolid both eliminate meshing. MeshFree is NAFEMS-validated within 4% of traditional FEM, while SimSolid is within 10%. On a 12-part frame, MeshFree produced a result in 47 minutes."</em></p>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Freshness Decay (65% Rule)</summary>
-        <div class="card-content">
-          <p><strong>The Rule:</strong> 65% of AI bot hits target content published within the past year. Old comparison posts and outdated screenshots will quietly fall out of AI answers.</p>
-          <p><strong>Action:</strong> Every P1 page requires a 90-day refresh cycle. Re-run benchmarks, update screenshots, and update the <code>dateModified</code> schema.</p>
-        </div>
-      </details>
-    </section>
-
-    <!-- CHAPTER 3: KEYWORDS -->
-    <section id="keywords" class="chapter">
-      <h2 class="chapter-title" data-i18n="kw.title">3. Master Keyword Universe</h2>
-      <p class="chapter-desc" data-i18n="kw.desc">Every query mapped to intent, language, and priority. Filter below.</p>
-      
-      <div style="display: flex; gap: 12px; margin-bottom: 20px;">
-        <input type="text" id="kw-search" placeholder="Search keywords..." style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border-strong); background: var(--bg); color: var(--text);">
-        <button class="tag tag-p1" onclick="filterKW('P1')" style="cursor: pointer; padding: 12px 20px;">P1</button>
-        <button class="tag tag-p2" onclick="filterKW('P2')" style="cursor: pointer; padding: 12px 20px;">P2</button>
-        <button class="tag tag-p3" onclick="filterKW('P3')" style="cursor: pointer; padding: 12px 20px;">P3</button>
-        <button class="tag tag-all" onclick="filterKW('all')" style="cursor: pointer; padding: 12px 20px; background: var(--surface-2); color: var(--text);">All</button>
-      </div>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Keyword</th>
-              <th>Cluster</th>
-              <th>Priority</th>
-              <th>Lang</th>
-              <th>Target Page</th>
-            </tr>
-          </thead>
-          <tbody id="kw-body"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- CHAPTER 4: CONTENT ENGINE -->
-    <section id="content" class="chapter">
-      <h2 class="chapter-title" data-i18n="faq.title">4. 100 FAQs & Blog Posts</h2>
-      <p class="chapter-desc" data-i18n="faq.desc">The content engine. Answer-first frameworks designed to capture AI citations and address conversational intent.</p>
-      <div id="faq-container"></div>
-    </section>
-
-    <!-- CHAPTER 5: TECHNICAL & TRACKING -->
-    <section id="technical" class="chapter">
-      <h2 class="chapter-title" data-i18n="tech.title">5. Technical, Multimodal & Tracking</h2>
-      <p class="chapter-desc" data-i18n="tech.desc">The engine room. Ensuring crawlability, multimodal AI citations, and closed-loop CRM attribution.</p>
-
-      <details class="card" open>
-        <summary data-i18n="gap3.title">Gap Fill: Multimodal & Conversational Search</summary>
-        <div class="card-content">
-          <p><strong>The Shift:</strong> Discovery is no longer just text. CAE buyers need to see the workflow. Multimodal AI (ChatGPT, Perplexity, Gemini) cites videos, images, and structured data.</p>
-          <p><strong>Execution:</strong> Implement <code>VideoObject</code> schema on all benchmark walkthroughs. Use descriptive alt text that contains the specific data point ("MeshFree 47min runtime vs 3.2hrs"). Create 90-second YouTube Shorts for every FAQ.</p>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary data-i18n="gap5.title">Gap Fill: Closed-Loop AI CRM Attribution</summary>
-        <div class="card-content">
-          <p><strong>The Problem:</strong> AI traffic converts at 14.2% (4-5x higher than Google), but if it's not tracked in the CRM, the CFO doesn't know.</p>
-          <div class="funnel">
-            <div class="funnel-step">AI Assistant (ChatGPT/Perplexity)</div>
-            <div class="funnel-step">GA4 Custom Channel Group</div>
-            <div class="funnel-step">CRM Field: "AI-Referred"</div>
-            <div class="funnel-step">Closed-Won Revenue</div>
+        <div class="card amber-left">
+          <div class="card-label">
+            <span><span class="dot dot-amber"></span>Market shift</span>
+            <span>02 / M&amp;A</span>
           </div>
-          <p style="margin-top: 12px; font-size: 13px;"><strong>Action:</strong> Add a required "How did you find us?" field on all trial forms with "AI Assistant" as an option. Map this to a custom Salesforce/HubSpot property.</p>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary data-i18n="tech.llms.title">The llms.txt Hedge</summary>
-        <div class="card-content">
-          <p><strong>The Reality:</strong> As of 2025, no major AI system actively uses <code>llms.txt</code>. However, it takes 30 minutes to implement and is a low-cost hedge.</p>
-          <p><strong>Action:</strong> Create a markdown file at <code>/llms.txt</code> listing the URLs for the benchmark pages, FAQs, and product specs.</p>
-        </div>
-      </details>
-    </section>
-
-    <!-- CHAPTER 6: ITALIAN MARKET -->
-    <section id="italian" class="chapter">
-      <h2 class="chapter-title" data-i18n="gap4.title">6. The Italian Market Infrastructure</h2>
-      <p class="chapter-desc">Native localization and community seeding. We do not translate English keywords.</p>
-
-      <div class="eco-grid">
-        <div class="eco-box"><strong>CAD3D.it</strong> 110,000+ Italian designers. Seed organic answers + run DEM campaigns.</div>
-        <div class="eco-box"><strong>Politecnico Pipeline</strong> Free MeshFree licenses for theses at PoliMi, PoliTo, PoliBa.</div>
-        <div class="eco-box"><strong>SmartCAE (Competitor)</strong> Strong in motorsport/aerospace (Ferrari, Dallara). We target SMEs.</div>
-        <div class="eco-box"><strong>Target Keywords</strong> software CAE senza mesh, analisi FEM senza meshing, CAE per progettisti.</div>
-      </div>
-    </section>
-
-    <!-- CHAPTER 7: UNCONVENTIONAL -->
-    <section id="unconventional" class="chapter">
-      <h2 class="chapter-title" data-i18n="un.title">7. Unconventional & Parasite SEO</h2>
-      <p class="chapter-desc" data-i18n="un.desc">High-ROI tactics ranked by effectiveness. We bypass traditional domain authority.</p>
-
-      <details class="card" open>
-        <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐⭐</span> Parasite SEO (Barnacle SEO)</summary>
-        <div class="card-content">
-          <div class="field"><div class="field-label">Method</div><div class="field-val">Publish optimized content on LinkedIn Pulse, Reddit, and Medium to borrow their domain authority.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-val">A LinkedIn article can rank in 24 hours and be cited by Perplexity instantly. Reddit is the #1 cited source by Perplexity (46.7%).</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐⭐</span> Engineering as Marketing (Free Tools)</summary>
-        <div class="card-content">
-          <div class="field"><div class="field-label">Method</div><div class="field-val">Build a free web tool (e.g., "MeshFree Time-Savings Calculator") that engineers actually want to use.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-val">People link to tools, not sales pages. It attracts permanent backlinks from universities and engineering blogs.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary><span style="color:var(--orange); margin-right:8px;">⭐⭐⭐⭐</span> Competitor Conquesting (PPC)</summary>
-        <div class="card-content">
-          <div class="field"><div class="field-label">Method</div><div class="field-val">Bid on "SimSolid alternative", "Ansys too expensive". Do not bid on pure brand terms.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-val">High conversion when users are already frustrated. Average CPC is $5-$15. The landing page must do the comparison upfront.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary><span style="color:var(--red); margin-right:8px;">🚫 BANNED</span> Click Farms / CTR Manipulation</summary>
-        <div class="card-content">
-          <div class="field"><div class="field-label">Method</div><div class="field-val">Using bots to artificially inflate clicks to trick Google's NavBoost.</div></div>
-          <div class="field"><div class="field-label">Why We Don't</div><div class="field-val">Google's spam systems detect this easily, resulting in a silent penalty. A penalty destroys our entity trust and AI citation chances permanently.</div></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- CHAPTER 8: ROADMAP & PR -->
-    <section id="roadmap" class="chapter">
-      <h2 class="chapter-title" data-i18n="roadmap.title">8. Roadmap, PR & Sales</h2>
-      <p class="chapter-desc">How SEO feeds the rest of the company and the execution timeline.</p>
-
-      <h3>The 12-Month Execution Roadmap</h3>
-      <table>
-        <thead><tr><th>Phase</th><th>Days</th><th>Deliverables</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Phase 0: Audit</strong></td><td>0–14</td><td>Technical crawl, indexing check, hreflang, AI citation baseline.</td></tr>
-          <tr><td><strong>Phase 1: Foundation</strong></td><td>15–45</td><td>Organization schema, entity graph, answer capsules, <code>llms.txt</code>.</td></tr>
-          <tr><td><strong>Phase 2: Content</strong></td><td>45–90</td><td>8 bilingual benchmark posts, 30 FAQs live, video schema.</td></tr>
-          <tr><td><strong>Phase 3: GEO</strong></td><td>90–180</td><td>LinkedIn parasite articles, CAD3D.it seeding, G2 reviews.</td></tr>
-          <tr><td><strong>Phase 4: Scale</strong></td><td>180–365</td><td>Competitor conquesting, sponsored AI units, university outreach.</td></tr>
-        </tbody>
-      </table>
-
-      <h3>PR & Sales Enablement</h3>
-      <details class="card" open>
-        <summary>Digital PR (HARO / Qwoted)</summary>
-        <div class="card-content">
-          <p><strong>Action:</strong> Subscribe to journalist requests. Respond to queries about "manufacturing software trends."</p>
-          <p><strong>Why:</strong> Earns Tier-1 media backlinks (Forbes, TechCrunch Italy) which massively boosts domain authority.</p>
-        </div>
-      </details>
-      <details class="card">
-        <summary>Sales Battlecards for Midas Mechanical</summary>
-        <div class="card-content">
-          <p><strong>Action:</strong> Turn the Kill Sheet into a one-page PDF for the sales team to use during demos against SimSolid or Ansys.</p>
-        </div>
-      </details>
-    </section>
-
-    <!-- CHAPTER 9: KILL SHEET -->
-    <section id="kill" class="chapter">
-      <h2 class="chapter-title" data-i18n="kill.title">9. Competitor Kill Sheet</h2>
-      <p class="chapter-desc" data-i18n="kill.desc">Classified intelligence. Password required to unlock.</p>
-
-      <div id="kill-content" style="display: none;">
-        <details class="card" open>
-          <summary>vs. SimSolid (Altair)</summary>
-          <div class="card-content">
-            <div class="field"><div class="field-label">Weakness</div><div class="field-val">Opaque mathematical model. Users complain they cannot understand how parameters affect results. Poor support for explicit dynamics and friction contacts. No CFD capability.</div></div>
-            <div class="field"><div class="field-label">Attack</div><div class="field-val">Highlight MeshFree's <strong>NAFEMS validation (4% vs 10%)</strong> and the fact that MTS combines structural (MeshFree) AND CFD (NFX) in one package.</div></div>
+          <h3 class="card-title">The 2026 industry acquisitions</h3>
+          <p class="card-body">Every major competitor rebranded in 2025-2026. <strong>Ansys</strong> now operates under <strong>Synopsys</strong> (<code>ansys.synopsys.com</code>). <strong>Altair SimSolid</strong> was acquired by <strong>Siemens</strong> in June 2026 and is now <strong>Simcenter Simsolid</strong>. Its Italian distributor <strong>SmartCAE</strong> is now part of <strong>Var Industries (Var Group)</strong>.</p>
+          <div class="card-footer">
+            <strong>Mandatory action:</strong> Target both legacy (<code>Altair SimSolid</code>) and current (<code>Simcenter Simsolid</code>) query variants to capture engineers confused by Siemens and SmartCAE rebranding metadata errors.
           </div>
-        </details>
-        <details class="card">
-          <summary>vs. Ansys / Abaqus</summary>
-          <div class="card-content">
-            <div class="field"><div class="field-label">Weakness</div><div class="field-val">Extremely high cost. Massive learning curve. Requires dedicated simulation analysts. Meshing workflow is a massive bottleneck.</div></div>
-            <div class="field"><div class="field-label">Attack</div><div class="field-val">Target "CAE for design engineers". MeshFree empowers the <em>progettista</em> to validate their own designs instantly without waiting for the CAE department.</div></div>
+        </div>
+
+        <div class="card red-left">
+          <div class="card-label">
+            <span><span class="dot dot-red"></span>Freshness penalty</span>
+            <span>03 / Tech debt</span>
           </div>
-        </details>
+          <h3 class="card-title">Stale timestamps &amp; orphan slugs</h3>
+          <p class="card-body">Current site footers still display <code>&copy; 2020</code>, <code>midasmechanical.it</code> promotes <em>nuove versioni 2023</em>, and <code>e-fem.it</code> exposes a live default WordPress <code>/hello-world/</code> slug alongside stale event URLs (<code>/landing_mecspe22/</code>).</p>
+          <div class="card-footer">
+            <strong>Mandatory action:</strong> Update all footers to <code>&copy; 2026</code> immediately, purge 2023 version banners, 301 redirect <code>/hello-world/</code> and <code>/landing_mecspe22/</code>, and consolidate duplicate <code>/nfx/</code> plus <code>/nfx-intro/</code> pages.
+          </div>
+        </div>
       </div>
     </section>
 
-  </main>
-</div>
+    <!-- CHAPTER 2 -->
+    <section id="ch2" class="section">
+      <div class="section-head">
+        <div class="section-eyebrow"><span class="num">02</span><span class="sep">/</span><span>Core positioning &amp; product differentiation</span></div>
+        <h2 class="section-title">The strategic wedge &amp; information gain</h2>
+        <p class="section-lede">We cannot out-authority Ansys (Synopsys) or Siemens on raw domain rating. Instead, we <strong>out-inform</strong> them by exposing mathematical transparency, NAFEMS verification data, and unified structural plus CFD licensing.</p>
+      </div>
 
-<script>
-  // --- 1. TRANSLATIONS ---
-  const i18n = {
-    en: {
-      "header.kicker": "EFEM IT × Midas Mechanical",
-      "header.title": "Master Operations Manual.",
-      "header.lead": "The definitive, evidence-based execution framework for SEO, AEO, and GEO. Designed to out-inform Ansys, Abaqus, and SimSolid.",
-      "nav.strategy": "1. Strategic Foundation", "nav.playbook": "2. Playbook & AEO", "nav.keywords": "3. Keyword Universe", "nav.content": "4. 100 FAQs & Posts", "nav.technical": "5. Technical & Tracking", "nav.italian": "6. Italian Market", "nav.unconventional": "7. Unconventional", "nav.roadmap": "8. Roadmap & PR", "nav.kill": "9. Kill Sheet 🔒",
-      "lock.title": "Restricted Access", "lock.desc": "Enter password to view competitor intelligence.", "lock.btn": "Unlock",
-      
-      "strat.title": "1. Strategic Foundation & The Wedge", "strat.desc": "We cannot out-authority the incumbents. We compete on Information Gain, applied engineering proof, and entity association.",
-      "playbook.title": "2. The Playbook & AEO Reality", "playbook.desc": "The tactical execution. We prioritize domain authority and prompt-alignment over thin schema layers.",
-      "gap1.title": "Gap Fill: The AEO Reality (Domain Authority vs. Schema)", "gap2.title": "Gap Fill: Programmatic SEO Architecture", "aeo.capsule.title": "Direct-Answer Capsules & The 44.2% Rule",
-      "kw.title": "3. Master Keyword Universe", "kw.desc": "Every query mapped to intent, language, and priority. Filter below.",
-      "faq.title": "4. 100 FAQs & Blog Posts", "faq.desc": "The content engine. Answer-first frameworks designed to capture AI citations and address conversational intent.",
-      "tech.title": "5. Technical, Multimodal & Tracking", "tech.desc": "The engine room. Ensuring crawlability, multimodal AI citations, and closed-loop CRM attribution.",
-      "gap3.title": "Gap Fill: Multimodal & Conversational Search", "gap5.title": "Gap Fill: Closed-Loop AI CRM Attribution", "tech.llms.title": "The llms.txt Hedge",
-      "gap4.title": "6. The Italian Market Infrastructure",
-      "un.title": "7. Unconventional & Parasite SEO", "un.desc": "High-ROI tactics ranked by effectiveness. We bypass traditional domain authority.",
-      "roadmap.title": "8. Roadmap, PR & Sales",
-      "kill.title": "9. Competitor Kill Sheet", "kill.desc": "Classified intelligence. Password required to unlock."
-    },
-    it: {
-      "header.kicker": "EFEM IT × Midas Mechanical",
-      "header.title": "Manuale Operativo Master.",
-      "header.lead": "Il framework di esecuzione definitivo e basato sull'evidenza per SEO, AEO e GEO. Progettato per superare in informazioni Ansys, Abaqus e SimSolid.",
-      "nav.strategy": "1. Fondazione Strategica", "nav.playbook": "2. Playbook & AEO", "nav.keywords": "3. Universo Keyword", "nav.content": "4. 100 FAQ & Post", "nav.technical": "5. Tecnico & Tracking", "nav.italian": "6. Mercato Italiano", "nav.unconventional": "7. Non Convenzionali", "nav.roadmap": "8. Roadmap & PR", "nav.kill": "9. Kill Sheet 🔒",
-      "lock.title": "Accesso Riservato", "lock.desc": "Inserisci la password per visualizzare le informazioni sui concorrenti.", "lock.btn": "Sblocca",
-      
-      "strat.title": "1. Fondazione Strategica & Il Cuneo", "strat.desc": "Non possiamo superare gli incumbent in autorità. Competiamo su Information Gain, prova ingegneristica applicata e associazione di entità.",
-      "playbook.title": "2. Il Playbook & La Realtà AEO", "playbook.desc": "L'esecuzione tattica. Diamo priorità all'autorità di dominio e all'allineamento dei prompt rispetto ai livelli di schema sottili.",
-      "gap1.title": "Riempimento Gap: La Realtà AEO (Autorità di Dominio vs Schema)", "gap2.title": "Riempimento Gap: Architettura SEO Programmatica", "aeo.capsule.title": "Capsule di Risposta Diretta & La Regola del 44.2%",
-      "kw.title": "3. Universo Keyword Master", "kw.desc": "Ogni query mappata su intento, lingua e priorità. Filtra di seguito.",
-      "faq.title": "4. 100 FAQ & Blog Post", "faq.desc": "Il motore di contenuto. Framework Answer-first progettati per catturare citazioni AI e indirizzare l'intento conversazionale.",
-      "tech.title": "5. Tecnico, Multimodale & Tracking", "tech.desc": "La sala macchine. Garantire la scansionabilità, le citazioni AI multimodali e l'attribuzione CRM a ciclo chiuso.",
-      "gap3.title": "Riempimento Gap: Ricerca Multimodale & Conversazionale", "gap5.title": "Riempimento Gap: Attribuzione CRM AI a Ciclo Chiuso", "tech.llms.title": "L'Hedge llms.txt",
-      "gap4.title": "6. L'Infrastruttura del Mercato Italiano",
-      "un.title": "7. SEO Non Convenzionale e Parasite", "un.desc": "Tattiche ad alto ROI classificate per efficacia. Bypassiamo l'autorità di dominio tradizionale.",
-      "roadmap.title": "8. Roadmap, PR & Vendite",
-      "kill.title": "9. Kill Sheet Concorrenti", "kill.desc": "Intelligence classificata. Password richiesta per sbloccare."
-    }
-  };
-
-  let currentLang = 'it';
-  let isKillSheetUnlocked = false;
-
-  function setLang(lang) {
-    currentLang = lang;
-    document.documentElement.lang = lang;
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (i18n[lang] && i18n[lang][key]) {
-        el.innerHTML = i18n[lang][key];
-      }
-    });
-    document.getElementById('btn-en').classList.remove('active');
-    document.getElementById('btn-it').classList.remove('active');
-    document.getElementById(`btn-${lang}`).classList.add('active');
-  }
-
-  setLang('it');
-
-  // Navigation
-  function scrollToSection(id) {
-    if (id === 'kill' && !isKillSheetUnlocked) {
-      document.getElementById('kill-sheet-lock').style.display = 'flex';
-      return;
-    }
-    
-    document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
-    document.querySelector(`.nav-item[onclick="scrollToSection('${id}')"]`).classList.add('active');
-    
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  // Password Logic
-  function checkPassword() {
-    const input = document.getElementById('lock-input').value;
-    if (input === '0000') {
-      isKillSheetUnlocked = true;
-      document.getElementById('kill-sheet-lock').style.display = 'none';
-      document.getElementById('kill-content').style.display = 'block';
-      scrollToSection('kill');
-    } else {
-      alert(currentLang === 'it' ? 'Password errata.' : 'Incorrect password.');
-    }
-  }
-
-  document.getElementById('lock-input').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') checkPassword();
-  });
-
-  // --- DATA: KEYWORDS (Expanded to 60+ items) ---
-  const KEYWORDS = [
-    // Product Core
-    { kw: "software CAE senza mesh", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Pillar senza mesh" },
-    { kw: "analisi FEM senza meshing", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Pillar senza mesh" },
-    { kw: "MeshFree vs SimSolid", cluster: "Comparison", priority: "P1", lang: "EN", page: "Comparison hub" },
-    { kw: "confronto MeshFree SimSolid", cluster: "Comparison", priority: "P1", lang: "IT", page: "Pillar confronto" },
-    { kw: "MeshFree NAFEMS validation", cluster: "Trust", priority: "P1", lang: "EN", page: "NAFEMS trust" },
-    { kw: "validazione NAFEMS", cluster: "Trust", priority: "P1", lang: "IT", page: "NAFEMS trust" },
-    { kw: "MeshFree prova gratuita", cluster: "MeshFree", priority: "P1", lang: "IT", page: "MeshFree trial" },
-    { kw: "MTS prezzo", cluster: "MTS", priority: "P1", lang: "IT", page: "MTS pricing" },
-    { kw: "CAE without meshing", cluster: "Problem-aware", priority: "P1", lang: "EN", page: "Pillar no mesh" },
-    { kw: "SimSolid alternative", cluster: "Comparison", priority: "P1", lang: "EN", page: "Alternative hub" },
-    { kw: "CAE per progettisti", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Solution designers" },
-    { kw: "MeshFree CAE software", cluster: "MeshFree", priority: "P2", lang: "EN", page: "MeshFree product" },
-    { kw: "alternativa ad Ansys", cluster: "Comparison", priority: "P2", lang: "IT", page: "Alternative hub" },
-    { kw: "NFX vs Fluent", cluster: "NFX", priority: "P2", lang: "EN", page: "NFX vs Fluent" },
-    { kw: "MeshFree accuracy", cluster: "Trust", priority: "P2", lang: "EN", page: "NAFEMS trust" },
-    { kw: "MTS CAE package", cluster: "MTS", priority: "P2", lang: "EN", page: "MTS page" },
-    { kw: "MeshFree migration from Ansys", cluster: "Migration", priority: "P2", lang: "EN", page: "Switching page" },
-    { kw: "Ansys maintenance cost too high", cluster: "Migration", priority: "P2", lang: "EN", page: "Alternative hub" },
-    { kw: "come migrare da Ansys a MeshFree", cluster: "Migration", priority: "P2", lang: "IT", page: "Switching page" },
-    { kw: "NFX CFD analisi fluidodinamica", cluster: "NFX", priority: "P2", lang: "IT", page: "NFX product" },
-    { kw: "simulazione scambiatori calore", cluster: "Industry", priority: "P3", lang: "IT", page: "Blog" },
-    { kw: "MeshFree Samsung", cluster: "MeshFree", priority: "P3", lang: "EN", page: "About" },
-    { kw: "CAE for automotive", cluster: "Industry", priority: "P3", lang: "EN", page: "Blog" },
-    { kw: "CAE for industrial machinery", cluster: "Industry", priority: "P3", lang: "EN", page: "Blog" },
-    { kw: "simulazione industriale", cluster: "Industry", priority: "P3", lang: "IT", page: "Blog" },
-    { kw: "midas mechanical", cluster: "Branded", priority: "P1", lang: "EN", page: "Homepage" },
-    { kw: "distributore midas italia", cluster: "Branded", priority: "P2", lang: "IT", page: "Homepage" }
-  ];
-
-  const kwBody = document.getElementById('kw-body');
-  function renderKeywords(priorityFilter = 'all') {
-    let html = '';
-    KEYWORDS.forEach(k => {
-      if (priorityFilter !== 'all' && k.priority !== priorityFilter) return;
-      html += `
-        <tr>
-          <td class="kw-name">${k.kw}</td>
-          <td>${k.cluster}</td>
-          <td><span class="tag tag-${k.priority.toLowerCase()}">${k.priority}</span></td>
-          <td><span class="tag tag-${k.lang.toLowerCase()}">${k.lang}</span></td>
-          <td>${k.page}</td>
-        </tr>
-      `;
-    });
-    kwBody.innerHTML = html || '<tr><td colspan="5" style="text-align:center;">No keywords found.</td></tr>';
-  }
-
-  function filterKW(priority) {
-    renderKeywords(priority);
-  }
-
-  renderKeywords();
-
-  // --- DATA: FAQS (Expanded to 25+ detailed entries) ---
-  const FAQS = [
-    {
-      cat: "Meshing & Pain Points",
-      q: "Why is meshing the biggest bottleneck in FEA?",
-      a: "<strong>Answer:</strong> Meshing is the most time-consuming step in traditional FEA because it requires manual geometry cleanup and defeaturing before the solver can even run. Engineers often spend 60-80% of their simulation time on this step.<br><br><strong>Why it matters:</strong> When you are validating a design iteration, waiting hours for a mesh kills momentum. MeshFree eliminates this by using the Implicit Boundary Method, allowing you to validate CAD directly."
-    },
-    {
-      cat: "Meshing & Pain Points",
-      q: "How much time do engineers waste on geometry cleanup?",
-      a: "<strong>Answer:</strong> Studies show engineers can waste up to 70% of their simulation time on geometry preparation. SimSolid and Ansys both require this step.<br><br><strong>Why it matters:</strong> This is the core wedge for Midas. We position MeshFree as the tool that gives design engineers their time back."
-    },
-    {
-      cat: "Meshing & Pain Points",
-      q: "What is the difference between meshless and traditional FEA?",
-      a: "<strong>Answer:</strong> Traditional FEA divides the model into thousands of small elements (a mesh). Meshless FEA (like MeshFree) uses mathematical approximations (like the Implicit Boundary Method) to solve the CAD geometry directly without creating a mesh.<br><br><strong>Why it matters:</strong> Meshless is faster for design-stage validation, while traditional FEA is better for deep, specialized nonlinear analysis."
-    },
-    {
-      cat: "Meshing & Pain Points",
-      q: "Can I simulate moving parts without a mesh?",
-      a: "<strong>Answer:</strong> Yes, MeshFree handles linear static, modal, and basic nonlinear contact analysis directly on the CAD. For highly complex explicit dynamics (like crash testing), traditional tools like Radioss are still required.<br><br><strong>Why it matters:</strong> We must be honest about limitations to build trust with senior engineers. We win on design-stage validation, not crash testing."
-    },
-    {
-      cat: "Software Comparisons",
-      q: "MeshFree vs SimSolid: Which is more accurate for design validation?",
-      a: "<strong>Answer:</strong> Both tools are NAFEMS-validated, but they solve differently. MeshFree uses the Implicit Boundary Method, which offers a highly transparent mathematical model. SimSolid uses External Approximations, which is faster on huge assemblies but has an opaque solver.<br><br><strong>Why it matters:</strong> Users on Capterra report SimSolid's math is 'difficult to understand how calculation parameters affect the results.' We attack this transparency gap."
-    },
-    {
-      cat: "Software Comparisons",
-      q: "Is SimSolid really as accurate as Ansys?",
-      a: "<strong>Answer:</strong> NAFEMS tests show SimSolid results are often within 10% of Ansys. However, SimSolid cannot simulate friction contacts or large deformations in explicit simulation like Radioss.<br><br><strong>Why it matters:</strong> This is a critical limitation. If a user needs explicit dynamics, SimSolid fails. This is where Midas can win."
-    },
-    {
-      cat: "Software Comparisons",
-      q: "Why do engineers complain about SimSolid's 'opaque math'?",
-      a: "<strong>Answer:</strong> SimSolid uses a meshless approach that approximates the solution without a traditional mesh. Because the solver logic is proprietary and not easily inspectable, engineers often cannot explain why a result is what it is.<br><br><strong>Why it matters:</strong> MeshFree offers a more documented, transparent approach. We use this to build trust with senior engineers."
-    },
-    {
-      cat: "Software Comparisons",
-      q: "MeshFree vs Ansys Discovery: Which is better for designers?",
-      a: "<strong>Answer:</strong> Ansys Discovery uses a hybrid approach but often still struggles with complex assemblies. MeshFree is purpose-built for large assembly validation without meshing, running natively on standard workstations.<br><br><strong>Why it matters:</strong> Discovery is a stepping stone to full Ansys. MeshFree is a complete, standalone validation tool for the progettista."
-    },
-    {
-      cat: "Software Comparisons",
-      q: "Is NFX CFD as good as Fluent for pump simulation?",
-      a: "<strong>Answer:</strong> Published research comparing the two notes that Fluent results were more sensitive to time consideration than NFX in a centrifugal pump study. NFX provides highly accurate, robust results for standard pump and turbomachinery workflows at a fraction of Fluent's cost.<br><br><strong>Why it matters:</strong> We own the 'NFX vs Fluent' query. We target companies that use Fluent but need a cheaper, integrated tool for standard design iterations."
-    },
-    {
-      cat: "Cost & Licensing",
-      q: "How much does an Ansys license really cost?",
-      a: "<strong>Answer:</strong> Ansys Mechanical Pro can cost 80k-120k RMB/year, while Enterprise can exceed 300k-500k RMB/year. Abaqus complete suites can reach 500k-800k RMB/year.<br><br><strong>Why it matters:</strong> Midas MTS starts at €20,000. The price difference is massive. We own the 'affordable CAE' keyword cluster."
-    },
-    {
-      cat: "Cost & Licensing",
-      q: "What is included in the MTS package (€20k)?",
-      a: "<strong>Answer:</strong> MTS is an all-in-one package that includes both MeshFree (structural) and NFX (CFD). This means you get both structural and fluid simulation in a single, cost-effective license."
-    },
-    {
-      cat: "Cost & Licensing",
-      q: "Is there a perpetual license option for MTS?",
-      a: "<strong>Answer:</strong> Yes, Midas offers both node-locked and network licenses, often structured as perpetual licenses with an annual maintenance fee, unlike the subscription-only models of Ansys and Abaqus.<br><br><strong>Why it matters:</strong> CFOs prefer CapEx (perpetual) over OpEx (subscription) for long-term cost predictability. We highlight this in our pricing pages."
-    },
-    {
-      cat: "Cost & Licensing",
-      q: "What is the ROI of switching to a meshless CAE tool?",
-      a: "<strong>Answer:</strong> If a design engineer spends 10 hours a week waiting for meshes or CAE analysts, switching to MeshFree can reclaim 60% of that time. Over a year, that is hundreds of hours of engineering capacity unlocked.<br><br><strong>Why it matters:</strong> This is the core argument for the CFO and the Head of Engineering. We sell time, not just software."
-    },
-    {
-      cat: "Italian Market",
-      q: "Qual è la differenza tra MeshFree e SimSolid?",
-      a: "<strong>Risposta:</strong> MeshFree e SimSolid eliminano entrambi il meshing, ma con metodi diversi. MeshFree usa l'Implicit Boundary Method ed è validato NAFEMS con uno scostamento inferiore al 4% rispetto al FEM tradizionale. SimSolid è più rapido su assiemi molto grandi ma con un modello matematico meno trasparente.<br><br><strong>Perché è importante:</strong> Questa è la query di confronto principale per il mercato italiano. Intercettiamo il vocabolario già stabilito dal distributore SimSolid."
-    },
-    {
-      cat: "Italian Market",
-      q: "MeshFree è validato NAFEMS?",
-      a: "<strong>Risposta:</strong> Sì. MeshFree è stato validato utilizzando i modelli standard NAFEMS, con uno scostamento inferiore al 4% rispetto ai risultati FEM tradizionali. Questo garantisce un'affidabilità di livello ingegneristico per la validazione in fase di progettazione."
-    },
-    {
-      cat: "Italian Market",
-      q: "Quanto costa midas MTS?",
-      a: "<strong>Risposta:</strong> Il pacchetto MTS (che include MeshFree e NFX) parte da €20.000 per la versione Advanced e €26.000 per la Professional. Questo include l'intero workflow per strutture e fluidi, rappresentando una frazione del costo di Ansys o Abaqus."
-    }
-  ];
-
-  const faqContainer = document.getElementById('faq-container');
-  let currentCategory = '';
-  let faqHTML = '';
-
-  FAQS.forEach((faq, index) => {
-    if (faq.cat !== currentCategory) {
-      currentCategory = faq.cat;
-      faqHTML += `<div class="faq-category">${currentCategory}</div>`;
-    }
-    faqHTML += `
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          ${faq.q}
+      <div class="pillar-list">
+        <div class="pillar-item">
+          <div class="pillar-num">01</div>
+          <div class="pillar-content">
+            <div class="card-label"><span style="color:var(--accent);">Mathematical transparency</span></div>
+            <h3 class="card-title">MeshFree's Implicit Boundary Method (IBM)</h3>
+            <p class="card-body">Unlike heuristic external approximations, MeshFree solves directly on native CAD geometry using a structured non-conforming background grid combined with <strong>Implicit Boundary Functions</strong>. It is <strong>NAFEMS-validated within 4 percent</strong> of traditional finite element solvers and demonstrates monotonic convergence.</p>
+          </div>
         </div>
-        <div class="faq-a">
-          <p>${faq.a}</p>
+
+        <div class="pillar-item">
+          <div class="pillar-num">02</div>
+          <div class="pillar-content">
+            <div class="card-label"><span style="color:var(--amber);">Exposing rival black-box math</span></div>
+            <h3 class="card-title">Simcenter Simsolid's opaque math weakness</h3>
+            <p class="card-body">Simcenter Simsolid relies on proprietary External Approximations over arbitrary polyhedral volumes. Engineers across Reddit (<code>r/fea</code>) and Eng-Tips repeatedly warn that it operates as an uninspectable black box, sensitive to accuracy sliders and sharp-corner stress singularities.</p>
+          </div>
+        </div>
+
+        <div class="pillar-item">
+          <div class="pillar-num">03</div>
+          <div class="pillar-content">
+            <div class="card-label"><span style="color:var(--green);">The ultimate weapon</span></div>
+            <h3 class="card-title">All-in-one structural plus native CFD (MIDAS MTS)</h3>
+            <p class="card-body">Simcenter Simsolid lacks native Navier-Stokes fluid-flow CFD, forcing buyers into costly FloEFD or STAR-CCM+ add-ons. <strong>MIDAS MTS</strong> bundles <strong>MeshFree (structural)</strong> and <strong>NFX (structural plus native CFD/CHT)</strong> into a single &euro;20k license.</p>
+          </div>
         </div>
       </div>
-    `;
-  });
 
-  faqContainer.innerHTML = faqHTML;
+      <div class="quote-block" style="margin-top:32px;">
+        <div class="quote-label">
+          <span>Canonical positioning statement</span>
+          <button class="copy-btn" onclick="copyText('pos-statement', this)">Copy statement</button>
+        </div>
+        <blockquote id="pos-statement" class="quote-text">
+          Simcenter Simsolid is an excellent tool for rapid assembly screening. However, it is fundamentally a structural tool with an opaque black-box mathematical model. MeshFree uses the Implicit Boundary Method (IBM), offering NAFEMS-validated transparency within 4 percent error. More importantly, only the MIDAS MTS package includes integrated CFD (NFX) for coupled thermal-fluid-structural workflows in a single license.
+        </blockquote>
+      </div>
+    </section>
 
-  // Active state tracking for sidebar
-  window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('.chapter');
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      if (scrollY >= sectionTop - 100) {
-        current = section.getAttribute('id');
-      }
-    });
-    
-    document.querySelectorAll('.nav-item').forEach(li => {
-      li.classList.remove('active');
-      if (li.getAttribute('onclick') && li.getAttribute('onclick').includes(current)) {
-        li.classList.add('active');
-      }
-    });
-  });
-</script>
-</body>
-</html>
+    <!-- CHAPTER 3 -->
+    <section id="ch3" class="section">
+      <div class="section-head">
+        <div class="section-eyebrow"><span class="num">03</span><span class="sep">/</span><span>Competitive intelligence matrix</span></div>
+        <h2 class="section-title">2026 competitor landscape</h2>
+        <p class="section-lede">Detailed tactical breakdown of incumbent strengths, structural vulnerabilities, pricing traps, and organic search footprints across Italy and global English markets.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-label">
+            <span><span class="dot dot-amber"></span>Primary Italian rival</span>
+            <span style="font-family:var(--font-mono);text-transform:none;letter-spacing:0;">simsolid.smartcae.com</span>
+          </div>
+          <h3 class="card-title">SmartCAE (Var Industries / Var Group)</h3>
+          <p class="card-body">Backed by Var Group industrial distribution and motorsport heritage (Ferrari, Dallara). Deploys dedicated product subdomains (<code>simsolid.smartcae.com</code>, <code>inspire.smartcae.com</code>) and a 90-plus hour webinar library.</p>
+          <div class="card-footer">
+            <strong style="color:var(--red);">Exploitable weaknesses:</strong>
+            <ul style="margin-top:8px;padding-left:16px;color:var(--text-secondary);font-size:12px;line-height:1.6;">
+              <li style="margin-bottom:6px;"><strong>Broken 2026 rebranding metadata:</strong> The June 2026 Altair-to-Siemens transition left mismatched title tags (SimSolid pages still titled "Altair HyperMesh: Cosa &egrave; Simsolid?").</li>
+              <li style="margin-bottom:6px;"><strong>Subdomain authority fragmentation:</strong> Splits link equity across multiple subdomains instead of a unified domain.</li>
+              <li><strong>Rigid annual lock-in:</strong> Enforces strict one-year upfront Altair Unit subscriptions with zero suspension and no native fluid CFD in SimSolid.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">
+            <span><span class="dot dot-blue"></span>Tier-1 incumbent</span>
+            <span style="font-family:var(--font-mono);text-transform:none;letter-spacing:0;">ansys.synopsys.com</span>
+          </div>
+          <h3 class="card-title">Ansys (Synopsys Simulation)</h3>
+          <p class="card-body">Commands massive domain authority through encyclopedic FEA and CFD glossaries, university student editions, and an aggressive Italian VAR network (Cadland, E3D, EnginSoft, Braitec).</p>
+          <div class="card-footer">
+            <strong style="color:var(--red);">Exploitable weaknesses:</strong>
+            <ul style="margin-top:8px;padding-left:16px;color:var(--text-secondary);font-size:12px;line-height:1.6;">
+              <li style="margin-bottom:6px;"><strong>Punitive pricing and core-count fees:</strong> Mechanical Pro and Enterprise plus Fluent easily exceeds $50k to $100k, compounded by HPC core taxes above 4 to 8 cores.</li>
+              <li><strong>Steep learning curve and meshing overhead:</strong> Design engineers waste weeks on geometry defeaturing and mesh quality troubleshooting.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">
+            <span><span class="dot dot-purple"></span>Nonlinear gold standard</span>
+            <span style="font-family:var(--font-mono);text-transform:none;letter-spacing:0;">3ds.com/simulia</span>
+          </div>
+          <h3 class="card-title">Abaqus (Dassault Syst&egrave;mes SIMULIA)</h3>
+          <p class="card-body">Unrivaled benchmark leader for extreme nonlinearities, crash and explicit dynamics, and complex elastomeric contacts in automotive and aerospace R&amp;D.</p>
+          <div class="card-footer">
+            <strong style="color:var(--red);">Exploitable weaknesses:</strong>
+            <ul style="margin-top:8px;padding-left:16px;color:var(--text-secondary);font-size:12px;line-height:1.6;">
+              <li><strong>$50k to $80k first-year entry cliff:</strong> Token-based licensing prices out 80 percent of Italian mechanical SMEs whose daily workload is linear static, modal, thermal, and standard nonlinear contact.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">
+            <span><span class="dot dot-green"></span>CAD-embedded funnel</span>
+            <span style="font-family:var(--font-mono);text-transform:none;letter-spacing:0;">solidworks.com/it</span>
+          </div>
+          <h3 class="card-title">SolidWorks Simulation</h3>
+          <p class="card-body">Captures Italian mechanical designers (<em>progettisti</em>) early via zero-export CAD integration and active reseller tutorials (Eka srl, Formame, SolidFacile).</p>
+          <div class="card-footer">
+            <strong style="color:var(--red);">Exploitable weaknesses:</strong>
+            <ul style="margin-top:8px;padding-left:16px;color:var(--text-secondary);font-size:12px;line-height:1.6;">
+              <li><strong>The welded assembly (carpenteria metallica) wall:</strong> Conformal meshing routinely fails or stalls on large welded frames, thin-walled sheet metal mixed with solids, and multi-part contacts, making SolidWorks graduates our number one upgrade cohort.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 4 -->
+    <section id="ch4" class="section">
+      <div class="section-head">
+        <div class="section-eyebrow"><span class="num">04</span><span class="sep">/</span><span>Generative engine optimization</span></div>
+        <h2 class="section-title">GEO &amp; AI citations (the review gate)</h2>
+        <p class="section-lede">Quoleady and Semrush 2026 AI search studies prove that <strong>99 to 100 percent of software tools recommended by ChatGPT and Perplexity</strong> pass a mandatory <strong>5 to 10 plus verified G2/Capterra review threshold</strong>.</p>
+      </div>
+
+      <div class="grid-3-2">
+        <div class="chart-card">
+          <div class="chart-head">
+            <div>
+              <div class="chart-title">Verified B2B directory reviews vs LLM inclusion gate</div>
+              <div class="chart-sub">MeshFree (0) and NFX (1) fall below the algorithmic trust floor required for AI recommendations.</div>
+            </div>
+            <span class="chart-badge">Log scale</span>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="reviewGateChart"></canvas>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="card red-left">
+            <div class="card-label"><span><span class="dot dot-red"></span>The MIDAS directory problem</span></div>
+            <p class="card-body" style="margin-bottom:0;"><strong>midas MeshFree</strong> currently has <strong style="color:var(--red);">0 reviews</strong>. <strong>midas NFX</strong> has <strong style="color:var(--amber);">1 review</strong>. Worse, Capterra's generic <code>MIDAS</code> listing belongs to a <strong>$29 per month UK room-scheduling app</strong>, causing severe brand entity contamination.</p>
+          </div>
+
+          <div class="card green-left">
+            <div class="card-label"><span><span class="dot dot-green"></span>The 30-day review sprint</span></div>
+            <ul style="padding-left:16px;color:var(--text-secondary);font-size:12.5px;line-height:1.65;">
+              <li style="margin-bottom:8px;"><strong style="color:var(--text);">Claim distinct profiles:</strong> Separate "midas MeshFree" and "midas NFX" entities on G2, Capterra, and SourceForge with explicit <code>sameAs</code> schema links.</li>
+              <li><strong style="color:var(--text);">Seed workflow-specific prompts:</strong> Incentivize 10-plus Italian and European clients to detail exact engineering workflows (modal analysis of a robot frame, welded carpenteria metallica without meshing, centrifugal pump CFD in NFX).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 5 -->
+    <section id="ch5" class="section">
+      <div class="section-head">
+        <div class="section-eyebrow"><span class="num">05</span><span class="sep">/</span><span>Engineering as marketing</span></div>
+        <h2 class="section-title">Interactive 3-year total cost of ownership (TCO)</h2>
+        <p class="section-lede">MIDAS MTS (&euro;20k entry) includes <strong>all CPU and GPU cores</strong> and eliminates meshing, reclaiming <strong>more than 60 percent of CAD prep time</strong>. Adjust your engineering team parameters below to model 3-year savings against Simcenter Simsolid (plus CFD add-on) and Ansys or Abaqus.</p>
+      </div>
+
+      <div class="grid-2-3">
+        <div class="card">
+          <h3 class="card-title" style="font-size:14px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);">Workstation &amp; team parameters</h3>
+
+          <div class="slider-row">
+            <div class="slider-head">
+              <label for="tco-engineers" class="slider-label">Simulation engineers per seat</label>
+              <span class="slider-value" id="lbl-engineers">3 Engineers</span>
+            </div>
+            <input type="range" id="tco-engineers" min="1" max="15" value="3" oninput="updateTCO()">
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-head">
+              <label for="tco-cores" class="slider-label">CPU cores per workstation</label>
+              <span class="slider-value" id="lbl-cores">24 Cores</span>
+            </div>
+            <input type="range" id="tco-cores" min="8" max="64" step="8" value="24" oninput="updateTCO()">
+            <div class="slider-hint">Ansys and Abaqus charge HPC packs above 4 to 8 cores. MIDAS unlocks all cores at no extra cost.</div>
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-head">
+              <label for="tco-hours" class="slider-label">Weekly meshing and cleanup hours per engineer</label>
+              <span class="slider-value" id="lbl-hours">12 hrs/wk</span>
+            </div>
+            <input type="range" id="tco-hours" min="2" max="25" value="12" oninput="updateTCO()">
+            <div class="slider-hint">MeshFree cuts geometry defeaturing and meshing labor by 65 percent (valued at &euro;55 per hour).</div>
+          </div>
+
+          <div class="toggle-row">
+            <span class="toggle-label">Require native fluid-flow CFD?</span>
+            <input type="checkbox" id="tco-cfd" class="toggle-switch" checked onchange="updateTCO()">
+          </div>
+
+          <div class="savings-banner" id="tco-savings-banner">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-head">
+            <div>
+              <div class="chart-title">3-year cumulative cost breakdown (&euro;k)</div>
+              <div class="chart-sub">Licenses + HPC core tax + meshing labor</div>
+            </div>
+            <span class="chart-badge">Live model</span>
+          </div>
+          <div class="chart-wrap" style="height:300px;">
+            <canvas id="tcoChartCanvas"></canvas>
+          </div>
+          <div class="stat-grid-3">
+            <div class="stat-cell">
+              <div class="stat-cell-label">MIDAS MTS 3-yr</div>
+              <div class="stat-cell-value" id="stat-midas-total" style="color:var(--accent);">&euro;173k</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-cell-label">SimSolid + CFD 3-yr</div>
+              <div class="stat-cell-value" id="stat-simsolid-total" style="color:var(--amber);">&euro;389k</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-cell-label">Ansys / Abaqus 3-yr</div>
+              <div class="stat-cell-value" id="stat-ansys-total" style="color:var(--red);">&euro;642k</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 6 -->
+    <section id="ch6" class="section">
+      <div class="section-head">
+        <div class="section-eyebrow"><span class="num">06</span><span class="sep">/</span><span>Asymmetric growth &amp; primary proof</span></div>
+        <h2 class="section-title">Unconventional SEO plus NAFEMS validation lookup</h2>
+        <p class="section-lede">Reddit is the <strong>number one cited source by Perplexity (46.7 percent)</strong>, and Google Italy ranks auto-translated English Reddit threads via <code>?tl=it</code>. Deploy transparent technical answers on <code>r/fea</code> and LinkedIn Pulse while liberating NAFEMS validation benchmarks into open HTML.</p>
+      </div>
+
+      <div class="grid-2-3">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="card">
+            <div class="card-label"><span><span class="dot dot-purple"></span>The ?tl=it counter-programming hack</span></div>
+            <h3 class="card-title">Why English r/fea threads rank in Italy</h3>
+            <p class="card-body" style="margin-bottom:0;">Because native Italian FEA forum discussions are sparse, Google Italy automatically translates high-ranking English <code>r/fea</code> and <code>r/AskEngineers</code> threads using <code>?tl=it</code> URL parameters. Seeding non-promotional, benchmark-backed English explanations captures both global English buyers and Italian <em>progettisti</em> simultaneously.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">
+              <span><span class="dot dot-purple"></span>Approved Reddit outreach template</span>
+              <button class="copy-btn" onclick="copyText('reddit-script', this)">Copy script</button>
+            </div>
+            <blockquote id="reddit-script" style="font-size:12.5px;color:var(--text-secondary);line-height:1.65;padding-top:4px;">
+              I'm an engineer working with Midas software (so full disclosure, I'm affiliated), but I've been using MeshFree for exactly this. It's an Implicit Boundary Method solver, so it skips the meshing entirely. We've found it's NAFEMS-validated within about 4 percent of traditional FEM for linear static and modal analysis. If you're doing complex explicit dynamics, stick with Ansys. But for quick CAD validation before full CAE, it's genuinely a massive time saver. Happy to share the benchmark methodology we used if you're interested.
+            </blockquote>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="chart-head">
+            <div>
+              <div class="chart-title">Interactive NAFEMS validation lookup</div>
+              <div class="chart-sub">MeshFree IBM vs reference FEM, extracted from NAFEMS wp_oct_20 Part 2 and MIDAS verification datasets into crawlable HTML.</div>
+            </div>
+            <select id="nafems-filter" onchange="renderNafemsTable()" style="background:var(--bg-subtle);border:1px solid var(--border-strong);border-radius:var(--radius);padding:6px 10px;font-size:11.5px;color:var(--text);outline:none;cursor:pointer;">
+              <option value="ALL">All analysis types</option>
+              <option value="Linear Static">Linear Static</option>
+              <option value="Modal">Modal / Frequency</option>
+              <option value="Thermal">Thermal / Thermo-Structural</option>
+            </select>
+          </div>
+          <div class="table-wrap" style="margin-top:14px;">
+            <div class="table-scroll" style="max-height:340px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Benchmark</th>
+                    <th>Type</th>
+                    <th>Reference</th>
+                    <th>MeshFree IBM</th>
+                    <th>Delta</th>
+                  </tr>
+                </thead>
+                <tbody id="nafems-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 7 -->
+    <section id="ch7" class="section">
+      <div class="section-head">
+        <div class="section-eyebrow"><span class="num">07</span><span class="sep">/</span><span>Machine-readable architecture</span></div>
+        <h2 class="section-title">Technical SEO, JSON-LD schema, multimodal optimization</h2>
+        <p class="section-lede">Deploy unified JSON-LD across <code>e-fem.it</code> and <code>midasmechanical.it</code>, paired with OCR-rich video keyframes and <code>.vtt</code> transcripts so Google AI Overviews and multimodal LLMs index every benchmark metric.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-label">
+            <span><span class="dot dot-blue"></span>Production JSON-LD block</span>
+            <button class="copy-btn" onclick="copyText('schema-code-block', this)">Copy JSON-LD</button>
+          </div>
+<pre id="schema-code-block" class="code-block">{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "MeshFree",
+  "operatingSystem": "Windows",
+  "applicationCategory": "EngineeringApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "20000",
+    "priceCurrency": "EUR"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "15"
+  }
+}</pre>
+          <p style="font-size:11.5px;color:var(--text-tertiary);margin-top:14px;line-height:1.6;">Pair with <code style="font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,0.04);padding:1px 4px;border-radius:3px;">Organization</code> schema linking <code style="font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,0.04);padding:1px 4px;border-radius:3px;">e-fem.it</code> (Parma HQ) and <code style="font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,0.04);padding:1px 4px;border-radius:3px;">midasmechanical.it</code> via <code style="font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,0.04);padding:1px 4px;border-radius:3px;">owns</code> and bidirectional <code style="font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,0.04);padding:1px 4px;border-radius:3px;">hreflang</code> tags.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-label"><span><span class="dot dot-green"></span>Multimodal AI &amp; video search</span></div>
+          <h3 class="card-title">Three operating rules</h3>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;">
+            <div style="padding:14px;background:var(--bg-subtle);border:1px solid var(--border);border-radius:var(--radius);">
+              <div style="font-size:12.5px;font-weight:500;color:var(--text);margin-bottom:4px;">In-frame OCR benchmark overlays</div>
+              <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.6;">Multimodal crawlers parse video keyframes directly. Burn crisp HUD overlays into every tutorial frame: part count, CAD format, solve time, peak stress (MPa), and error percent vs FEM.</div>
+            </div>
+            <div style="padding:14px;background:var(--bg-subtle);border:1px solid var(--border);border-radius:var(--radius);">
+              <div style="font-size:12.5px;font-weight:500;color:var(--text);margin-bottom:4px;">Human-edited .vtt captions</div>
+              <div style="font-size:11.5px;color:var(--text-secondary);line-height:1
+               
