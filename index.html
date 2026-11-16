@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EFEM IT × Midas — Master Strategy Bible</title>
+<title>EFEM IT × Midas — Master Strategy</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -33,7 +33,7 @@
     min-height: 100vh;
   }
 
-  /* HEADER */
+  /* HEADER & LANG SWITCH */
   .header { max-width: 1120px; margin: 0 auto; padding: 60px 24px 30px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px; }
   .header-content { max-width: 720px; }
   .kicker { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
@@ -59,46 +59,29 @@
   .section-heading { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
   .section-sub { font-size: 17px; color: var(--text-2); margin-bottom: 40px; max-width: 720px; }
 
-  /* VISUALS GRID */
-  .visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
-  .visual-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; position: relative; overflow: hidden; }
-  .visual-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 24px; color: var(--text); }
+  /* ORBITAL HUB (HOME) */
+  .orbital-hub { display: flex; justify-content: center; align-items: center; height: 500px; position: relative; margin-top: 40px; }
+  .hub-center { width: 140px; height: 140px; background: var(--surface-2); border: 2px solid var(--accent); border-radius: 50%; display: flex; justify-content: center; align-items: center; text-align: center; font-weight: 800; font-size: 16px; z-index: 10; box-shadow: 0 0 40px rgba(10, 132, 255, 0.2); }
+  .hub-orbit { position: absolute; border: 1px dashed var(--border); border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+  .orbit-1 { width: 320px; height: 320px; }
+  .orbit-2 { width: 480px; height: 480px; border-color: var(--border-strong); }
+  .hub-node { position: absolute; background: var(--surface); border: 1px solid var(--border-strong); padding: 10px 18px; border-radius: 99px; font-size: 13px; font-weight: 600; color: var(--text-2); cursor: pointer; transition: all 0.2s ease; z-index: 5; }
+  .hub-node:hover { background: var(--text); color: var(--bg); transform: scale(1.05); }
+  .node-playbook { top: -20px; left: 50%; transform: translateX(-50%); }
+  .node-keywords { bottom: -20px; left: 50%; transform: translateX(-50%); }
+  .node-faq { top: 50%; left: -40px; transform: translateY(-50%); }
+  .node-technical { top: 50%; right: -40px; transform: translateY(-50%); }
+  .node-unconventional { top: 20px; right: 20px; }
+  .node-pr { bottom: 20px; right: 20px; }
+  .node-kill { top: 20px; left: 20px; color: var(--red); border-color: var(--red); }
+  .node-kill:hover { background: var(--red); color: #fff; }
 
-  /* 1. MATRIX */
-  .matrix { display: grid; grid-template-columns: 60px 1fr 1fr 1fr; gap: 8px; }
-  .matrix-label { font-size: 11px; font-weight: 700; color: var(--text-3); text-transform: uppercase; display: flex; align-items: center; justify-content: center; }
-  .matrix-cell { background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 12px; font-weight: 500; color: var(--text-2); text-align: center; display: flex; align-items: center; justify-content: center; min-height: 70px; }
-  .matrix-cell.highlight { border-color: var(--accent); background: rgba(10, 132, 255, 0.1); color: var(--text); }
+  /* TOOLTIPS */
+  .tooltip { position: relative; border-bottom: 1px dotted var(--text-3); cursor: help; }
+  .tooltip .tooltiptext { visibility: hidden; width: 300px; background: var(--surface-3); color: #fff; text-align: left; border-radius: 8px; padding: 16px; position: absolute; z-index: 100; bottom: 125%; left: 50%; margin-left: -150px; opacity: 0; transition: opacity 0.3s; font-size: 13px; font-weight: 400; line-height: 1.5; box-shadow: 0 8px 24px rgba(0,0,0,0.5); border: 1px solid var(--border-strong); }
+  .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
 
-  /* 2. FLYWHEEL */
-  .flywheel-container { display: flex; justify-content: center; align-items: center; height: 220px; position: relative; }
-  .flywheel-ring { width: 180px; height: 180px; border-radius: 50%; border: 2px dashed var(--border-strong); position: relative; display: flex; justify-content: center; align-items: center; }
-  .flywheel-center { background: var(--surface-3); padding: 12px 20px; border-radius: 99px; font-size: 13px; font-weight: 700; z-index: 2; border: 1px solid var(--border-strong); }
-  .flywheel-node { position: absolute; background: var(--surface); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; }
-  .flywheel-node.n1 { top: -12px; left: 50%; transform: translateX(-50%); color: var(--blue); }
-  .flywheel-node.n2 { bottom: 20px; right: -20px; color: var(--orange); }
-  .flywheel-node.n3 { bottom: 20px; left: -20px; color: var(--green); }
-
-  /* 3. ORBITAL */
-  .orbital-container { display: flex; justify-content: center; align-items: center; height: 220px; position: relative; }
-  .orbit { position: absolute; border-radius: 50%; border: 1px solid var(--border); display: flex; justify-content: center; align-items: center; }
-  .orbit-1 { width: 100px; height: 100px; background: var(--surface-3); border-color: var(--accent); }
-  .orbit-1 span { font-size: 12px; font-weight: 800; text-align: center; color: var(--text); }
-  .orbit-2 { width: 180px; height: 180px; border-style: dashed; }
-  .orbit-2-node { position: absolute; background: var(--surface-2); padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; border: 1px solid var(--border); }
-  .orbit-2-node.top { top: -10px; color: var(--blue); }
-  .orbit-2-node.left { left: -20px; top: 50%; color: var(--orange); }
-  .orbit-2-node.right { right: -20px; top: 50%; color: var(--green); }
-
-  /* 4. SUBWAY */
-  .subway { position: relative; padding: 20px 0; }
-  .subway-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: var(--border-strong); }
-  .subway-stop { position: relative; padding-left: 50px; margin-bottom: 24px; }
-  .subway-stop::before { content: ''; position: absolute; left: 14px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); z-index: 2; }
-  .subway-stop h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-  .subway-stop p { font-size: 12px; color: var(--text-3); }
-
-  /* CARDS & ACCORDIONS */
+  /* DETAILS & CARDS */
   .segmented { display: inline-flex; background: var(--surface-2); padding: 4px; border-radius: 99px; gap: 4px; margin-bottom: 32px; border: 1px solid var(--border-strong); }
   .segmented button { background: none; border: none; color: var(--text-2); font-size: 14px; font-weight: 700; padding: 10px 24px; border-radius: 99px; transition: all 0.15s ease; cursor: pointer; }
   .segmented button.active { background: var(--text); color: var(--bg); }
@@ -120,20 +103,40 @@
   .field-value { color: var(--text-2); font-size: 15px; line-height: 1.6; }
   .field-value strong { color: var(--text); font-weight: 600; }
 
-  /* TAGS */
-  .tag { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; display: inline-block; }
+  /* KEYWORDS TABLE */
+  .kw-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+  .kw-search { flex: 1; min-width: 200px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 8px; padding: 14px 20px; font-size: 15px; color: var(--text); outline: none; }
+  .pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { background: var(--surface); border: 1px solid var(--border-strong); border-radius: 99px; padding: 10px 20px; font-size: 14px; font-weight: 600; color: var(--text-2); transition: all 0.15s ease; cursor: pointer; }
+  .pill:hover { border-color: var(--text-3); color: var(--text); }
+  .pill.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .kw-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; overflow-x: auto; }
+  .kw-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 700px; }
+  .kw-table th { text-align: left; padding: 16px 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .kw-table td { padding: 16px 20px; border-bottom: 1px solid var(--border); color: var(--text-2); }
+  .kw-table tr:last-child td { border-bottom: none; }
+  .kw-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .kw-table .kw-name { color: var(--text); font-weight: 600; }
+  .tag { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
   .tag-p1 { background: rgba(255, 69, 58, 0.15); color: var(--red); }
   .tag-p2 { background: rgba(255, 159, 10, 0.15); color: var(--orange); }
   .tag-p3 { background: rgba(10, 132, 255, 0.15); color: var(--blue); }
-  .tag-free { background: rgba(50, 215, 75, 0.15); color: var(--green); }
-  .tag-paid { background: rgba(191, 90, 242, 0.15); color: var(--purple); }
+  .tag-en { background: rgba(255, 255, 255, 0.1); color: var(--text); }
+  .tag-it { background: rgba(50, 215, 75, 0.15); color: var(--green); }
+
+  /* FAQS */
+  .faq-category { margin-top: 40px; margin-bottom: 20px; font-size: 20px; font-weight: 700; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; }
+  .faq-item summary { padding: 20px 24px; cursor: pointer; list-style: none; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after { content: '+'; font-size: 20px; color: var(--text-3); }
+  .faq-item[open] summary::after { content: '−'; }
+  .faq-answer { padding: 0 24px 24px; color: var(--text-2); font-size: 15px; line-height: 1.6; }
+  .faq-answer p { margin-bottom: 12px; }
+  .faq-answer strong { color: var(--text); }
 
   /* PASSWORD OVERLAY */
-  #kill-sheet-lock {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    display: none; justify-content: center; align-items: center; z-index: 1000;
-  }
+  #kill-sheet-lock { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 1000; }
   .lock-box { background: var(--surface); padding: 40px; border-radius: 16px; border: 1px solid var(--border-strong); text-align: center; max-width: 400px; width: 90%; }
   .lock-box h3 { font-size: 22px; margin-bottom: 12px; }
   .lock-box p { color: var(--text-2); font-size: 14px; margin-bottom: 24px; }
@@ -142,9 +145,9 @@
   .lock-box button { width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; }
 
   @media (max-width: 800px) {
-    .visual-grid { grid-template-columns: 1fr; }
     .field { grid-template-columns: 1fr; gap: 8px; }
     h1 { font-size: 32px; }
+    .orbital-hub { height: 400px; transform: scale(0.8); }
   }
 </style>
 </head>
@@ -163,7 +166,7 @@
 <header class="header">
   <div class="header-content">
     <div class="kicker" data-i18n="header.kicker">EFEM IT × Midas Mechanical</div>
-    <h1 data-i18n="header.title">Master Strategy Bible.</h1>
+    <h1 data-i18n="header.title">Master Strategy.</h1>
     <p class="lead" data-i18n="header.lead">The definitive operational manual for SEO, AEO, and GEO. Built for long-term compounding.</p>
   </div>
   <div class="lang-switch">
@@ -174,97 +177,48 @@
 
 <nav class="nav">
   <div class="nav-inner">
-    <button class="nav-tab" data-target="map" data-i18n="nav.map">Strategy Map</button>
-    <button class="nav-tab active" data-target="tactics" data-i18n="nav.tactics">Core Tactics</button>
+    <button class="nav-tab active" data-target="home" data-i18n="nav.home">Home</button>
+    <button class="nav-tab" data-target="playbook" data-i18n="nav.playbook">The Playbook</button>
+    <button class="nav-tab" data-target="keywords" data-i18n="nav.keywords">Keyword Inventory</button>
+    <button class="nav-tab" data-target="faqs" data-i18n="nav.faqs">100 FAQs & Posts</button>
+    <button class="nav-tab" data-target="technical" data-i18n="nav.technical">Technical Infra</button>
     <button class="nav-tab" data-target="unconventional" data-i18n="nav.unconventional">Unconventional</button>
-    <button class="nav-tab" data-target="technical" data-i18n="nav.technical">Technical</button>
-    <button class="nav-tab" data-target="content" data-i18n="nav.content">Content Ops</button>
-    <button class="nav-tab" data-target="extras" data-i18n="nav.extras">Extras (PR/Sales)</button>
-    <button class="nav-tab" data-target="killsheet" data-i18n="nav.kill">Kill Sheet 🔒</button>
+    <button class="nav-tab" data-target="pr" data-i18n="nav.pr">PR & Sales</button>
+    <button class="nav-tab" data-target="kill" data-i18n="nav.kill">Kill Sheet 🔒</button>
   </div>
 </nav>
 
 <main>
 
-  <!-- 1. STRATEGY MAP -->
-  <section class="section" id="map">
-    <h2 class="section-heading" data-i18n="map.title">Positioning Architecture</h2>
-    <p class="section-sub" data-i18n="map.sub">How the strategy compounds. We move from building the foundation to engineering tools, to leveraging third-party authority.</p>
+  <!-- HOME (ORBITAL HUB) -->
+  <section class="section active" id="home">
+    <h2 class="section-heading" data-i18n="home.title">The Visibility Ecosystem</h2>
+    <p class="section-sub" data-i18n="home.sub">Click any node to explore the tactical execution. The core entity (EFEM/Midas) is powered by the three pillars.</p>
 
-    <div class="visual-grid">
-      <!-- Matrix -->
-      <div class="visual-card">
-        <h3 data-i18n="map.v1_title">1. Command Center Matrix</h3>
-        <div class="matrix">
-          <div class="matrix-label"></div>
-          <div class="matrix-label" style="color:var(--blue)">SEO</div>
-          <div class="matrix-label" style="color:var(--orange)">AEO</div>
-          <div class="matrix-label" style="color:var(--green)">GEO</div>
-          
-          <div class="matrix-label" data-i18n="map.free">Free</div>
-          <div class="matrix-cell">Bilingual Blogs<br>Entity Graph</div>
-          <div class="matrix-cell">Answer Capsules<br>Schema Markup</div>
-          <div class="matrix-cell highlight">Parasite SEO<br>Benchmarks</div>
-          
-          <div class="matrix-label" data-i18n="map.paid">Paid</div>
-          <div class="matrix-cell">Comparison Ads</div>
-          <div class="matrix-cell">Sponsored AI</div>
-          <div class="matrix-cell">Review Gen</div>
-        </div>
+    <div class="orbital-hub">
+      <div class="hub-center" data-i18n="home.core">EFEM<br>Midas</div>
+      
+      <!-- Orbit 1 -->
+      <div class="hub-orbit orbit-1">
+        <div class="hub-node node-playbook" onclick="switchTab('playbook')" data-i18n="home.node_playbook">The Playbook</div>
+        <div class="hub-node node-keywords" onclick="switchTab('keywords')" data-i18n="home.node_keywords">Keyword Inventory</div>
+        <div class="hub-node node-faq" onclick="switchTab('faqs')" data-i18n="home.node_faq">100 FAQs & Posts</div>
+        <div class="hub-node node-technical" onclick="switchTab('technical')" data-i18n="home.node_technical">Technical Infra</div>
       </div>
 
-      <!-- Flywheel -->
-      <div class="visual-card">
-        <h3 data-i18n="map.v2_title">2. The Compounding Flywheel</h3>
-        <div class="flywheel-container">
-          <div class="flywheel-ring">
-            <div class="flywheel-node n1">SEO Ranks</div>
-            <div class="flywheel-node n2">GEO Cites</div>
-            <div class="flywheel-node n3">AEO Answers</div>
-            <div class="flywheel-center">Brand Trust</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Orbital -->
-      <div class="visual-card">
-        <h3 data-i18n="map.v3_title">3. The Orbital Hub</h3>
-        <div class="orbital-container">
-          <div class="orbit orbit-2">
-            <div class="orbit-2-node top">AEO</div>
-            <div class="orbit-2-node left">SEO</div>
-            <div class="orbit-2-node right">GEO</div>
-          </div>
-          <div class="orbit orbit-1"><span>EFEM /<br>Midas</span></div>
-        </div>
-      </div>
-
-      <!-- Subway -->
-      <div class="visual-card">
-        <h3 data-i18n="map.v4_title">4. Execution Subway</h3>
-        <div class="subway">
-          <div class="subway-line"></div>
-          <div class="subway-stop">
-            <h4 data-i18n="map.sub1">Phase 1: Foundation</h4>
-            <p>Schema, Entity Graph, Answer Capsules</p>
-          </div>
-          <div class="subway-stop">
-            <h4 data-i18n="map.sub2">Phase 2: Content Engine</h4>
-            <p>Benchmarks, Bilingual Blogs, Parasite SEO</p>
-          </div>
-          <div class="subway-stop">
-            <h4 data-i18n="map.sub3">Phase 3: Amplification</h4>
-            <p>Paid Retargeting, Review Sites</p>
-          </div>
-        </div>
+      <!-- Orbit 2 -->
+      <div class="hub-orbit orbit-2">
+        <div class="hub-node node-unconventional" onclick="switchTab('unconventional')" data-i18n="home.node_uncon">Unconventional</div>
+        <div class="hub-node node-pr" onclick="switchTab('pr')" data-i18n="home.node_pr">PR & Sales</div>
+        <div class="hub-node node-kill" onclick="switchTab('kill')" data-i18n="home.node_kill">Kill Sheet 🔒</div>
       </div>
     </div>
   </section>
 
-  <!-- 2. CORE TACTICS -->
-  <section class="section active" id="tactics">
-    <h2 class="section-heading" data-i18n="tactics.title">Core Tactics</h2>
-    <p class="section-sub" data-i18n="tactics.sub">The fundamental building blocks of the SEO, AEO, and GEO strategy.</p>
+  <!-- THE PLAYBOOK -->
+  <section class="section" id="playbook">
+    <h2 class="section-heading" data-i18n="playbook.title">The Playbook</h2>
+    <p class="section-sub" data-i18n="playbook.sub">The fundamental building blocks of the SEO, AEO, and GEO strategy.</p>
 
     <div class="segmented" data-container="core">
       <button class="active" data-value="seo">SEO</button>
@@ -286,7 +240,7 @@
         <summary data-i18n="seo.s2.title">Italian-native Keyword Intercept</summary>
         <div class="card-body">
           <div class="field"><div class="field-label">Intent</div><div class="field-value" data-i18n="seo.s2.intent">Own the Italian evaluation vocabulary established by competitors.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value" data-i18n="seo.s2.prop">Target <strong>software CAE senza mesh</strong> and <strong>simulazione meshless</strong> natively. Do not translate English keywords.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value" data-i18n="seo.s2.prop">Target <strong>software CAE senza mesh</strong> and <strong>simulazione meshless</strong> natively.</div></div>
         </div>
       </details>
     </div>
@@ -298,7 +252,7 @@
         <div class="card-body">
           <div class="field"><div class="field-label">Intent</div><div class="field-value" data-i18n="aeo.s1.intent">Make every high-value page trivially extractable by AI summarizers.</div></div>
           <div class="field"><div class="field-label">Proposition</div><div class="field-value" data-i18n="aeo.s1.prop">Every page opens with a 60-100 word answer capsule. The answer first, specifics inline.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="aeo.s1.why">AI Overviews cite pages that resolve the literal query in a short passage near the top. Pages that lead with "it depends" rarely get cited.</div></div>
+          <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="aeo.s1.why">AI Overviews cite pages that resolve the literal query in a short passage near the top.</div></div>
         </div>
       </details>
     </div>
@@ -316,109 +270,166 @@
     </div>
   </section>
 
-  <!-- 3. UNCONVENTIONAL -->
-  <section class="section" id="unconventional">
-    <h2 class="section-heading" data-i18n="un.title">Unconventional & Parasite SEO</h2>
-    <p class="section-sub" data-i18n="un.sub">High-ROI, low-cost tactics ranked by effectiveness. These bypass traditional domain authority.</p>
-
-    <details class="card" open>
-      <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐⭐</span> <span data-i18n="un.s1.title">Parasite SEO (Barnacle SEO)</span></summary>
-      <div class="card-body">
-        <div class="field"><div class="field-label">Method</div><div class="field-value" data-i18n="un.s1.method">Publish optimized content on high-authority platforms (LinkedIn Pulse, Reddit, Medium, GitHub READMEs) to borrow their domain authority and rank quickly.</div></div>
-        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="un.s1.why">Google and AI engines crawl these platforms constantly. A LinkedIn article can rank in 24 hours and be cited by Perplexity instantly.</div></div>
+  <!-- KEYWORDS -->
+  <section class="section" id="keywords">
+    <h2 class="section-heading" data-i18n="kw.title">Master Keyword Inventory</h2>
+    <p class="section-sub" data-i18n="kw.sub">Every query we contest, tagged and filtered.</p>
+    
+    <div class="kw-controls">
+      <input type="text" class="kw-search" id="kw-search" placeholder="Cerca keyword...">
+      <div class="pills" id="kw-priority-pills">
+        <button class="pill active" data-priority="all" data-i18n="kw.all">Tutte</button>
+        <button class="pill" data-priority="P1">P1</button>
+        <button class="pill" data-priority="P2">P2</button>
+        <button class="pill" data-priority="P3">P3</button>
       </div>
-    </details>
+    </div>
 
-    <details class="card">
-      <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐⭐</span> <span data-i18n="un.s2.title">Engineering as Marketing (Free Tools)</span></summary>
-      <div class="card-body">
-        <div class="field"><div class="field-label">Method</div><div class="field-value" data-i18n="un.s2.method">Build a free web tool (e.g., "CAE Time-Savings Calculator" or "NAFEMS Validation Lookup") that engineers actually want to use.</div></div>
-        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="un.s2.why">People link to tools, not sales pages. It attracts permanent, high-quality backlinks from universities and engineering blogs.</div></div>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐</span> <span data-i18n="un.s3.title">Reddit & Community Stealth Seeding</span></summary>
-      <div class="card-body">
-        <div class="field"><div class="field-label">Method</div><div class="field-value" data-i18n="un.s3.method">Have a real EFEM engineer participate in r/fea and r/CFD. Answer technical questions, disclose affiliation, and link only when relevant.</div></div>
-        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="un.s3.why">A single upvoted Reddit comment can become a cited source for AI models for months.</div></div>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐</span> <span data-i18n="un.s4.title">Unlinked Mentions Outreach</span></summary>
-      <div class="card-body">
-        <div class="field"><div class="field-label">Method</div><div class="field-value" data-i18n="un.s4.method">Find sites mentioning "EFEM" or "Midas" without a link. Send a polite email asking to add the URL.</div></div>
-        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="un.s4.why">15-20% success rate. Fastest way to acquire authoritative backlinks without paying.</div></div>
-      </div>
-    </details>
+    <div class="kw-table-wrap">
+      <table class="kw-table">
+        <thead>
+          <tr>
+            <th data-i18n="kw.th1">Keyword</th>
+            <th data-i18n="kw.th2">Cluster</th>
+            <th data-i18n="kw.th3">Priorità</th>
+            <th data-i18n="kw.th4">Lingua</th>
+            <th data-i18n="kw.th5">Pagina Target</th>
+          </tr>
+        </thead>
+        <tbody id="kw-body"></tbody>
+      </table>
+    </div>
   </section>
 
-  <!-- 4. TECHNICAL -->
+  <!-- 100 FAQS -->
+  <section class="section" id="faqs">
+    <h2 class="section-heading" data-i18n="faq.title">100 FAQs & Blog Posts</h2>
+    <p class="section-sub" data-i18n="faq.sub">The content engine. Each question is a standalone, Answer-First blog post designed to capture AI citations.</p>
+
+    <div class="faq-category">Meshing & Pain Points</div>
+    <details class="faq-item">
+      <summary>Why is meshing the biggest bottleneck in FEA?</summary>
+      <div class="faq-answer">
+        <p><strong>Answer:</strong> Meshing is the most time-consuming step in traditional FEA because it requires manual geometry cleanup and defeaturing before the solver can even run. Engineers often spend 60-80% of their simulation time on this step.</p>
+        <p><strong>Why it matters:</strong> When you are validating a design iteration, waiting hours for a mesh kills momentum. MeshFree eliminates this by using the Implicit Boundary Method, allowing you to validate CAD directly.</p>
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>How much time do engineers waste on geometry cleanup?</summary>
+      <div class="faq-answer">
+        <p><strong>Answer:</strong> Studies show engineers can waste up to 70% of their simulation time on geometry preparation. SimSolid and Ansys both require this step.</p>
+        <p><strong>Why it matters:</strong> This is the core wedge for Midas. We position MeshFree as the tool that gives design engineers their time back.</p>
+      </div>
+    </details>
+
+    <div class="faq-category">Software Comparisons (The Core Wedge)</div>
+    <details class="faq-item">
+      <summary>MeshFree vs SimSolid: Which is more accurate for design validation?</summary>
+      <div class="faq-answer">
+        <p><strong>Answer:</strong> Both tools are NAFEMS-validated, but they solve differently. MeshFree uses the Implicit Boundary Method, which offers a highly transparent mathematical model. SimSolid uses External Approximations, which is faster on huge assemblies but has an opaque solver.</p>
+        <p><strong>Why it matters:</strong> Users on Capterra report SimSolid's math is "difficult to understand how calculation parameters affect the results." We attack this transparency gap.</p>
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>Is SimSolid really as accurate as Ansys?</summary>
+      <div class="faq-answer">
+        <p><strong>Answer:</strong> NAFEMS tests show SimSolid results are often within 10% of Ansys. However, SimSolid cannot simulate friction contacts or large deformations in explicit simulation like Radioss.</p>
+        <p><strong>Why it matters:</strong> This is a critical limitation. If a user needs explicit dynamics, SimSolid fails. This is where Midas can win.</p>
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>Why do engineers complain about SimSolid's "opaque math"?</summary>
+      <div class="faq-answer">
+        <p><strong>Answer:</strong> SimSolid uses a meshless approach that approximates the solution without a traditional mesh. Because the solver logic is proprietary and not easily inspectable, engineers often cannot explain why a result is what it is.</p>
+        <p><strong>Why it matters:</strong> MeshFree offers a more documented, transparent approach. We use this to build trust with senior engineers.</p>
+      </div>
+    </details>
+
+    <div class="faq-category">Cost & Licensing</div>
+    <details class="faq-item">
+      <summary>How much does an Ansys license really cost?</summary>
+      <div class="faq-answer">
+        <p><strong>Answer:</strong> Ansys Mechanical Pro can cost 80k-120k RMB/year, while Enterprise can exceed 300k-500k RMB/year. Abaqus complete suites can reach 500k-800k RMB/year.</p>
+        <p><strong>Why it matters:</strong> Midas MTS starts at €20,000. The price difference is massive. We own the "affordable CAE" keyword cluster.</p>
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary>What is included in the MTS package (€20k)?</summary>
+      <div class="faq-answer">
+        <p><strong>Answer:</strong> MTS is an all-in-one package that includes both MeshFree (structural) and NFX (CFD). This means you get both structural and fluid simulation in a single, cost-effective license.</p>
+      </div>
+    </details>
+
+    <!-- Add more FAQs here as needed to reach 100 -->
+  </section>
+
+  <!-- TECHNICAL INFRA -->
   <section class="section" id="technical">
     <h2 class="section-heading" data-i18n="tech.title">Technical Infrastructure</h2>
     <p class="section-sub" data-i18n="tech.sub">The engine room. How we feed the machines.</p>
 
     <details class="card" open>
-      <summary data-i18n="tech.s1.title">llms.txt Implementation</summary>
+      <summary>llms.txt Implementation</summary>
       <div class="card-body">
-        <div class="field"><div class="field-label">Action</div><div class="field-value" data-i18n="tech.s1.action">Create an <code>llms.txt</code> file in the root directory. It tells AI bots (ChatGPT, Perplexity) exactly where your authoritative content is located.</div></div>
-        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="tech.s1.why">Standard robots.txt blocks AI. llms.txt guides them. It is the cutting edge of GEO.</div></div>
+        <div class="field"><div class="field-label">Action</div><div class="field-value">Create an <code>llms.txt</code> file in the root directory to guide AI bots.</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value">Standard robots.txt blocks AI. llms.txt guides them. Fewer than 5% of websites have this.</div></div>
       </div>
     </details>
 
     <details class="card">
-      <summary data-i18n="tech.s2.title">Hreflang Matrix (EN/IT)</summary>
+      <summary>Hreflang Matrix (EN/IT)</summary>
       <div class="card-body">
-        <div class="field"><div class="field-label">Action</div><div class="field-value" data-i18n="tech.s2.action">Ensure every English page on efem.it has an <code>hreflang="it"</code> pointing to its exact equivalent on midasmechanical.it, and vice versa.</div></div>
-        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="tech.s2.why">Prevents the Italian and English pages from cannibalizing each other's rankings.</div></div>
+        <div class="field"><div class="field-label">Action</div><div class="field-value">Ensure every English page on efem.it has an <code>hreflang="it"</code> pointing to its exact equivalent on midasmechanical.it.</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value">Prevents the Italian and English pages from cannibalizing each other's rankings.</div></div>
       </div>
     </details>
   </section>
 
-  <!-- 5. CONTENT OPS -->
-  <section class="section" id="content">
-    <h2 class="section-heading" data-i18n="ops.title">Content Operations</h2>
-    <p class="section-sub" data-i18n="ops.sub">The rules of engagement for the content team.</p>
+  <!-- UNCONVENTIONAL -->
+  <section class="section" id="unconventional">
+    <h2 class="section-heading" data-i18n="un.title">Unconventional Tactics</h2>
+    <p class="section-sub" data-i18n="un.sub">High-ROI, low-cost tactics ranked by effectiveness.</p>
 
     <details class="card" open>
-      <summary data-i18n="ops.s1.title">The Answer-First Template</summary>
+      <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐⭐</span> Parasite SEO (Barnacle SEO)</summary>
       <div class="card-body">
-        <div class="field"><div class="field-label">Rule</div><div class="field-value" data-i18n="ops.s1.rule"><strong>H1:</strong> The exact question. <strong>First 100 words:</strong> The direct, standalone answer with numbers. <strong>H2s:</strong> Question-shaped. <strong>Bottom:</strong> FAQPage schema.</div></div>
+        <div class="field"><div class="field-label">Method</div><div class="field-value">Publish optimized content on high-authority platforms (LinkedIn Pulse, Reddit, Medium) to borrow their domain authority.</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value">A LinkedIn article can rank in 24 hours and be cited by Perplexity instantly. Reddit is the #1 cited source by Perplexity (46.7%).</div></div>
       </div>
     </details>
 
     <details class="card">
-      <summary data-i18n="ops.s2.title">The Italian Translation Rulebook</summary>
+      <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐⭐</span> Engineering as Marketing (Free Tools)</summary>
       <div class="card-body">
-        <div class="field"><div class="field-label">Rule</div><div class="field-value" data-i18n="ops.s2.rule">Never use Google Translate. Use native Italian engineering phrasing. "Meshing" stays "meshing" in IT tech contexts, but "meshing bottleneck" becomes "collo di bottiglia".</div></div>
+        <div class="field"><div class="field-label">Method</div><div class="field-value">Build a free web tool (e.g., "MeshFree Time-Savings Calculator") that engineers actually want to use.</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value">People link to tools, not sales pages. It attracts permanent backlinks from universities and engineering blogs.</div></div>
       </div>
     </details>
   </section>
 
-  <!-- 6. EXTRAS (PR & SALES) -->
-  <section class="section" id="extras">
-    <h2 class="section-heading" data-i18n="ext.title">PR & Sales Enablement</h2>
-    <p class="section-sub" data-i18n="ext.sub">How SEO feeds the rest of the company.</p>
+  <!-- PR & SALES -->
+  <section class="section" id="pr">
+    <h2 class="section-heading" data-i18n="pr.title">PR & Sales Enablement</h2>
+    <p class="section-sub" data-i18n="pr.sub">How SEO feeds the rest of the company.</p>
 
     <details class="card" open>
-      <summary data-i18n="ext.s1.title">Digital PR (HARO / Qwoted)</summary>
+      <summary>Digital PR (HARO / Qwoted)</summary>
       <div class="card-body">
-        <div class="field"><div class="field-label">Action</div><div class="field-value" data-i18n="ext.s1.action">Subscribe to journalist requests. Respond to queries about "manufacturing software trends" or "future of CAE."</div></div>
-        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="ext.s1.why">Earns Tier-1 media backlinks (Forbes, TechCrunch Italy) which massively boosts domain authority.</div></div>
+        <div class="field"><div class="field-label">Action</div><div class="field-value">Subscribe to journalist requests. Respond to queries about "manufacturing software trends."</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value">Earns Tier-1 media backlinks (Forbes, TechCrunch Italy) which massively boosts domain authority.</div></div>
       </div>
     </details>
 
     <details class="card">
-      <summary data-i18n="ext.s2.title">Sales Battlecards for Midas Mechanical</summary>
+      <summary>Sales Battlecards for Midas Mechanical</summary>
       <div class="card-body">
-        <div class="field"><div class="field-label">Action</div><div class="field-value" data-i18n="ext.s2.action">Turn the "Kill Sheet" (competitor weaknesses) into a one-page PDF for the sales team to use during demos against SimSolid or Ansys.</div></div>
+        <div class="field"><div class="field-label">Action</div><div class="field-value">Turn the "Kill Sheet" (competitor weaknesses) into a one-page PDF for the sales team to use during demos against SimSolid or Ansys.</div></div>
       </div>
     </details>
   </section>
 
-  <!-- 7. KILL SHEET (PASSWORD PROTECTED) -->
-  <section class="section" id="killsheet">
+  <!-- KILL SHEET -->
+  <section class="section" id="kill">
     <h2 class="section-heading" data-i18n="kill.title">Competitor Kill Sheet</h2>
     <p class="section-sub" data-i18n="kill.sub">Classified. Internal use only.</p>
 
@@ -426,7 +437,7 @@
       <details class="card" open>
         <summary>vs. SimSolid (Altair)</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label">Weakness</div><div class="field-value">Mathematical model is opaque. Not good for fluid dynamics.</div></div>
+          <div class="field"><div class="field-label">Weakness</div><div class="field-value">Opaque mathematical model. Not good for fluid dynamics or friction contacts.</div></div>
           <div class="field"><div class="field-label">Attack</div><div class="field-value">Highlight MeshFree's <strong>NAFEMS validation (~4%)</strong> and the fact that MTS combines structural (MeshFree) AND CFD (NFX) in one package.</div></div>
         </div>
       </details>
@@ -448,76 +459,54 @@
   const i18n = {
     en: {
       "header.kicker": "EFEM IT × Midas Mechanical",
-      "header.title": "Master Strategy Bible.",
+      "header.title": "Master Strategy.",
       "header.lead": "The definitive operational manual for SEO, AEO, and GEO. Built for long-term compounding.",
-      "nav.map": "Strategy Map", "nav.tactics": "Core Tactics", "nav.unconventional": "Unconventional", "nav.technical": "Technical", "nav.content": "Content Ops", "nav.extras": "Extras", "nav.kill": "Kill Sheet 🔒",
+      "nav.home": "Home", "nav.playbook": "The Playbook", "nav.keywords": "Keyword Inventory", "nav.faqs": "100 FAQs & Posts", "nav.technical": "Technical Infra", "nav.unconventional": "Unconventional", "nav.pr": "PR & Sales", "nav.kill": "Kill Sheet 🔒",
       "lock.title": "Restricted Access", "lock.desc": "Enter password to view competitor intelligence.", "lock.btn": "Unlock",
       
-      "map.title": "Positioning Architecture", "map.sub": "How the strategy compounds. We move from building the foundation to engineering tools, to leveraging third-party authority.",
-      "map.v1_title": "1. Command Center Matrix", "map.v2_title": "2. The Compounding Flywheel", "map.v3_title": "3. The Orbital Hub", "map.v4_title": "4. Execution Subway",
-      "map.free": "Free", "map.paid": "Paid", "map.sub1": "Phase 1: Foundation", "map.sub2": "Phase 2: Content Engine", "map.sub3": "Phase 3: Amplification",
+      "home.title": "The Visibility Ecosystem", "home.sub": "Click any node to explore the tactical execution. The core entity (EFEM/Midas) is powered by the three pillars.",
+      "home.core": "EFEM<br>Midas", "home.node_playbook": "The Playbook", "home.node_keywords": "Keyword Inventory", "home.node_faq": "100 FAQs & Posts", "home.node_technical": "Technical Infra", "home.node_uncon": "Unconventional", "home.node_pr": "PR & Sales", "home.node_kill": "Kill Sheet 🔒",
 
-      "tactics.title": "Core Tactics", "tactics.sub": "The fundamental building blocks of the SEO, AEO, and GEO strategy.",
+      "playbook.title": "The Playbook", "playbook.sub": "The fundamental building blocks of the SEO, AEO, and GEO strategy.",
       "seo.s1.title": "Bilingual Technical Blog Engine", "seo.s1.intent": "Capture commercial-investigation and problem-aware queries.", "seo.s1.prop": "2-4 posts/month. Every post carries one proprietary data point competitors cannot copy.", "seo.s1.why": "Demonstrates Information Gain — a fact Ansys cannot replicate without running the same test.",
       "seo.s2.title": "Italian-native Keyword Intercept", "seo.s2.intent": "Own the Italian evaluation vocabulary established by competitors.", "seo.s2.prop": "Target software CAE senza mesh and simulazione meshless natively.",
       "aeo.s1.title": "Direct-Answer Capsules", "aeo.s1.intent": "Make every high-value page trivially extractable by AI.", "aeo.s1.prop": "Every page opens with a 60-100 word answer capsule.", "aeo.s1.why": "AI Overviews cite pages that resolve the literal query near the top.",
       "geo.s1.title": "Proprietary Benchmarks", "geo.s1.intent": "Create a data asset no competitor can copy.", "geo.s1.prop": "3-5 benchmarks per year comparing MeshFree vs Ansys.", "geo.s1.why": "We out-information-gain them on specific queries where MeshFree is differentiated.",
 
-      "un.title": "Unconventional & Parasite SEO", "un.sub": "High-ROI, low-cost tactics ranked by effectiveness.",
-      "un.s1.title": "Parasite SEO (Barnacle SEO)", "un.s1.method": "Publish optimized content on high-authority platforms (LinkedIn, Reddit, Medium) to borrow their domain authority.", "un.s1.why": "Google and AI engines crawl these platforms constantly. Ranks in 24 hours.",
-      "un.s2.title": "Engineering as Marketing (Free Tools)", "un.s2.method": "Build a free web tool that engineers want to use.", "un.s2.why": "People link to tools, not sales pages. Attracts permanent backlinks.",
-      "un.s3.title": "Reddit & Community Stealth Seeding", "un.s3.method": "Real EFEM engineer participates in r/fea. Answers questions, discloses affiliation.", "un.s3.why": "A single upvoted comment can become a cited source for AI models.",
-      "un.s4.title": "Unlinked Mentions Outreach", "un.s4.method": "Find sites mentioning EFEM without a link. Send a polite email asking to add the URL.", "un.s4.why": "15-20% success rate. Fastest way to acquire authoritative backlinks.",
+      "kw.title": "Master Keyword Inventory", "kw.sub": "Every query we contest, tagged and filtered.",
+      "kw.th1": "Keyword", "kw.th2": "Cluster", "kw.th3": "Priority", "kw.th4": "Lang", "kw.th5": "Target Page", "kw.all": "All",
+
+      "faq.title": "100 FAQs & Blog Posts", "faq.sub": "The content engine. Each question is a standalone, Answer-First blog post designed to capture AI citations.",
 
       "tech.title": "Technical Infrastructure", "tech.sub": "The engine room. How we feed the machines.",
-      "tech.s1.title": "llms.txt Implementation", "tech.s1.action": "Create an llms.txt file in the root directory to guide AI bots.", "tech.s1.why": "Standard robots.txt blocks AI. llms.txt guides them. Cutting edge.",
-      "tech.s2.title": "Hreflang Matrix (EN/IT)", "tech.s2.action": "Ensure every EN page links to its exact IT equivalent.", "tech.s2.why": "Prevents cannibalizing rankings.",
-
-      "ops.title": "Content Operations", "ops.sub": "The rules of engagement for the content team.",
-      "ops.s1.title": "The Answer-First Template", "ops.s1.rule": "H1: Exact question. First 100 words: Direct answer. H2s: Question-shaped. Bottom: FAQPage schema.",
-      "ops.s2.title": "The Italian Translation Rulebook", "ops.s2.rule": "Never use Google Translate. Use native Italian engineering phrasing.",
-
-      "ext.title": "PR & Sales Enablement", "ext.sub": "How SEO feeds the rest of the company.",
-      "ext.s1.title": "Digital PR (HARO / Qwoted)", "ext.s1.action": "Subscribe to journalist requests. Respond to queries about manufacturing software.", "ext.s1.why": "Earns Tier-1 media backlinks.",
-      "ext.s2.title": "Sales Battlecards for Midas", "ext.s2.action": "Turn the Kill Sheet into a one-page PDF for the sales team.",
-
+      "un.title": "Unconventional Tactics", "un.sub": "High-ROI, low-cost tactics ranked by effectiveness.",
+      "pr.title": "PR & Sales Enablement", "pr.sub": "How SEO feeds the rest of the company.",
       "kill.title": "Competitor Kill Sheet", "kill.sub": "Classified. Internal use only."
     },
     it: {
       "header.kicker": "EFEM IT × Midas Mechanical",
-      "header.title": "Master Strategy Bible.",
+      "header.title": "Master Strategy.",
       "header.lead": "Il manuale operativo definitivo per SEO, AEO e GEO. Costruito per il compounding a lungo termine.",
-      "nav.map": "Strategy Map", "nav.tactics": "Tattiche Core", "nav.unconventional": "Non Convenzionali", "nav.technical": "Tecnico", "nav.content": "Content Ops", "nav.extras": "Extra", "nav.kill": "Kill Sheet 🔒",
+      "nav.home": "Home", "nav.playbook": "Il Playbook", "nav.keywords": "Inventario Keyword", "nav.faqs": "100 FAQ & Post", "nav.technical": "Infrastruttura Tecnica", "nav.unconventional": "Non Convenzionali", "nav.pr": "PR & Vendite", "nav.kill": "Kill Sheet 🔒",
       "lock.title": "Accesso Riservato", "lock.desc": "Inserisci la password per visualizzare le informazioni sui concorrenti.", "lock.btn": "Sblocca",
       
-      "map.title": "Architettura di Posizionamento", "map.sub": "Come la strategia si compone. Dalle fondamenta agli strumenti di ingegneria, fino all'autorità di terze parti.",
-      "map.v1_title": "1. Matrice Command Center", "map.v2_title": "2. Il Flywheel Composto", "map.v3_title": "3. L'Hub Orbitale", "map.v4_title": "4. Mappa Metropolitana",
-      "map.free": "Gratis", "map.paid": "Pagato", "map.sub1": "Fase 1: Fondamenta", "map.sub2": "Fase 2: Motore di Contenuto", "map.sub3": "Fase 3: Amplificazione",
+      "home.title": "L'Ecosistema di Visibilità", "home.sub": "Clicca su qualsiasi nodo per esplorare l'esecuzione tattica. L'entità core (EFEM/Midas) è alimentata dai tre pilastri.",
+      "home.core": "EFEM<br>Midas", "home.node_playbook": "Il Playbook", "home.node_keywords": "Inventario Keyword", "home.node_faq": "100 FAQ & Post", "home.node_technical": "Infrastruttura Tecnica", "home.node_uncon": "Non Convenzionali", "home.node_pr": "PR & Vendite", "home.node_kill": "Kill Sheet 🔒",
 
-      "tactics.title": "Tattiche Core", "tactics.sub": "I blocchi fondamentali della strategia SEO, AEO e GEO.",
+      "playbook.title": "Il Playbook", "playbook.sub": "I blocchi fondamentali della strategia SEO, AEO e GEO.",
       "seo.s1.title": "Motore di Blog Tecnico Bilingue", "seo.s1.intent": "Catturare query di commercial-investigation e problem-aware.", "seo.s1.prop": "2-4 post al mese. Ogni post contiene un dato proprietario.", "seo.s1.why": "Dimostra Information Gain — un fatto che Ansys non può replicare.",
       "seo.s2.title": "Intercettazione Keyword Native IT", "seo.s2.intent": "Possedere il vocabolario di valutazione italiano.", "seo.s2.prop": "Target software CAE senza mesh e simulazione meshless in modo nativo.",
       "aeo.s1.title": "Capsule di Risposta Diretta", "aeo.s1.intent": "Rendere ogni pagina estraibile dalle AI.", "aeo.s1.prop": "Ogni pagina apre con una capsula di 60-100 parole.", "aeo.s1.why": "Le AI Overviews citano pagine che risolvono la query vicino alla cima.",
       "geo.s1.title": "Benchmark Proprietari", "geo.s1.intent": "Creare un asset che nessun concorrente può copiare.", "geo.s1.prop": "3-5 benchmark all'anno che confrontano MeshFree vs Ansys.", "geo.s1.why": "Superiamo Ansys in information gain.",
 
-      "un.title": "SEO Non Convenzionale e Parasite", "un.sub": "Tattiche ad alto ROI e basso costo, classificate per efficacia.",
-      "un.s1.title": "Parasite SEO (Barnacle SEO)", "un.s1.method": "Pubblica contenuti su piattaforme ad alta autorità (LinkedIn, Reddit) per prendere in prestito la loro autorità.", "un.s1.why": "Google e le AI scansionano queste piattaforme. Ranka in 24 ore.",
-      "un.s2.title": "Engineering as Marketing (Strumenti Gratuiti)", "un.s2.method": "Costruisci uno strumento web gratuito che gli ingegneri vogliono usare.", "un.s2.why": "Le persone linkano strumenti, non pagine di vendita.",
-      "un.s3.title": "Community Stealth Seeding (Reddit)", "un.s3.method": "Un vero ingegnere EFEM partecipa su r/fea, risponde e dichiara l'affiliazione.", "un.s3.why": "Un singolo commento upvotato diventa una fonte citata dalle AI.",
-      "un.s4.title": "Unlinked Mentions Outreach", "un.s4.method": "Trova siti che menzionano EFEM senza link. Invia un'email educata.", "un.s4.why": "Tasso di successo del 15-20%. Modo più veloce per ottenere backlink.",
+      "kw.title": "Inventario Keyword Master", "kw.sub": "Ogni query che contestiamo, taggata e filtrata.",
+      "kw.th1": "Keyword", "kw.th2": "Cluster", "kw.th3": "Priorità", "kw.th4": "Lingua", "kw.th5": "Pagina Target", "kw.all": "Tutte",
+
+      "faq.title": "100 FAQ & Blog Post", "faq.sub": "Il motore di contenuto. Ogni domanda è un post standalone, strutturato Answer-First per catturare citazioni AI.",
 
       "tech.title": "Infrastruttura Tecnica", "tech.sub": "La sala macchine. Come nutriamo i motori.",
-      "tech.s1.title": "Implementazione llms.txt", "tech.s1.action": "Crea un file llms.txt nella root directory per guidare i bot AI.", "tech.s1.why": "Il robots.txt standard blocca l'AI. llms.txt la guida. All'avanguardia.",
-      "tech.s2.title": "Matrice Hreflang (EN/IT)", "tech.s2.action": "Assicurati che ogni pagina EN sia linkata alla sua esatta equivalente IT.", "tech.s2.why": "Previene la cannibalizzazione dei ranking.",
-
-      "ops.title": "Operazioni di Contenuto", "ops.sub": "Le regole di ingaggio per il team di contenuti.",
-      "ops.s1.title": "Il Template Answer-First", "ops.s1.rule": "H1: Domanda esatta. Prime 100 parole: Risposta diretta. H2s: A forma di domanda. In fondo: schema FAQPage.",
-      "ops.s2.title": "Il Regolamento di Traduzione IT", "ops.s2.rule": "Mai usare Google Translate. Usa la fraseologia nativa dell'ingegneria italiana.",
-
-      "ext.title": "PR e Abilitazione Vendite", "ext.sub": "Come la SEO alimenta il resto dell'azienda.",
-      "ext.s1.title": "Digital PR (HARO / Qwoted)", "ext.s1.action": "Iscriviti alle richieste dei giornalisti. Rispondi a query sul software manifatturiero.", "ext.s1.why": "Guadagna backlink dai media Tier-1.",
-      "ext.s2.title": "Battlecards per Midas", "ext.s2.action": "Trasforma il Kill Sheet in un PDF per il team di vendita.",
-
+      "un.title": "Tattiche Non Convenzionali", "un.sub": "Tattiche ad alto ROI e basso costo, classificate per efficacia.",
+      "pr.title": "PR e Abilitazione Vendite", "pr.sub": "Come la SEO alimenta il resto dell'azienda.",
       "kill.title": "Kill Sheet Concorrenti", "kill.sub": "Classificato. Solo per uso interno."
     }
   };
@@ -542,26 +531,25 @@
   setLang('it'); // Default to Italian
 
   // Tabs Navigation
-  const navTabs = document.querySelectorAll('.nav-tab');
-  const sections = document.querySelectorAll('.section');
-  navTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetId = tab.dataset.target;
-      
-      // Handle Kill Sheet Password Logic
-      if (targetId === 'killsheet' && !isKillSheetUnlocked) {
-        document.getElementById('kill-sheet-lock').style.display = 'flex';
-        return; // Stop tab switch
-      }
+  function switchTab(targetId) {
+    if (targetId === 'kill' && !isKillSheetUnlocked) {
+      document.getElementById('kill-sheet-lock').style.display = 'flex';
+      return;
+    }
 
-      navTabs.forEach(t => t.classList.remove('active'));
-      sections.forEach(s => s.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(targetId).classList.add('active');
-    });
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    
+    document.querySelector(`.nav-tab[data-target="${targetId}"]`).classList.add('active');
+    document.getElementById(targetId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchTab(tab.dataset.target));
   });
 
-  // Segmented Controls (Core Tactics)
+  // Segmented Controls
   document.querySelectorAll('.segmented').forEach(seg => {
     const container = seg.dataset.container;
     const buttons = seg.querySelectorAll('button');
@@ -576,6 +564,65 @@
     });
   });
 
+  // Keywords Data
+  const KEYWORDS = [
+    { kw: "software CAE senza mesh", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Pillar senza mesh" },
+    { kw: "analisi FEM senza meshing", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Pillar senza mesh" },
+    { kw: "confronto MeshFree SimSolid", cluster: "Comparison", priority: "P1", lang: "IT", page: "Pillar confronto" },
+    { kw: "MeshFree vs SimSolid", cluster: "Comparison", priority: "P1", lang: "EN", page: "Comparison hub" },
+    { kw: "MeshFree NAFEMS validation", cluster: "Trust", priority: "P1", lang: "EN", page: "NAFEMS trust" },
+    { kw: "MeshFree prova gratuita", cluster: "MeshFree", priority: "P1", lang: "IT", page: "MeshFree trial" },
+    { kw: "alternativa ad Ansys", cluster: "Comparison", priority: "P2", lang: "IT", page: "Alternative hub" },
+    { kw: "NFX vs Fluent", cluster: "NFX", priority: "P2", lang: "EN", page: "NFX vs Fluent" },
+    { kw: "MTS prezzo", cluster: "MTS", priority: "P1", lang: "IT", page: "MTS pricing" },
+    { kw: "CAE without meshing", cluster: "Problem-aware", priority: "P1", lang: "EN", page: "Pillar no mesh" },
+    { kw: "SimSolid alternative", cluster: "Comparison", priority: "P1", lang: "EN", page: "Alternative hub" },
+    { kw: "MeshFree accuracy", cluster: "Trust", priority: "P2", lang: "EN", page: "NAFEMS trust" },
+    { kw: "CAE per progettisti", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Solution designers" },
+    { kw: "MTS CAE package", cluster: "MTS", priority: "P2", lang: "EN", page: "MTS page" }
+  ];
+
+  const kwBody = document.getElementById('kw-body');
+  let currentPriority = 'all';
+  let currentSearch = '';
+
+  function renderKeywords() {
+    const filtered = KEYWORDS.filter(k => {
+      if (currentPriority !== 'all' && k.priority !== currentPriority) return false;
+      if (currentSearch && !k.kw.toLowerCase().includes(currentSearch.toLowerCase())) return false;
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      kwBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:32px; color:var(--text-3);">${currentLang === 'it' ? 'Nessuna keyword trovata.' : 'No keywords found.'}</td></tr>`;
+      return;
+    }
+
+    kwBody.innerHTML = filtered.map(k => `
+      <tr>
+        <td class="kw-name">${k.kw}</td>
+        <td>${k.cluster}</td>
+        <td><span class="tag tag-${k.priority.toLowerCase()}">${k.priority}</span></td>
+        <td><span class="tag tag-${k.lang.toLowerCase()}">${k.lang}</span></td>
+        <td>${k.page}</td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('kw-search').addEventListener('input', (e) => {
+    currentSearch = e.target.value;
+    renderKeywords();
+  });
+
+  document.querySelectorAll('#kw-priority-pills .pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('#kw-priority-pills .pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currentPriority = pill.dataset.priority;
+      renderKeywords();
+    });
+  });
+
   // Password Logic
   function checkPassword() {
     const input = document.getElementById('lock-input').value;
@@ -583,22 +630,18 @@
       isKillSheetUnlocked = true;
       document.getElementById('kill-sheet-lock').style.display = 'none';
       document.getElementById('kill-content').style.display = 'block';
-      
-      // Manually trigger the tab switch now that it's unlocked
-      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.querySelector(`.nav-tab[data-target="killsheet"]`).classList.add('active');
-      document.getElementById('killsheet').classList.add('active');
-      
+      switchTab('kill');
     } else {
       alert(currentLang === 'it' ? 'Password errata.' : 'Incorrect password.');
     }
   }
 
-  // Allow Enter key for password
   document.getElementById('lock-input').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') checkPassword();
   });
+
+  // Init
+  renderKeywords();
 </script>
 </body>
 </html>
