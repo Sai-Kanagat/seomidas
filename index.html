@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EFEM IT × Midas Mechanical — Search Visibility Strategy</title>
+<title>EFEM IT × Midas Mechanical — Strategy</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -12,8 +12,8 @@
     --surface: #1c1c1e;
     --surface-2: #2c2c2e;
     --surface-3: #3a3a3c;
-    --border: rgba(255, 255, 255, 0.08);
-    --border-strong: rgba(255, 255, 255, 0.16);
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.2);
     --text: #f5f5f7;
     --text-2: #a1a1a6;
     --text-3: #6e6e73;
@@ -26,10 +26,9 @@
     --radius-sm: 8px;
   }
 
-  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
+  html { -webkit-font-smoothing: antialiased; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     font-size: 15px;
@@ -39,545 +38,206 @@
   }
 
   a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  button { font-family: inherit; }
+  button { font-family: inherit; cursor: pointer; }
 
   /* HEADER */
   .header {
     max-width: 1120px;
     margin: 0 auto;
-    padding: 88px 24px 56px;
-  }
-  .kicker {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 18px;
-  }
-  h1 {
-    font-size: 52px;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-    margin-bottom: 20px;
-    color: var(--text);
-  }
-  .lead {
-    font-size: 21px;
-    color: var(--text-2);
-    max-width: 680px;
-    line-height: 1.4;
-    letter-spacing: -0.015em;
-  }
-  .meta {
+    padding: 80px 24px 40px;
     display: flex;
-    gap: 32px;
-    margin-top: 40px;
-    font-size: 12px;
-    color: var(--text-3);
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
   }
-  .meta b {
-    color: var(--text-2);
-    font-weight: 500;
-    margin-left: 6px;
+  .header-content { max-width: 720px; }
+  .kicker {
+    font-size: 11px; font-weight: 600; color: var(--text-3);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px;
   }
+  h1 { font-size: 48px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 16px; }
+  .lead { font-size: 19px; color: var(--text-2); line-height: 1.4; letter-spacing: -0.015em; }
 
-  /* NAV */
+  /* LANG TOGGLE */
+  .lang-toggle {
+    display: flex; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 3px; gap: 2px;
+  }
+  .lang-toggle button {
+    background: none; border: none; color: var(--text-2);
+    font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 6px;
+    transition: all 0.15s ease;
+  }
+  .lang-toggle button.active { background: var(--surface-3); color: var(--text); }
+
+  /* NAV - Optimized for Notion */
   .nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    background: #000000; border-bottom: 1px solid var(--border);
   }
   .nav-inner {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    gap: 2px;
-    overflow-x: auto;
-    scrollbar-width: none;
+    max-width: 1120px; margin: 0 auto; padding: 0 24px;
+    display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none;
   }
   .nav-inner::-webkit-scrollbar { display: none; }
   .nav-tab {
-    background: none;
-    border: none;
-    color: var(--text-3);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 17px 14px;
-    cursor: pointer;
-    border-bottom: 1px solid transparent;
-    margin-bottom: -1px;
-    white-space: nowrap;
-    letter-spacing: -0.005em;
-    transition: color 0.15s ease;
+    background: none; border: none; color: var(--text-3);
+    font-size: 14px; font-weight: 500; padding: 16px 16px;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    white-space: nowrap; transition: color 0.15s ease;
   }
-  .nav-tab:hover { color: var(--text-2); }
-  .nav-tab.active {
-    color: var(--text);
-    border-bottom-color: var(--text);
-  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--text); border-bottom-color: var(--accent); }
 
   /* SECTIONS */
   .section {
-    display: none;
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 72px 24px 120px;
+    display: none; max-width: 1120px; margin: 0 auto; padding: 48px 24px 100px;
   }
-  .section.active { display: block; }
+  .section.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-  .eyebrow {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .section-heading {
-    font-size: 40px;
-    font-weight: 700;
-    letter-spacing: -0.035em;
-    line-height: 1.1;
-    margin-bottom: 20px;
-    max-width: 720px;
-  }
-  .section-sub {
-    font-size: 18px;
-    color: var(--text-2);
-    max-width: 720px;
-    margin-bottom: 56px;
-    line-height: 1.45;
-    letter-spacing: -0.01em;
-  }
+  .section-heading { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
+  .section-sub { font-size: 17px; color: var(--text-2); margin-bottom: 40px; max-width: 720px; }
 
-  /* STATS */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-bottom: 72px;
+  /* VISUALS (OVERVIEW) */
+  .visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+  .visual-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px; position: relative;
   }
-  .stat {
-    background: var(--surface);
-    padding: 28px 24px;
-  }
-  .stat-value {
-    font-size: 36px;
-    font-weight: 600;
-    letter-spacing: -0.035em;
-    line-height: 1;
-    color: var(--text);
-  }
-  .stat-label {
-    font-size: 12px;
-    color: var(--text-3);
-    margin-top: 8px;
-    letter-spacing: -0.005em;
-  }
+  .visual-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 24px; }
+  
+  /* WEDGE DIAGRAM */
+  .wedge-container { display: flex; align-items: center; justify-content: space-between; height: 120px; position: relative; }
+  .wedge-box { background: var(--surface-2); border: 1px solid var(--border-strong); padding: 16px; border-radius: 8px; text-align: center; width: 45%; z-index: 2; }
+  .wedge-box h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .wedge-box p { font-size: 12px; color: var(--text-3); }
+  .wedge-arrow { position: absolute; left: 40%; width: 20%; height: 2px; background: var(--accent); z-index: 1; }
+  .wedge-arrow::after { content: ''; position: absolute; right: -4px; top: -4px; border-left: 6px solid var(--accent); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+  .wedge-highlight { border-color: var(--accent); box-shadow: 0 0 20px rgba(10, 132, 255, 0.15); }
 
-  /* CARDS */
-  .pillar-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 40px;
+  /* FUNNEL DIAGRAM */
+  .funnel-container { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .funnel-step {
+    height: 40px; display: flex; align-items: center; justify-content: center;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--text-2);
   }
-  .pillar {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
-  }
-  .pillar .num {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: 0.04em;
-    margin-bottom: 16px;
-  }
-  .pillar h3 {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    margin-bottom: 10px;
-  }
-  .pillar p {
-    font-size: 14px;
-    color: var(--text-2);
-    line-height: 1.55;
-  }
+  .funnel-step:nth-child(1) { width: 100%; }
+  .funnel-step:nth-child(2) { width: 80%; background: rgba(255, 179, 64, 0.1); border-color: rgba(255, 179, 64, 0.3); color: var(--orange); }
+  .funnel-step:nth-child(3) { width: 60%; background: rgba(77, 163, 255, 0.1); border-color: rgba(77, 163, 255, 0.3); color: var(--blue); }
+  .funnel-step:nth-child(4) { width: 40%; background: rgba(94, 224, 133, 0.1); border-color: rgba(94, 224, 133, 0.3); color: var(--green); }
 
-  .callout {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 2px solid var(--accent);
-    border-radius: var(--radius-sm);
-    padding: 24px 28px;
-    margin-bottom: 40px;
-  }
-  .callout p {
-    font-size: 16px;
-    color: var(--text);
-    line-height: 1.55;
-    letter-spacing: -0.01em;
-  }
-  .callout p + p {
-    margin-top: 12px;
-    color: var(--text-2);
-    font-size: 14px;
-  }
-
-  /* SEGMENTED */
+  /* STRATEGY CARDS */
   .segmented {
-    display: inline-flex;
-    background: var(--surface);
-    padding: 3px;
-    border-radius: var(--radius-sm);
-    gap: 2px;
-    margin-bottom: 32px;
-    border: 1px solid var(--border);
+    display: inline-flex; background: var(--surface); padding: 3px;
+    border-radius: var(--radius-sm); gap: 2px; margin-bottom: 32px; border: 1px solid var(--border);
   }
   .segmented button {
-    background: none;
-    border: none;
-    color: var(--text-2);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 8px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
+    background: none; border: none; color: var(--text-2);
+    font-size: 13px; font-weight: 600; padding: 8px 20px; border-radius: 6px; transition: all 0.15s ease;
   }
-  .segmented button:hover { color: var(--text); }
-  .segmented button.active {
-    background: var(--surface-3);
-    color: var(--text);
-  }
+  .segmented button.active { background: var(--text); color: var(--bg); }
 
   .panel { display: none; }
-  .panel.active { display: block; }
+  .panel.active { display: block; animation: fadeIn 0.3s ease; }
 
-  /* DETAILS / STRATEGY CARDS */
   details.card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: 12px;
-    overflow: hidden;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 12px; overflow: hidden;
   }
   details.card summary {
-    padding: 22px 26px;
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text);
+    padding: 20px 24px; cursor: pointer; list-style: none;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 15px; font-weight: 600; color: var(--text);
     transition: background 0.15s ease;
   }
   details.card summary::-webkit-details-marker { display: none; }
   details.card summary:hover { background: var(--surface-2); }
   details.card summary::after {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-right: 1.5px solid var(--text-3);
-    border-bottom: 1.5px solid var(--text-3);
-    transform: rotate(-45deg);
-    transition: transform 0.2s ease;
-    flex-shrink: 0;
-    margin-right: 4px;
-    margin-top: -4px;
+    content: ''; width: 8px; height: 8px;
+    border-right: 2px solid var(--text-3); border-bottom: 2px solid var(--text-3);
+    transform: rotate(-45deg); transition: transform 0.2s ease; margin-top: -4px;
   }
-  details.card[open] summary::after {
-    transform: rotate(45deg);
-    margin-top: 0;
-  }
-  details.card[open] summary {
-    border-bottom: 1px solid var(--border);
-  }
-  .card-body {
-    padding: 8px 26px 22px;
-  }
-  .field {
-    display: grid;
-    grid-template-columns: 130px 1fr;
-    gap: 24px;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .field:last-child { border-bottom: none; padding-bottom: 8px; }
-  .field-label {
-    color: var(--text-3);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding-top: 3px;
-  }
-  .field-value {
-    color: var(--text-2);
-    line-height: 1.6;
-    font-size: 14.5px;
-  }
-  .field-value strong {
-    color: var(--text);
-    font-weight: 500;
-  }
+  details.card[open] summary::after { transform: rotate(45deg); margin-top: 0; }
+  details.card[open] summary { border-bottom: 1px solid var(--border); }
+  .card-body { padding: 8px 24px 24px; }
+  .field { display: grid; grid-template-columns: 120px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .field:last-child { border-bottom: none; padding-bottom: 0; }
+  .field-label { color: var(--text-3); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 2px; }
+  .field-value { color: var(--text-2); font-size: 14.5px; line-height: 1.6; }
+  .field-value strong { color: var(--text); font-weight: 500; }
 
   /* KEYWORDS */
-  .kw-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 20px;
-    align-items: center;
-  }
+  .kw-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
   .kw-search {
-    flex: 1;
-    min-width: 220px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 11px 16px;
-    font-size: 14px;
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s ease;
+    flex: 1; min-width: 200px; background: var(--surface); border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm); padding: 12px 16px; font-size: 14px; color: var(--text); outline: none;
   }
   .kw-search:focus { border-color: var(--accent); }
-  .kw-search::placeholder { color: var(--text-3); }
-
-  .pills {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
+  .pills { display: flex; gap: 8px; flex-wrap: wrap; }
   .pill {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 8px 16px;
-    font-size: 12.5px;
-    font-weight: 500;
-    color: var(--text-2);
-    cursor: pointer;
-    transition: all 0.15s ease;
-    white-space: nowrap;
+    background: var(--surface); border: 1px solid var(--border-strong); border-radius: 99px;
+    padding: 8px 16px; font-size: 13px; font-weight: 600; color: var(--text-2); transition: all 0.15s ease;
   }
-  .pill:hover { border-color: var(--border-strong); color: var(--text); }
-  .pill.active {
-    background: var(--text);
-    color: var(--bg);
-    border-color: var(--text);
-  }
+  .pill:hover { border-color: var(--text-3); color: var(--text); }
+  .pill.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-  .kw-meta-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .kw-count {
-    font-size: 13px;
-    color: var(--text-3);
-  }
-  .kw-legend {
-    display: flex;
-    gap: 16px;
-    font-size: 11.5px;
-    color: var(--text-3);
-  }
-  .kw-legend span {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .legend-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  .kw-table-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    overflow-x: auto;
-  }
-  .kw-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13.5px;
-    min-width: 720px;
-  }
-  .kw-table th {
-    text-align: left;
-    padding: 14px 20px;
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--text-3);
-    background: var(--surface-2);
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-  }
-  .kw-table td {
-    padding: 13px 20px;
-    border-bottom: 1px solid var(--border);
-    color: var(--text-2);
-    vertical-align: middle;
-  }
+  .kw-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; overflow-x: auto; }
+  .kw-table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 700px; }
+  .kw-table th { text-align: left; padding: 14px 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .kw-table td { padding: 14px 20px; border-bottom: 1px solid var(--border); color: var(--text-2); }
   .kw-table tr:last-child td { border-bottom: none; }
-  .kw-table tbody tr:hover td { background: rgba(255, 255, 255, 0.025); }
-  .kw-table .kw-name {
-    color: var(--text);
-    font-weight: 500;
-    letter-spacing: -0.005em;
-  }
+  .kw-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .kw-table .kw-name { color: var(--text); font-weight: 500; }
+  .tag { padding: 3px 8px; border-radius: 4px; font-size: 10.5px; font-weight: 700; }
+  .tag-p1 { background: rgba(255, 105, 97, 0.15); color: var(--red); }
+  .tag-p2 { background: rgba(255, 179, 64, 0.15); color: var(--orange); }
+  .tag-p3 { background: rgba(77, 163, 255, 0.15); color: var(--blue); }
+  .tag-it { background: rgba(94, 224, 133, 0.15); color: var(--green); }
 
-  .tag {
-    display: inline-block;
-    padding: 3px 9px;
-    border-radius: 5px;
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-  .tag-p1 { background: rgba(255, 105, 97, 0.14); color: var(--red); }
-  .tag-p2 { background: rgba(255, 179, 64, 0.14); color: var(--orange); }
-  .tag-p3 { background: rgba(77, 163, 255, 0.14); color: var(--blue); }
-  .tag-en { background: rgba(255, 255, 255, 0.06); color: var(--text-2); }
-  .tag-it { background: rgba(94, 224, 133, 0.13); color: var(--green); }
+  /* BLOG SAMPLES */
+  .blog-sample { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; margin-bottom: 32px; }
+  .blog-sample h1 { font-size: 28px; margin-bottom: 16px; }
+  .blog-sample h2 { font-size: 20px; margin: 32px 0 16px; color: var(--text); }
+  .blog-sample p { font-size: 16px; color: var(--text-2); margin-bottom: 16px; line-height: 1.6; }
+  .blog-sample ul { margin: 0 0 16px 24px; color: var(--text-2); font-size: 16px; line-height: 1.6; }
+  .blog-sample table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+  .blog-sample th, .blog-sample td { padding: 12px; border: 1px solid var(--border); text-align: left; }
+  .blog-sample th { background: var(--surface-2); color: var(--text); }
+  .blog-sample td { color: var(--text-2); }
+  .answer-capsule { background: rgba(10, 132, 255, 0.1); border-left: 4px solid var(--accent); padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; font-size: 16px; font-weight: 500; color: var(--text); }
 
-  /* TIMELINE */
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .timeline-item {
-    background: var(--surface);
-    padding: 32px;
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 40px;
-    align-items: start;
-  }
-  .timeline-period {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: -0.005em;
-  }
-  .timeline-title {
-    font-size: 19px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 14px;
-    color: var(--text);
-  }
-  .timeline-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .timeline-list li {
-    font-size: 14px;
-    color: var(--text-2);
-    line-height: 1.55;
-    padding-left: 18px;
-    position: relative;
-  }
-  .timeline-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 9px;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--text-3);
-  }
-
-  /* FOOTER */
-  .footer {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 48px 24px 64px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-size: 12px;
-    color: var(--text-3);
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .pillar-grid { grid-template-columns: 1fr; }
+  @media (max-width: 800px) {
+    .header { flex-direction: column; gap: 24px; }
     h1 { font-size: 36px; }
-    .section-heading { font-size: 30px; }
-    .timeline-item { grid-template-columns: 1fr; gap: 16px; padding: 24px; }
-    .field { grid-template-columns: 1fr; gap: 6px; padding: 12px 0; }
-    .header { padding: 56px 20px 40px; }
-    .section { padding: 48px 20px 80px; }
-    .lead { font-size: 17px; }
-    .section-sub { font-size: 15px; }
+    .visual-grid { grid-template-columns: 1fr; }
+    .field { grid-template-columns: 1fr; gap: 8px; }
+    .blog-sample { padding: 24px; }
   }
 </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="kicker">EFEM IT × Midas Mechanical</div>
-  <h1>Search visibility strategy.</h1>
-  <p class="lead">A single system for organic rankings, AI citation, and generative recommendation across English and Italian markets. Built on the no-mesh CAE wedge.</p>
-  <div class="meta">
-    <span>Owner<b>SEO Lead</b></span>
-    <span>Version<b>1.0</b></span>
-    <span>Scope<b>SEO · AEO · GEO</b></span>
-    <span>Markets<b>EN · IT</b></span>
+  <div class="header-content">
+    <div class="kicker" data-i18n="header.kicker">EFEM IT × Midas Mechanical</div>
+    <h1 data-i18n="header.title">Search visibility strategy.</h1>
+    <p class="lead" data-i18n="header.lead">A unified system for organic rankings, AI citation, and generative recommendation across English and Italian markets.</p>
+  </div>
+  <div class="lang-toggle">
+    <button class="active" onclick="setLang('en')">EN</button>
+    <button onclick="setLang('it')">IT</button>
   </div>
 </header>
 
 <nav class="nav">
   <div class="nav-inner">
-    <button class="nav-tab active" data-target="overview">Overview</button>
-    <button class="nav-tab" data-target="seo">SEO</button>
-    <button class="nav-tab" data-target="aeo">AEO</button>
-    <button class="nav-tab" data-target="geo">GEO</button>
-    <button class="nav-tab" data-target="keywords">Keywords</button>
-    <button class="nav-tab" data-target="roadmap">Roadmap</button>
+    <button class="nav-tab active" data-target="overview" data-i18n="nav.overview">Overview</button>
+    <button class="nav-tab" data-target="seo" data-i18n="nav.seo">SEO</button>
+    <button class="nav-tab" data-target="aeo" data-i18n="nav.aeo">AEO</button>
+    <button class="nav-tab" data-target="geo" data-i18n="nav.geo">GEO</button>
+    <button class="nav-tab" data-target="keywords" data-i18n="nav.keywords">Keywords</button>
+    <button class="nav-tab" data-target="samples" data-i18n="nav.samples">Content Samples</button>
   </div>
 </nav>
 
@@ -585,164 +245,73 @@
 
   <!-- OVERVIEW -->
   <section class="section active" id="overview">
-    <div class="eyebrow">Overview</div>
-    <h2 class="section-heading">We cannot out-authority Ansys. We can out-inform them.</h2>
-    <p class="section-sub">The strategy targets the exact queries where an engineer is already looking for a no-mesh alternative and a validated result. Proprietary benchmarks and applied case studies are the wedge that incumbents structurally cannot replicate.</p>
+    <h2 class="section-heading" data-i18n="overview.title">The Strategic Wedge</h2>
+    <p class="section-sub" data-i18n="overview.sub">We cannot out-authority Ansys. We can out-inform them. Proprietary benchmarks and applied case studies are the wedge incumbents cannot replicate.</p>
 
-    <div class="stats">
-      <div class="stat"><div class="stat-value">150</div><div class="stat-label">Keywords mapped</div></div>
-      <div class="stat"><div class="stat-value">8</div><div class="stat-label">Clusters</div></div>
-      <div class="stat"><div class="stat-value">2</div><div class="stat-label">Languages</div></div>
-      <div class="stat"><div class="stat-value">4</div><div class="stat-label">Funnel stages</div></div>
-    </div>
+    <div class="visual-grid">
+      <!-- Wedge Visual -->
+      <div class="visual-card">
+        <h3 data-i18n="overview.wedge_title">Market Positioning</h3>
+        <div class="wedge-container">
+          <div class="wedge-box">
+            <h4>Ansys / Abaqus</h4>
+            <p>High Authority<br>Complex Workflow</p>
+          </div>
+          <div class="wedge-arrow"></div>
+          <div class="wedge-box wedge-highlight">
+            <h4>MeshFree / MTS</h4>
+            <p>Information Gain<br>No-Mesh CAE</p>
+          </div>
+        </div>
+      </div>
 
-    <div class="pillar-grid">
-      <div class="pillar">
-        <div class="num">01</div>
-        <h3>SEO</h3>
-        <p>Rank in Google organic for commercial-investigation queries. Bilingual content engine, entity graph across both sister domains, keyword intercept for Italian-native vocabulary.</p>
+      <!-- Funnel Visual -->
+      <div class="visual-card">
+        <h3 data-i18n="overview.funnel_title">Conversion Architecture</h3>
+        <div class="funnel-container">
+          <div class="funnel-step" data-i18n="overview.funnel_1">Awareness: "senza mesh" queries</div>
+          <div class="funnel-step" data-i18n="overview.funnel_2">Consideration: Comparisons & Benchmarks</div>
+          <div class="funnel-step" data-i18n="overview.funnel_3">Decision: NAFEMS Validation</div>
+          <div class="funnel-step" data-i18n="overview.funnel_4">Lead: Free Trial / Demo</div>
+        </div>
       </div>
-      <div class="pillar">
-        <div class="num">02</div>
-        <h3>AEO</h3>
-        <p>Become the quoted answer inside Google AI Overviews, ChatGPT, and Perplexity. Answer capsules, question-shaped H2s, FAQPage schema, monthly citation audit.</p>
-      </div>
-      <div class="pillar">
-        <div class="num">03</div>
-        <h3>GEO</h3>
-        <p>Be the entity AI recommends by name. Proprietary benchmarks, named-engineer authorship, applied case studies, entity consistency across every third-party surface.</p>
-      </div>
-    </div>
-
-    <div class="callout">
-      <p>The single sentence that governs every page: <strong>"The fastest path from CAD to a design decision, without meshing, validated within 4% of traditional FEM, at a fraction of the cost."</strong></p>
-      <p>Every asset either reinforces that embedding or gets pruned. The sister-concern structure is the unfair advantage — EFEM IT argues the software case, Midas Mechanical proves it on real Italian engineering projects.</p>
     </div>
   </section>
 
   <!-- SEO -->
   <section class="section" id="seo">
-    <div class="eyebrow">Search Engine Optimization</div>
-    <h2 class="section-heading">Rank for the queries engineers search when they are already choosing.</h2>
-    <p class="section-sub">The free engine builds the durable moat. The paid engine buys the high-intent moments while the moat fills. Both run on the same bilingual content architecture.</p>
+    <h2 class="section-heading">Search Engine Optimization</h2>
+    <p class="section-sub">Rank for the queries engineers search when they are already choosing.</p>
 
     <div class="segmented" data-container="seo">
-      <button class="active" data-value="free">Free</button>
-      <button data-value="paid">Paid</button>
+      <button class="active" data-value="free" data-i18n="btn.free">Free</button>
+      <button data-value="paid" data-i18n="btn.paid">Paid</button>
     </div>
 
     <div class="panel active" data-group="seo" data-value="free">
-
       <details class="card">
-        <summary>Bilingual technical blog engine</summary>
+        <summary data-i18n="seo.s1.title">Bilingual technical blog engine</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Capture commercial-investigation and problem-aware queries from design engineers and Italian <strong>progettisti meccanici</strong>.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Two to four posts per month per brand, sourced from AnswerThePublic, AlsoAsked, and real sales objections. Every post carries one proprietary data point that competitors cannot copy.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">A benchmark post ranks top-3 within six months and becomes the cited source for <strong>MeshFree vs SimSolid</strong> in both AI Overviews and Perplexity.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">"MeshFree vs SimSolid: Benchmark su un Telaio Industriale a 12 Parti" — full methodology, comparison table above the fold, open invitation to reproduce the result.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Blog content is the only free surface where EFEM IT can demonstrate <strong>Information Gain</strong> — a fact Ansys cannot replicate on the same query without running the same test.</div></div>
+          <div class="field"><div class="field-label">Intent</div><div class="field-value">Capture commercial-investigation and problem-aware queries.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value">2-4 posts/month. Every post carries one proprietary data point competitors cannot copy.</div></div>
+          <div class="field"><div class="field-label">Why</div><div class="field-value">Demonstrates <strong>Information Gain</strong> — a fact Ansys cannot replicate without running the same test.</div></div>
         </div>
       </details>
-
       <details class="card">
-        <summary>Italian-native keyword intercept</summary>
+        <summary data-i18n="seo.s2.title">Italian-native keyword intercept</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Own the Italian evaluation vocabulary that SimSolid's distributor already established, instead of translating English keywords.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Dedicated Italian keyword map around <strong>software CAE senza mesh</strong>, <strong>analisi FEM senza meshing</strong>, <strong>simulazione meshless</strong>. Native copy, never machine-translated.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Both EFEM IT and Midas Mechanical rank top-5 for every "senza mesh" query. Italian branded search volume for <strong>MeshFree</strong> and <strong>Midas MTS</strong> rises measurably within six months.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Italian comparison page opens with a 60-word capsule: <em>"MeshFree e SimSolid eliminano entrambi il meshing, ma con metodi diversi. MeshFree è validato NAFEMS con uno scostamento di circa il 4% rispetto al FEM tradizionale."</em></div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">The Italian conversation already exists and is already commercially framed by competitors. Intercepting existing demand with a validated alternative is a direct path to high-intent traffic.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Sister-concern entity graph</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Signal to Google that EFEM IT and Midas Mechanical are two connected nodes of one engineering entity, strengthening topical authority of both domains.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Organization schema on both sites with cross-domain <strong>sameAs</strong> properties. Pillar-and-cluster internal linking between the software authority and the applied engineering proof.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Google's entity graph understands the relationship. EFEM comparison pages inherit trust from Midas case studies. Combined entity outranks single-domain competitors on cluster queries.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Footer on both sites: <em>"EFEM IT is the software arm of the group. Midas Mechanical is the applied engineering sister concern."</em> Linked, schema-marked, consistent everywhere.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Google understands entities, not just websites. A declared sister-concern relationship is a free authority multiplier that single-domain challengers cannot replicate.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Bilingual glossary hub</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Capture definitional and educational queries that precede commercial evaluation, and become the canonical source for meshless CAE terminology.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Twenty to thirty glossary pages in both languages — <strong>Implicit Boundary Method</strong>, <strong>analisi FEM senza meshing</strong>, <strong>validazione NAFEMS</strong>. DefinedTerm schema, links to product and comparison pages.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">The glossary becomes the most-linked Italian and English resource for meshless CAE definitions, and is cited by AI engines for every "What is X?" query in the category.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Italian entry for <em>analisi FEM senza meshing</em> opens with a 50-word direct definition, then links to the comparison page and the railcar case study.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Definitional content is disproportionately cited by AI systems because it is self-contained and low-ambiguity. Also creates dozens of internal linking opportunities at zero marginal cost.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Engineering community participation</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Build brand mentions and third-party validation in the communities where design engineers actually discuss CAE tool selection.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Named EFEM engineer (not a marketing account) contributing to r/fea, r/CFD, Eng-Tips, and relevant LinkedIn groups. Technical detail only, affiliation disclosed, links only when directly relevant.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">A single well-received Reddit comment becomes a cited source for <strong>MeshFree vs SimSolid</strong> in Perplexity and ChatGPT for months.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Engineer responds to "Affordable CAE without meshing?" with a technical breakdown of IBM vs External Approximations, a link to the NAFEMS benchmark, and a one-line disclosure.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Reddit appears in over half of AI Mode's citing answers. Community participation is also a trust signal for AI citation that first-party marketing cannot manufacture.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Free trial as link and citation magnet</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Convert the free trial into a linkable, citable asset that attracts backlinks and AI citations, not just a conversion endpoint.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Trial landing page with a real sample dataset, a five-minute walkthrough video, and a downloadable benchmark report comparing MeshFree runtime to a traditional meshed FEM workflow.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Fifteen to twenty-five referring domains from engineering education, technical blogs, and Italian university departments within six months.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Trial page includes the runtime comparison table. University engineering departments receive a free trial plus the report with an invitation to run an independent student benchmark.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Free trials are usually treated as pure conversion tools. A genuine data asset makes them link magnets and Information Gain surfaces at the same time.</div></div>
+          <div class="field"><div class="field-label">Intent</div><div class="field-value">Own the Italian evaluation vocabulary established by competitors.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Target <strong>software CAE senza mesh</strong> and <strong>simulazione meshless</strong> natively.</div></div>
         </div>
       </details>
     </div>
 
     <div class="panel" data-group="seo" data-value="paid">
-
       <details class="card">
-        <summary>Comparison search ads</summary>
+        <summary data-i18n="seo.p1.title">Comparison search ads</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Buy the exact moment an engineer is already comparing tools, and feed engaged sessions back into the organic ranking signal loop.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Exact and phrase match on <strong>MeshFree vs SimSolid</strong>, <strong>SimSolid alternative</strong>, <strong>Abaqus alternative</strong>, <strong>software CAE senza mesh</strong>. Always sent to the dedicated comparison page.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Four to six percent conversion to trial or demo. Engaged paid sessions lift the organic ranking of the same comparison page within 60 to 90 days.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Italian Search Ad for "software CAE senza mesh" lands on the Italian comparison page — answer capsule above the fold, table above the fold, trial CTA at the bottom.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Paid and organic are the same signal loop in 2026. Paid traffic creates engaged sessions. NavBoost uses those sessions to judge whether the page satisfies the query.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>LinkedIn document ads and thought-leader ads</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Put the comparison guide and benchmark in front of design engineers and engineering managers who have not yet searched for a solution.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Document ads for the "Best CAE Tools 2027" guide. Thought-leader ads amplifying named EFEM engineers. Targeting: design engineer, simulation engineer, <strong>progettista meccanico</strong>, <strong>ingegnere calcolista</strong>.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Thirty to fifty qualified demo requests per quarter at a cost per lead 40 to 60 percent lower than broad Google Display.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Carousel titled "MeshFree vs SimSolid: The Benchmark Ansys Won't Publish" — methodology, runtime comparison, NAFEMS validation, and a gated benchmark download on the final slide.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">The CAE buyer lives on LinkedIn. Document ads create a first-party data asset that feeds retargeting and sales outreach, so paid spend does double duty.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Review-site sponsorship</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Appear in the consideration set when an engineer searches "best CAE software" or "SimSolid alternatives" on a third-party site.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Sponsor Capterra, G2, and Software Advice category and comparison pages. Optimize profiles with screenshots, use-case tags, and pricing ranges.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">EFEM IT appears as a sponsored alternative on the "SimSolid alternatives" and "Abaqus alternatives" pages of all three review sites.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Capterra profile includes the use-case tag "design-stage validation without meshing" plus three recent reviews describing specific industrial projects.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">G2 is the one review site every major AI surface agrees on for B2B software citations. Sponsorship is about being in the shortlist at the moment of evaluation.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Comparison-page retargeting</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Re-engage engineers who visited a comparison page but did not convert, using the applied case study as the proof layer.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Three-touch sequence: benchmark report download, then Midas case study, then trial CTA. Runs on LinkedIn and Google Display.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Ten to fifteen percent of comparison-page visitors convert to trial or demo within 30 days. Branded search volume rises as a side effect.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Italian engineer leaves the comparison page. Three days later: <em>"Hai letto il confronto MeshFree vs SimSolid? Ecco come un'azienda italiana ha ridotto i tempi di analisi del 60%."</em></div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Comparison-page visitors are the highest-intent retargeting audience. The case study is the proof that moves them from interested to convinced.</div></div>
+          <div class="field"><div class="field-label">Intent</div><div class="field-value">Buy the moment an engineer is comparing tools.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Exact match on <strong>MeshFree vs SimSolid</strong>. Sends to dedicated comparison page.</div></div>
         </div>
       </details>
     </div>
@@ -750,94 +319,25 @@
 
   <!-- AEO -->
   <section class="section" id="aeo">
-    <div class="eyebrow">Answer Engine Optimization</div>
-    <h2 class="section-heading">Be the quoted answer, not just the ranked link.</h2>
-    <p class="section-sub">AI Overviews and AI assistants cite pages that resolve the query in a short, self-contained passage near the top. Every page we publish is structured to be extractable by design.</p>
-
+    <h2 class="section-heading">Answer Engine Optimization</h2>
+    <p class="section-sub">Be the quoted answer inside Google AI Overviews and Perplexity.</p>
     <div class="segmented" data-container="aeo">
-      <button class="active" data-value="free">Free</button>
-      <button data-value="paid">Paid</button>
+      <button class="active" data-value="free" data-i18n="btn.free">Free</button>
+      <button data-value="paid" data-i18n="btn.paid">Paid</button>
     </div>
-
     <div class="panel active" data-group="aeo" data-value="free">
-
       <details class="card">
-        <summary>Direct-answer capsules</summary>
+        <summary data-i18n="aeo.s1.title">Direct-answer capsules</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Make every high-value page trivially extractable by AI summarizers so it can be quoted without surrounding context.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Every page opens with a 60 to 100 word answer capsule. The answer first, specifics inline, exact query phrasing in the first sentence, deeper explanation after.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Comparison pages cited by Google AI Overviews and Perplexity for their exact comparison queries, driving qualified traffic from engineers already in evaluation.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">"MeshFree and SimSolid both eliminate meshing, but they solve differently. MeshFree uses the Implicit Boundary Method and is NAFEMS-validated within roughly 4% of traditional FEM."</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">AI Overviews cite pages that resolve the literal query in a short passage near the top. Pages that lead with "it depends" almost never get cited.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Question-shaped H2 architecture</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Match section headings to real user queries so AI systems can extract the relevant section as a standalone answer.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Every H2 phrased as a real engineer's question — <strong>Is MeshFree NAFEMS-validated?</strong>, <strong>MeshFree è validato NAFEMS?</strong> — answered in the first 40 to 60 words.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">AI Overviews and People Also Ask surface specific H2 sections as the answer to sub-questions, expanding the page's citation surface beyond just the headline query.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">MeshFree product page H2s: "What is the Implicit Boundary Method?", "Is MeshFree NAFEMS-validated?", "What are MeshFree's limitations versus Ansys Mechanical?"</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Question-shaped H2s, bulleted lists, and comparison tables are the three structural patterns that recur in AI-Overview-cited content. Zero cost, direct payoff.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>FAQPage schema with buyer-phrased questions</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Make FAQ content explicitly machine-readable so AI systems can extract Q&amp;A pairs as structured answers.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">FAQPage schema on every comparison and product page, with five to seven fully expanded Q&amp;As phrased exactly as an engineer would ask them.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Pages with FAQPage schema selected for rich results and AI Overviews more often than pages without. The Italian FAQ becomes the cited answer when an Italian engineer asks the same question.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Italian FAQ: <strong>MeshFree è validato NAFEMS?</strong> — <em>"Sì. MeshFree è stato validato utilizzando i modelli standard NAFEMS, con uno scostamento inferiore al 4% rispetto ai risultati FEM tradizionali."</em></div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">FAQPage schema makes a page citable by design rather than depending on the AI system's inference. It is the cheapest AEO upgrade on any page.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Italian AEO mirror</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Ensure every English AEO asset has a native Italian equivalent — not a translation — so we can be cited in Italian-language AI answers.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Italian-native answer capsules, Italian technical vocabulary, Italian buyer context. Cross-linked with <strong>hreflang</strong> so English and Italian pages never cannibalise.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">When an Italian engineer asks Perplexity <em>"Qual è il miglior software CAE senza mesh?"</em>, the cited answer is an EFEM or Midas Italian page.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Italian MeshFree page includes an Italian answer capsule, Italian benchmark table, Italian FAQ section, and the Italian trial CTA with e-FEM's Simulation Team.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">AI citation is language-specific. Translated pages match the query poorly. Native content matches the exact phrasing Italian engineers use, which is the core citation signal.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Monthly citation audit</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Continuously identify which pages are cited, which are ignored, and why, then adjust the structure accordingly.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Every month, run a manual or tool-based audit across ChatGPT, Perplexity, Gemini, and Google AI Overviews for 20 to 30 target questions in both languages.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Within six months, EFEM's citation share for English target questions rises from near-zero to 30 to 40 percent, and Midas's Italian citation share rises similarly.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Audit finds Perplexity cites Ansys for "MeshFree vs Ansys accuracy" because the Ansys page has a cleaner comparison table. EFEM adds a more detailed table above the fold, re-audits in 30 days.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">When AI Overviews update, roughly half of cited sources get replaced. Citation is a discipline, not a one-off setup.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Every page opens with a 60-100 word answer capsule. The answer first, specifics inline.</div></div>
         </div>
       </details>
     </div>
-
     <div class="panel" data-group="aeo" data-value="paid">
-
       <details class="card">
-        <summary>Sponsored answer units on AI search networks</summary>
+        <summary data-i18n="aeo.p1.title">Sponsored answer units</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Buy placement inside emerging AI search networks where organic citation is slow to build.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Targeted placements on AI search ad networks and sponsored answer units alongside high-intent category prompts.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">EFEM appears as the sponsored answer when an engineer asks an AI assistant "What is the best affordable CAE software without meshing?"</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Sponsored placement for "MeshFree vs SimSolid for design engineers" surfaces a short EFEM-authored answer with a link to the full benchmark.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Paid AEO buys the citation moment while the organic AEO engine is still compounding. Small budget, experimental category, measurable.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Paid placement in top-cited listicles</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Ensure EFEM appears in the third-party listicles and comparison pages that AI engines cite most heavily for "best X" queries.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Identify the ten most-cited CAE comparison pages on G2, Capterra, Software Advice, and independent engineering blogs. Sponsor placement or pitch contributed commentary.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">EFEM appears in six of the ten most-cited listicles, and those listicles become the sources AI engines pull from for "best CAE tools 2027."</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Sponsored placement on a G2 comparison page for "Best FEA Software" positions MeshFree as the no-mesh alternative with a link to the EFEM benchmark.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">The majority of sources cited in AI Overviews sit outside Google's organic top ten. We have to be present in that outside pool — paid placement is the shortcut.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Targeted placements on AI search ad networks alongside high-intent prompts.</div></div>
         </div>
       </details>
     </div>
@@ -845,105 +345,25 @@
 
   <!-- GEO -->
   <section class="section" id="geo">
-    <div class="eyebrow">Generative Engine Optimization</div>
-    <h2 class="section-heading">Become the entity AI recommends by name.</h2>
-    <p class="section-sub">GEO is trust, not keywords. AI models cross-reference sources, so our entity has to be consistent everywhere and our engineers have to be real people with reputations outside our own blog.</p>
-
+    <h2 class="section-heading">Generative Engine Optimization</h2>
+    <p class="section-sub">Become the entity AI recommends by name.</p>
     <div class="segmented" data-container="geo">
-      <button class="active" data-value="free">Free</button>
-      <button data-value="paid">Paid</button>
+      <button class="active" data-value="free" data-i18n="btn.free">Free</button>
+      <button data-value="paid" data-i18n="btn.paid">Paid</button>
     </div>
-
     <div class="panel active" data-group="geo" data-value="free">
-
       <details class="card">
-        <summary>Proprietary benchmarks as Information Gain</summary>
+        <summary data-i18n="geo.s1.title">Proprietary benchmarks</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Create a data asset no competitor can copy without running the same test, making EFEM the only citable source for a specific, valuable fact.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Three to five proprietary benchmarks per year comparing MeshFree, NFX, and MTS against Ansys, Abaqus, and SimSolid. Full methodology, input files, open invitation to reproduce.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">The benchmark becomes the most-cited source for "MeshFree vs SimSolid benchmark" and "MeshFree runtime vs Ansys."</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">"Benchmark: MeshFree vs SimSolid on a 12-Part Industrial Frame" — geometry, runtime, deviation, downloadable input file, open submission for independent results.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">We cannot out-authority Ansys. We can out-information-gain them on the specific queries where MeshFree is genuinely differentiated.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Entity consistency across the web</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Make EFEM and Midas unambiguously recognizable as connected, credible entities to AI models that cross-reference sources.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Consistent NAP and entity data across both websites, LinkedIn, Capterra, G2, TrustRadius, Crunchbase, and Italian engineering directories. Organization schema with sameAs on all surfaces.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">When an AI model assembles an answer about Italian CAE distributors, it recognizes both companies as the same connected entity and cites either.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Every profile states the same core facts: "Italian distributor of midas MeshFree, NFX, and MTS. Sister concern of Midas Mechanical."</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">AI models cross-reference sources to build trust. Consistent entity data is how a small site becomes legible to AI models as a credible entity.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Named-engineer authorship</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Build individual engineer reputations that AI models associate with specific technical topics, so citations attach to a trusted person.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Every technical post bylined by a named engineer with a real credential, LinkedIn profile, and Person entity with sameAs. Off-domain reputation built through publications, podcasts, and conferences.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">When an AI model needs an expert opinion on meshless CAE, it recognizes the named engineer as a credible source because their reputation is reinforced across multiple third-party surfaces.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Bio: "Ten years running nonlinear FEA validation on industrial assemblies. Contributor to [engineering publication]." Same engineer answers questions on LinkedIn and Reddit under real name.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Google's quality guidance explicitly grades talent and accuracy, and fake authors are called out as deception. A real engineer with off-domain reputation cannot be ghostwritten.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Applied case studies as third-party-verifiable proof</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Create applied engineering content AI models can cite as evidence that MeshFree and NFX work in real industrial settings, not just vendor benchmarks.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Midas publishes one to two Italian-language case studies per month with a quantified before/after, a named workflow, and a direct quote from the engineer or manager.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Case studies become the proof layer AI models cite when an engineer asks "Does MeshFree work for real industrial assemblies?"</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Italian manufacturer used MeshFree to validate a frame assembly before fabrication. Case study documents model size, runtime, design change enabled, and a direct manager quote.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Case studies are both product content and third-party-verifiable proof — the ideal GEO asset. They also feed the sister-concern entity graph.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>LinkedIn authority bridge</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Borrow LinkedIn's domain authority to rank comparison content quickly while the EFEM domain is still building trust.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Publish the comparison summary as LinkedIn Articles under the EFEM company page, with a canonical link back to the full benchmark on the EFEM domain.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">The LinkedIn article ranks or gets cited for the comparison query within 24 to 48 hours, driving traffic to the full benchmark. It also appears in AI Mode answers.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">LinkedIn Article: "MeshFree vs SimSolid: The Benchmark We Ran So You Don't Have To." Summarizes methodology and results, ends with a link to the full benchmark.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Google and AI models trust established platforms. Publish genuinely useful content on the platform that already has the authority we are building.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value">3-5 benchmarks per year comparing MeshFree vs Ansys. Full methodology, open invitation to reproduce.</div></div>
         </div>
       </details>
     </div>
-
     <div class="panel" data-group="geo" data-value="paid">
-
       <details class="card">
-        <summary>Sponsored AI prompt placement</summary>
+        <summary data-i18n="geo.p1.title">Paid community amplification</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Buy visibility at the prompt level inside AI assistants and AI search surfaces.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Paid placements on emerging AI search ad networks and sponsored prompt units for high-intent category prompts.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">EFEM appears as a sponsored recommendation in 20 to 30 percent of target AI prompts within three months.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Sponsored placement for "What is the best CAE software for design engineers who don't want to mesh?" surfaces a short EFEM-authored answer with a link to the comparison.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">AI-assisted research now shapes early buyer understanding long before traditional demand signals appear. Paid GEO is experimental but strategically important.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Paid community amplification</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Amplify the organic community participation with paid promotion that respects platform norms.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">LinkedIn paid amplification of the best organic engineer posts. Reddit Ads promoting a genuinely helpful benchmark or case study to r/fea and r/CFD.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">A single engineer post, amplified with Reddit Ads, reaches 10,000+ design engineers and generates 50+ trial sign-ups.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Benchmark posted in r/fea with a transparent disclosure earns 40 upvotes and 15 comments organically. Reddit Ads promotes the post to related subreddits.</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Paid amplification only works if the organic content is genuinely useful first. The content must be engineer-useful before any paid layer is applied.</div></div>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>Compliant review generation</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label">Intent</div><div class="field-value">Accelerate review velocity and profile completeness on Capterra, G2, and TrustRadius so the EFEM entity is cross-referenced as a credible, reviewed product.</div></div>
-          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Compliant review-generation incentives within platform rules. Focus prompts on specific workflows so review text becomes AI-extractable proof.</div></div>
-          <div class="field"><div class="field-label">Best case</div><div class="field-value">Twenty-five to forty new verified reviews within six months at an average rating of 4.3 or higher.</div></div>
-          <div class="field"><div class="field-label">Example</div><div class="field-value">Post-project email: "Would you share how MeshFree performed on this project? Reviews that mention your specific workflow help other engineers evaluate the tool."</div></div>
-          <div class="field"><div class="field-label">Why</div><div class="field-value">Third-party validation plays a critical role in AI trust and citation eligibility. Paid review generation accelerates the velocity of genuine proof, not bought ratings.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value">Amplify organic Reddit/LinkedIn engineer posts with targeted ad spend.</div></div>
         </div>
       </details>
     </div>
@@ -951,10 +371,8 @@
 
   <!-- KEYWORDS -->
   <section class="section" id="keywords">
-    <div class="eyebrow">Keyword inventory</div>
-    <h2 class="section-heading">Every query we contest, tagged and filtered.</h2>
-    <p class="section-sub">Search, filter by priority, language, or cluster. Each keyword maps to a target page and a funnel intent. Priority P1 assets ship in the first 90 days.</p>
-
+    <h2 class="section-heading">Keyword Inventory</h2>
+    <p class="section-sub">Every query we contest, tagged and filtered.</p>
     <div class="kw-controls">
       <input type="text" class="kw-search" id="kw-search" placeholder="Search keywords...">
       <div class="pills" id="kw-priority-pills">
@@ -963,36 +381,7 @@
         <button class="pill" data-priority="P2">P2</button>
         <button class="pill" data-priority="P3">P3</button>
       </div>
-      <div class="pills" id="kw-lang-pills">
-        <button class="pill active" data-lang="all">EN + IT</button>
-        <button class="pill" data-lang="EN">EN</button>
-        <button class="pill" data-lang="IT">IT</button>
-      </div>
     </div>
-
-    <div class="kw-controls">
-      <div class="pills" id="kw-cluster-pills">
-        <button class="pill active" data-cluster="all">All clusters</button>
-        <button class="pill" data-cluster="MeshFree">MeshFree</button>
-        <button class="pill" data-cluster="NFX">NFX</button>
-        <button class="pill" data-cluster="MTS">MTS</button>
-        <button class="pill" data-cluster="Comparison">Comparison</button>
-        <button class="pill" data-cluster="Problem-aware">Problem-aware</button>
-        <button class="pill" data-cluster="Trust">Trust</button>
-        <button class="pill" data-cluster="Industry">Industry</button>
-        <button class="pill" data-cluster="Branded">Branded</button>
-      </div>
-    </div>
-
-    <div class="kw-meta-row">
-      <div class="kw-count" id="kw-count">150 keywords</div>
-      <div class="kw-legend">
-        <span><i class="legend-dot" style="background:#ff6961"></i>P1</span>
-        <span><i class="legend-dot" style="background:#ffb340"></i>P2</span>
-        <span><i class="legend-dot" style="background:#4da3ff"></i>P3</span>
-      </div>
-    </div>
-
     <div class="kw-table-wrap">
       <table class="kw-table">
         <thead>
@@ -1001,7 +390,6 @@
             <th>Cluster</th>
             <th>Priority</th>
             <th>Lang</th>
-            <th>Intent</th>
             <th>Target page</th>
           </tr>
         </thead>
@@ -1010,77 +398,132 @@
     </div>
   </section>
 
-  <!-- ROADMAP -->
-  <section class="section" id="roadmap">
-    <div class="eyebrow">Execution plan</div>
-    <h2 class="section-heading">Ninety days to structure. Twelve months to compound.</h2>
-    <p class="section-sub">The first phase is about foundations — entity graph, schema, benchmark asset, and baseline. After that, everything compounds. Paid layers are scaled only against proven cost per conversion.</p>
+  <!-- CONTENT SAMPLES -->
+  <section class="section" id="samples">
+    <h2 class="section-heading">Sample Content</h2>
+    <p class="section-sub">Demonstration of the Answer-First and Information Gain framework.</p>
 
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-period">Days 0 — 30</div>
-        <div>
-          <div class="timeline-title">Foundation and baseline</div>
-          <ul class="timeline-list">
-            <li>Organization schema and sameAs cross-links live on both domains</li>
-            <li>Bilingual benchmark post published (Italian and English)</li>
-            <li>FAQPage schema across all product and comparison pages</li>
-            <li>Answer capsule and question-shaped H2 templates applied sitewide</li>
-            <li>Citation baseline audit — record current AI Overview, Perplexity, and ChatGPT mentions</li>
-          </ul>
-        </div>
+    <!-- EN Sample -->
+    <div class="blog-sample">
+      <h1>MeshFree vs SimSolid: The 12-Part Industrial Frame Benchmark</h1>
+      <div class="answer-capsule">
+        MeshFree and SimSolid both eliminate meshing, but they solve differently. MeshFree uses the Implicit Boundary Method and is NAFEMS-validated within 4% of traditional FEM. On our 12-part industrial frame benchmark, MeshFree produced a design-ready result in 47 minutes on a standard workstation, without geometry cleanup.
       </div>
-      <div class="timeline-item">
-        <div class="timeline-period">Days 30 — 90</div>
-        <div>
-          <div class="timeline-title">Content engine live</div>
-          <ul class="timeline-list">
-            <li>Four bilingual blog posts published (two per brand)</li>
-            <li>Italian "senza mesh" pillar page live with full internal linking</li>
-            <li>Named-engineer bios with Person entity sameAs on every post</li>
-            <li>LinkedIn parasite-SEO article live for the comparison summary</li>
-            <li>First compliant review-generation push on Capterra and G2</li>
-          </ul>
-        </div>
+      
+      <h2>The Comparison Matrix</h2>
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>MeshFree</th><th>SimSolid</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Method</td><td>Implicit Boundary Method</td><td>External Approximations</td></tr>
+          <tr><td>NAFEMS Validation</td><td>Yes (~4% deviation)</td><td>Not publicly disclosed</td></tr>
+          <tr><td>Transparency</td><td>High — documented math</td><td>Low — opaque solver</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Why this matters for design engineers</h2>
+      <p>When you are validating a design iteration, waiting 3 hours for a traditional meshed FEM workflow kills momentum. MeshFree removes the meshing bottleneck entirely, allowing you to validate CAD directly and move to fabrication faster.</p>
+    </div>
+
+    <!-- IT Sample -->
+    <div class="blog-sample" lang="it">
+      <h1>Software CAE senza mesh: La Guida Completa</h1>
+      <div class="answer-capsule">
+        MeshFree e SimSolid eliminano entrambi il meshing, ma con metodi diversi. MeshFree usa l'Implicit Boundary Method ed è validato NAFEMS con uno scostamento inferiore al 4% rispetto al FEM tradizionale. È ideale per la validazione in fase di progettazione, mentre SimSolid è più rapido su assiemi molto grandi ma con un modello matematico meno trasparente.
       </div>
-      <div class="timeline-item">
-        <div class="timeline-period">Days 90 — 180</div>
-        <div>
-          <div class="timeline-title">Paid amplification and citation capture</div>
-          <ul class="timeline-list">
-            <li>Google Search Ads live on comparison and "senza mesh" queries</li>
-            <li>LinkedIn document ads running against the benchmark report</li>
-            <li>First AI Overview and Perplexity citations appear in audit</li>
-            <li>Two to three Midas Italian case studies published</li>
-            <li>Glossary hub shipped in both languages</li>
-          </ul>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-period">Days 180 — 365</div>
-        <div>
-          <div class="timeline-title">Category ownership</div>
-          <ul class="timeline-list">
-            <li>Top-3 rankings on core Italian "senza mesh" queries</li>
-            <li>30 to 40 percent AI citation share for English target questions</li>
-            <li>Measurable branded search growth for MeshFree and Midas MTS</li>
-            <li>Review-site sponsored placement live on Capterra and G2</li>
-            <li>Paid spend scaled to proven cost per conversion</li>
-          </ul>
-        </div>
-      </div>
+
+      <h2>Perché il meshing è un collo di bottiglia</h2>
+      <p>Per un progettista meccanico, il tempo speso a ripulire la geometria e creare la mesh è tempo sottratto all'innovazione. La simulazione meshless rimuove questo passaggio, permettendoti di analizzare direttamente il modello CAD.</p>
+
+      <h2>MeshFree vs SimSolid: Quale scegliere?</h2>
+      <ul>
+        <li><strong>Scegli MeshFree se:</strong> Hai bisogno di trasparenza matematica, validazione NAFEMS e un workflow integrato per strutture e fluidi (tramite MTS).</li>
+        <li><strong>Scegli SimSolid se:</strong> Lavori esclusivamente su assiemi enormi con geometrie difettose e necessiti solo di analisi esplorative rapide.</li>
+      </ul>
     </div>
   </section>
 
 </main>
 
-<footer class="footer">
-  <span>EFEM IT × Midas Mechanical — internal strategy document</span>
-  <span>v1.0</span>
-</footer>
-
 <script>
-  // Top-level tabs
+  // 1. Translations Dictionary
+  const i18n = {
+    en: {
+      "header.kicker": "EFEM IT × Midas Mechanical",
+      "header.title": "Search visibility strategy.",
+      "header.lead": "A unified system for organic rankings, AI citation, and generative recommendation across English and Italian markets.",
+      "nav.overview": "Overview",
+      "nav.seo": "SEO",
+      "nav.aeo": "AEO",
+      "nav.geo": "GEO",
+      "nav.keywords": "Keywords",
+      "nav.samples": "Content Samples",
+      "overview.title": "The Strategic Wedge",
+      "overview.sub": "We cannot out-authority Ansys. We can out-inform them. Proprietary benchmarks and applied case studies are the wedge incumbents cannot replicate.",
+      "overview.wedge_title": "Market Positioning",
+      "overview.funnel_title": "Conversion Architecture",
+      "overview.funnel_1": "Awareness: 'senza mesh' queries",
+      "overview.funnel_2": "Consideration: Comparisons & Benchmarks",
+      "overview.funnel_3": "Decision: NAFEMS Validation",
+      "overview.funnel_4": "Lead: Free Trial / Demo",
+      "btn.free": "Free",
+      "btn.paid": "Paid",
+      "seo.s1.title": "Bilingual technical blog engine",
+      "seo.s2.title": "Italian-native keyword intercept",
+      "seo.p1.title": "Comparison search ads",
+      "aeo.s1.title": "Direct-answer capsules",
+      "aeo.p1.title": "Sponsored answer units",
+      "geo.s1.title": "Proprietary benchmarks",
+      "geo.p1.title": "Paid community amplification"
+    },
+    it: {
+      "header.kicker": "EFEM IT × Midas Mechanical",
+      "header.title": "Strategia di visibilità.",
+      "header.lead": "Un sistema unificato per il posizionamento organico, le citazioni AI e le raccomandazioni generative nei mercati italiano e inglese.",
+      "nav.overview": "Panoramica",
+      "nav.seo": "SEO",
+      "nav.aeo": "AEO",
+      "nav.geo": "GEO",
+      "nav.keywords": "Parole chiave",
+      "nav.samples": "Esempi di Contenuto",
+      "overview.title": "Il Cuneo Strategico",
+      "overview.sub": "Non possiamo superare Ansys in autorità. Possiamo superarli in informazioni. Benchmark proprietari e casi di studio applicati sono il cuneo che gli incumbent non possono replicare.",
+      "overview.wedge_title": "Posizionamento di Mercato",
+      "overview.funnel_title": "Architettura di Conversione",
+      "overview.funnel_1": "Consapevolezza: query 'senza mesh'",
+      "overview.funnel_2": "Considerazione: Confronti e Benchmark",
+      "overview.funnel_3": "Decisione: Validazione NAFEMS",
+      "overview.funnel_4": "Lead: Prova Gratuita / Demo",
+      "btn.free": "Gratuito",
+      "btn.paid": "A Pagamento",
+      "seo.s1.title": "Motore di blog tecnico bilingue",
+      "seo.s2.title": "Intercettazione keyword native italiane",
+      "seo.p1.title": "Annunci search di confronto",
+      "aeo.s1.title": "Capsule di risposta diretta",
+      "aeo.p1.title": "Unità di risposta sponsorizzate",
+      "geo.s1.title": "Benchmark proprietari",
+      "geo.p1.title": "Amplificazione community a pagamento"
+    }
+  };
+
+  let currentLang = 'en';
+
+  // 2. Language Toggle
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (i18n[lang] && i18n[lang][key]) {
+        el.textContent = i18n[lang][key];
+      }
+    });
+    // Update toggle UI
+    document.querySelectorAll('.lang-toggle button').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.lang-toggle button[onclick="setLang('${lang}')"]`).classList.add('active');
+  }
+
+  // 3. Tabs Navigation
   const navTabs = document.querySelectorAll('.nav-tab');
   const sections = document.querySelectorAll('.section');
   navTabs.forEach(tab => {
@@ -1088,13 +531,11 @@
       navTabs.forEach(t => t.classList.remove('active'));
       sections.forEach(s => s.classList.remove('active'));
       tab.classList.add('active');
-      const target = document.getElementById(tab.dataset.target);
-      if (target) target.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      document.getElementById(tab.dataset.target).classList.add('active');
     });
   });
 
-  // Segmented controls (Free / Paid)
+  // 4. Segmented Controls (Free / Paid)
   document.querySelectorAll('.segmented').forEach(seg => {
     const container = seg.dataset.container;
     const buttons = seg.querySelectorAll('button');
@@ -1104,196 +545,43 @@
         buttons.forEach(b => b.classList.remove('active'));
         panels.forEach(p => p.classList.remove('active'));
         btn.classList.add('active');
-        const panel = document.querySelector(`.panel[data-group="${container}"][data-value="${btn.dataset.value}"]`);
-        if (panel) panel.classList.add('active');
+        document.querySelector(`.panel[data-group="${container}"][data-value="${btn.dataset.value}"]`).classList.add('active');
       });
     });
   });
 
-  // Keyword data
+  // 5. Keywords Data
   const KEYWORDS = [
-    // MeshFree
-    { kw: "MeshFree CAE software", cluster: "MeshFree", priority: "P1", lang: "EN", intent: "Product", page: "MeshFree product" },
-    { kw: "MeshFree no mesh analysis", cluster: "MeshFree", priority: "P1", lang: "EN", intent: "Product", page: "MeshFree product" },
-    { kw: "midas MeshFree", cluster: "MeshFree", priority: "P1", lang: "EN", intent: "Branded", page: "MeshFree product" },
-    { kw: "MeshFree download", cluster: "MeshFree", priority: "P1", lang: "EN", intent: "Transactional", page: "MeshFree trial" },
-    { kw: "MeshFree free trial", cluster: "MeshFree", priority: "P1", lang: "EN", intent: "Transactional", page: "MeshFree trial" },
-    { kw: "MeshFree NAFEMS validation", cluster: "MeshFree", priority: "P1", lang: "EN", intent: "Trust", page: "NAFEMS trust" },
-    { kw: "MeshFree pricing", cluster: "MeshFree", priority: "P2", lang: "EN", intent: "Commercial", page: "MeshFree pricing" },
-    { kw: "MeshFree review", cluster: "MeshFree", priority: "P2", lang: "EN", intent: "Commercial", page: "MeshFree product" },
-    { kw: "MeshFree implicit boundary method", cluster: "MeshFree", priority: "P2", lang: "EN", intent: "Educational", page: "Glossary" },
-    { kw: "MeshFree accuracy", cluster: "MeshFree", priority: "P2", lang: "EN", intent: "Trust", page: "NAFEMS trust" },
-    { kw: "MeshFree benchmark", cluster: "MeshFree", priority: "P2", lang: "EN", intent: "Trust", page: "NAFEMS trust" },
-    { kw: "MeshFree modal analysis", cluster: "MeshFree", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "MeshFree linear static", cluster: "MeshFree", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "MeshFree nonlinear contact", cluster: "MeshFree", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "MeshFree large assembly", cluster: "MeshFree", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "MeshFree CAD import", cluster: "MeshFree", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "MeshFree Samsung", cluster: "MeshFree", priority: "P3", lang: "EN", intent: "Branded", page: "Blog" },
-    { kw: "MeshFree italiano", cluster: "MeshFree", priority: "P1", lang: "IT", intent: "Branded", page: "MeshFree product" },
-    { kw: "MeshFree senza mesh", cluster: "MeshFree", priority: "P1", lang: "IT", intent: "Product", page: "Pillar senza mesh" },
-    { kw: "MeshFree prova gratuita", cluster: "MeshFree", priority: "P1", lang: "IT", intent: "Transactional", page: "MeshFree trial" },
-    { kw: "MeshFree validazione NAFEMS", cluster: "MeshFree", priority: "P1", lang: "IT", intent: "Trust", page: "NAFEMS trust" },
-    { kw: "MeshFree prezzo", cluster: "MeshFree", priority: "P2", lang: "IT", intent: "Commercial", page: "MeshFree pricing" },
-    { kw: "MeshFree analisi strutturale", cluster: "MeshFree", priority: "P2", lang: "IT", intent: "Product", page: "Blog" },
-    { kw: "MeshFree confronto", cluster: "MeshFree", priority: "P2", lang: "IT", intent: "Comparison", page: "Pillar confronto" },
-    { kw: "MeshFree alternativa SimSolid", cluster: "MeshFree", priority: "P1", lang: "IT", intent: "Comparison", page: "Pillar confronto" },
-    { kw: "MeshFree accuratezza", cluster: "MeshFree", priority: "P3", lang: "IT", intent: "Trust", page: "NAFEMS trust" },
-
-    // NFX
-    { kw: "midas NFX", cluster: "NFX", priority: "P2", lang: "EN", intent: "Branded", page: "NFX product" },
-    { kw: "NFX CFD", cluster: "NFX", priority: "P2", lang: "EN", intent: "Product", page: "NFX product" },
-    { kw: "NFX structural analysis", cluster: "NFX", priority: "P2", lang: "EN", intent: "Product", page: "NFX product" },
-    { kw: "NFX vs Fluent", cluster: "NFX", priority: "P2", lang: "EN", intent: "Comparison", page: "NFX vs Fluent" },
-    { kw: "NFX vs Ansys", cluster: "NFX", priority: "P2", lang: "EN", intent: "Comparison", page: "NFX vs Ansys" },
-    { kw: "NFX thermal analysis", cluster: "NFX", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "NFX nonlinear analysis", cluster: "NFX", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "NFX fatigue analysis", cluster: "NFX", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "NFX optimization", cluster: "NFX", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "NFX conjugate heat transfer", cluster: "NFX", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "NFX pump simulation", cluster: "NFX", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "NFX turbomachinery", cluster: "NFX", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "NFX italiano", cluster: "NFX", priority: "P2", lang: "IT", intent: "Branded", page: "NFX product" },
-    { kw: "NFX CFD italiano", cluster: "NFX", priority: "P2", lang: "IT", intent: "Product", page: "NFX product" },
-    { kw: "NFX analisi fluidodinamica", cluster: "NFX", priority: "P2", lang: "IT", intent: "Product", page: "NFX product" },
-    { kw: "NFX vs Fluent italiano", cluster: "NFX", priority: "P2", lang: "IT", intent: "Comparison", page: "NFX vs Fluent" },
-    { kw: "NFX analisi termica", cluster: "NFX", priority: "P3", lang: "IT", intent: "Product", page: "Blog" },
-    { kw: "NFX simulazione pompe", cluster: "NFX", priority: "P3", lang: "IT", intent: "Product", page: "Blog" },
-
-    // MTS
-    { kw: "midas MTS", cluster: "MTS", priority: "P2", lang: "EN", intent: "Branded", page: "MTS page" },
-    { kw: "MTS CAE package", cluster: "MTS", priority: "P2", lang: "EN", intent: "Product", page: "MTS page" },
-    { kw: "MTS Advanced", cluster: "MTS", priority: "P2", lang: "EN", intent: "Product", page: "MTS pricing" },
-    { kw: "MTS Professional", cluster: "MTS", priority: "P2", lang: "EN", intent: "Product", page: "MTS pricing" },
-    { kw: "MTS price", cluster: "MTS", priority: "P2", lang: "EN", intent: "Commercial", page: "MTS pricing" },
-    { kw: "MTS license", cluster: "MTS", priority: "P3", lang: "EN", intent: "Commercial", page: "MTS pricing" },
-    { kw: "MTS vs Ansys bundle", cluster: "MTS", priority: "P3", lang: "EN", intent: "Comparison", page: "Blog" },
-    { kw: "MTS all-in-one CAE", cluster: "MTS", priority: "P3", lang: "EN", intent: "Product", page: "Blog" },
-    { kw: "MTS maintenance", cluster: "MTS", priority: "P3", lang: "EN", intent: "Product", page: "MTS pricing" },
-    { kw: "MTS prezzo", cluster: "MTS", priority: "P1", lang: "IT", intent: "Commercial", page: "MTS pricing" },
-    { kw: "MTS italiano", cluster: "MTS", priority: "P1", lang: "IT", intent: "Branded", page: "MTS page" },
-    { kw: "MTS pacchetto CAE", cluster: "MTS", priority: "P2", lang: "IT", intent: "Product", page: "MTS page" },
-    { kw: "MTS struttura fluido", cluster: "MTS", priority: "P3", lang: "IT", intent: "Product", page: "Blog" },
-
-    // Comparison
-    { kw: "MeshFree vs SimSolid", cluster: "Comparison", priority: "P1", lang: "EN", intent: "Comparison", page: "Comparison hub" },
-    { kw: "MeshFree vs Ansys", cluster: "Comparison", priority: "P1", lang: "EN", intent: "Comparison", page: "Comparison hub" },
-    { kw: "MeshFree vs Abaqus", cluster: "Comparison", priority: "P1", lang: "EN", intent: "Comparison", page: "Comparison hub" },
-    { kw: "best CAE tools 2027", cluster: "Comparison", priority: "P1", lang: "EN", intent: "Comparison", page: "Blog" },
-    { kw: "SimSolid alternative", cluster: "Comparison", priority: "P1", lang: "EN", intent: "Comparison", page: "Alternative hub" },
-    { kw: "Ansys alternative", cluster: "Comparison", priority: "P2", lang: "EN", intent: "Comparison", page: "Alternative hub" },
-    { kw: "Abaqus alternative", cluster: "Comparison", priority: "P2", lang: "EN", intent: "Comparison", page: "Alternative hub" },
-    { kw: "affordable CAE software", cluster: "Comparison", priority: "P2", lang: "EN", intent: "Comparison", page: "Alternative hub" },
-    { kw: "CAE software comparison", cluster: "Comparison", priority: "P2", lang: "EN", intent: "Comparison", page: "Blog" },
-    { kw: "best FEA software 2027", cluster: "Comparison", priority: "P2", lang: "EN", intent: "Comparison", page: "Blog" },
-    { kw: "best CFD software 2027", cluster: "Comparison", priority: "P2", lang: "EN", intent: "Comparison", page: "Blog" },
-    { kw: "Nastran alternative", cluster: "Comparison", priority: "P3", lang: "EN", intent: "Comparison", page: "Alternative hub" },
-    { kw: "COMSOL alternative", cluster: "Comparison", priority: "P3", lang: "EN", intent: "Comparison", page: "Alternative hub" },
-    { kw: "SimScale alternative", cluster: "Comparison", priority: "P3", lang: "EN", intent: "Comparison", page: "Alternative hub" },
-    { kw: "SimSolid review criticism", cluster: "Comparison", priority: "P2", lang: "EN", intent: "Comparison", page: "Comparison hub" },
-    { kw: "confronto MeshFree SimSolid", cluster: "Comparison", priority: "P1", lang: "IT", intent: "Comparison", page: "Pillar confronto" },
-    { kw: "alternativa SimSolid", cluster: "Comparison", priority: "P1", lang: "IT", intent: "Comparison", page: "Pillar confronto" },
-    { kw: "alternativa Ansys", cluster: "Comparison", priority: "P2", lang: "IT", intent: "Comparison", page: "Alternative hub" },
-    { kw: "alternativa Abaqus", cluster: "Comparison", priority: "P2", lang: "IT", intent: "Comparison", page: "Alternative hub" },
-    { kw: "software CAE economico", cluster: "Comparison", priority: "P2", lang: "IT", intent: "Comparison", page: "Alternative hub" },
-    { kw: "CAE software confronto", cluster: "Comparison", priority: "P3", lang: "IT", intent: "Comparison", page: "Blog" },
-    { kw: "SimSolid accuratezza", cluster: "Comparison", priority: "P2", lang: "IT", intent: "Comparison", page: "Pillar confronto" },
-
-    // Problem-aware
-    { kw: "CAE without meshing", cluster: "Problem-aware", priority: "P1", lang: "EN", intent: "Problem-aware", page: "Pillar no mesh" },
-    { kw: "no mesh simulation", cluster: "Problem-aware", priority: "P1", lang: "EN", intent: "Problem-aware", page: "Pillar no mesh" },
-    { kw: "meshing bottleneck", cluster: "Problem-aware", priority: "P1", lang: "EN", intent: "Problem-aware", page: "Blog" },
-    { kw: "simulation without mesh", cluster: "Problem-aware", priority: "P1", lang: "EN", intent: "Problem-aware", page: "Pillar no mesh" },
-    { kw: "CAD to result", cluster: "Problem-aware", priority: "P2", lang: "EN", intent: "Problem-aware", page: "Blog" },
-    { kw: "design stage validation", cluster: "Problem-aware", priority: "P2", lang: "EN", intent: "Problem-aware", page: "Blog" },
-    { kw: "fast structural analysis", cluster: "Problem-aware", priority: "P2", lang: "EN", intent: "Problem-aware", page: "Blog" },
-    { kw: "simulation for design engineers", cluster: "Problem-aware", priority: "P2", lang: "EN", intent: "Problem-aware", page: "Solution designers" },
-    { kw: "meshless FEA", cluster: "Problem-aware", priority: "P2", lang: "EN", intent: "Problem-aware", page: "Pillar no mesh" },
-    { kw: "CAE for non-specialists", cluster: "Problem-aware", priority: "P3", lang: "EN", intent: "Problem-aware", page: "Solution designers" },
-    { kw: "eliminate geometry cleanup", cluster: "Problem-aware", priority: "P3", lang: "EN", intent: "Problem-aware", page: "Blog" },
-    { kw: "software CAE senza mesh", cluster: "Problem-aware", priority: "P1", lang: "IT", intent: "Problem-aware", page: "Pillar senza mesh" },
-    { kw: "analisi FEM senza meshing", cluster: "Problem-aware", priority: "P1", lang: "IT", intent: "Problem-aware", page: "Pillar senza mesh" },
-    { kw: "simulazione meshless", cluster: "Problem-aware", priority: "P1", lang: "IT", intent: "Problem-aware", page: "Pillar senza mesh" },
-    { kw: "analisi strutturale senza mesh", cluster: "Problem-aware", priority: "P1", lang: "IT", intent: "Problem-aware", page: "Pillar senza mesh" },
-    { kw: "CAE per progettisti", cluster: "Problem-aware", priority: "P1", lang: "IT", intent: "Problem-aware", page: "Solution designers" },
-    { kw: "meshless CAE", cluster: "Problem-aware", priority: "P2", lang: "IT", intent: "Problem-aware", page: "Pillar senza mesh" },
-    { kw: "simulazione veloce CAD", cluster: "Problem-aware", priority: "P2", lang: "IT", intent: "Problem-aware", page: "Blog" },
-    { kw: "validazione progetto senza mesh", cluster: "Problem-aware", priority: "P2", lang: "IT", intent: "Problem-aware", page: "Blog" },
-    { kw: "CAE per ufficio tecnico", cluster: "Problem-aware", priority: "P2", lang: "IT", intent: "Problem-aware", page: "Solution ufficio tecnico" },
-    { kw: "simulazione per ufficio tecnico", cluster: "Problem-aware", priority: "P2", lang: "IT", intent: "Problem-aware", page: "Solution ufficio tecnico" },
-
-    // Trust
-    { kw: "NAFEMS validation", cluster: "Trust", priority: "P1", lang: "EN", intent: "Trust", page: "NAFEMS trust" },
-    { kw: "FEA accuracy comparison", cluster: "Trust", priority: "P2", lang: "EN", intent: "Trust", page: "NAFEMS trust" },
-    { kw: "meshless accuracy", cluster: "Trust", priority: "P2", lang: "EN", intent: "Trust", page: "NAFEMS trust" },
-    { kw: "SimSolid accuracy", cluster: "Trust", priority: "P2", lang: "EN", intent: "Trust", page: "Comparison hub" },
-    { kw: "FEA benchmark", cluster: "Trust", priority: "P3", lang: "EN", intent: "Trust", page: "Blog" },
-    { kw: "validazione NAFEMS", cluster: "Trust", priority: "P1", lang: "IT", intent: "Trust", page: "NAFEMS trust" },
-    { kw: "MeshFree accuratezza", cluster: "Trust", priority: "P2", lang: "IT", intent: "Trust", page: "NAFEMS trust" },
-    { kw: "benchmark MeshFree", cluster: "Trust", priority: "P2", lang: "IT", intent: "Trust", page: "Blog" },
-    { kw: "accuratezza simulazione", cluster: "Trust", priority: "P3", lang: "IT", intent: "Trust", page: "Blog" },
-    { kw: "confronto accuratezza FEM", cluster: "Trust", priority: "P3", lang: "IT", intent: "Trust", page: "Blog" },
-
-    // Industry
-    { kw: "CAE for automotive", cluster: "Industry", priority: "P3", lang: "EN", intent: "Industry", page: "Blog" },
-    { kw: "CAE for industrial machinery", cluster: "Industry", priority: "P3", lang: "EN", intent: "Industry", page: "Blog" },
-    { kw: "CAE for electronics cooling", cluster: "Industry", priority: "P3", lang: "EN", intent: "Industry", page: "Blog" },
-    { kw: "CAE for pump design", cluster: "Industry", priority: "P3", lang: "EN", intent: "Industry", page: "Blog" },
-    { kw: "CAE for HVAC", cluster: "Industry", priority: "P3", lang: "EN", intent: "Industry", page: "Blog" },
-    { kw: "CAE for consumer products", cluster: "Industry", priority: "P3", lang: "EN", intent: "Industry", page: "Blog" },
-    { kw: "CAE for robotics", cluster: "Industry", priority: "P3", lang: "EN", intent: "Industry", page: "Blog" },
-    { kw: "CAE for rail", cluster: "Industry", priority: "P3", lang: "EN", intent: "Industry", page: "Blog" },
-    { kw: "CAE for aerospace", cluster: "Industry", priority: "P3", lang: "EN", intent: "Industry", page: "Blog" },
-    { kw: "CAE progettazione meccanica", cluster: "Industry", priority: "P2", lang: "IT", intent: "Industry", page: "Blog" },
-    { kw: "simulazione industriale", cluster: "Industry", priority: "P2", lang: "IT", intent: "Industry", page: "Blog" },
-    { kw: "analisi FEM automobilistico", cluster: "Industry", priority: "P3", lang: "IT", intent: "Industry", page: "Blog" },
-    { kw: "simulazione scambiatori calore", cluster: "Industry", priority: "P3", lang: "IT", intent: "Industry", page: "Blog" },
-    { kw: "simulazione pompe", cluster: "Industry", priority: "P3", lang: "IT", intent: "Industry", page: "Blog" },
-    { kw: "simulazione HVAC", cluster: "Industry", priority: "P3", lang: "IT", intent: "Industry", page: "Blog" },
-    { kw: "simulazione macchine industriali", cluster: "Industry", priority: "P3", lang: "IT", intent: "Industry", page: "Blog" },
-    { kw: "analisi FEM robotica", cluster: "Industry", priority: "P3", lang: "IT", intent: "Industry", page: "Blog" },
-    { kw: "analisi FEM ferroviario", cluster: "Industry", priority: "P3", lang: "IT", intent: "Industry", page: "Blog" },
-    { kw: "simulazione aerospaziale", cluster: "Industry", priority: "P3", lang: "IT", intent: "Industry", page: "Blog" },
-    { kw: "simulazione elettronica", cluster: "Industry", priority: "P3", lang: "IT", intent: "Industry", page: "Blog" },
-
-    // Branded
-    { kw: "midas mechanical", cluster: "Branded", priority: "P1", lang: "EN", intent: "Branded", page: "Homepage" },
-    { kw: "efem it", cluster: "Branded", priority: "P1", lang: "EN", intent: "Branded", page: "EFEM homepage" },
-    { kw: "midas italia", cluster: "Branded", priority: "P1", lang: "EN", intent: "Branded", page: "Homepage" },
-    { kw: "midas mechanical italia", cluster: "Branded", priority: "P1", lang: "IT", intent: "Branded", page: "Homepage" },
-    { kw: "efem italia", cluster: "Branded", priority: "P1", lang: "IT", intent: "Branded", page: "EFEM homepage" },
-    { kw: "midasit italia", cluster: "Branded", priority: "P1", lang: "EN", intent: "Branded", page: "Homepage" },
-    { kw: "midas distributor italy", cluster: "Branded", priority: "P2", lang: "EN", intent: "Branded", page: "Homepage" },
-    { kw: "efem simulation team", cluster: "Branded", priority: "P2", lang: "EN", intent: "Branded", page: "EFEM homepage" },
-    { kw: "distributore midas italia", cluster: "Branded", priority: "P2", lang: "IT", intent: "Branded", page: "Homepage" },
-    { kw: "midasit distributore", cluster: "Branded", priority: "P2", lang: "IT", intent: "Branded", page: "Homepage" },
-    { kw: "team simulazione efem", cluster: "Branded", priority: "P2", lang: "IT", intent: "Branded", page: "EFEM homepage" }
+    { kw: "software CAE senza mesh", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Pillar senza mesh" },
+    { kw: "analisi FEM senza meshing", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Pillar senza mesh" },
+    { kw: "confronto MeshFree SimSolid", cluster: "Comparison", priority: "P1", lang: "IT", page: "Pillar confronto" },
+    { kw: "MeshFree vs SimSolid", cluster: "Comparison", priority: "P1", lang: "EN", page: "Comparison hub" },
+    { kw: "MeshFree NAFEMS validation", cluster: "Trust", priority: "P1", lang: "EN", page: "NAFEMS trust" },
+    { kw: "MeshFree prova gratuita", cluster: "MeshFree", priority: "P1", lang: "IT", page: "MeshFree trial" },
+    { kw: "alternativa ad Ansys", cluster: "Comparison", priority: "P2", lang: "IT", page: "Alternative hub" },
+    { kw: "NFX vs Fluent", cluster: "NFX", priority: "P2", lang: "EN", page: "NFX vs Fluent" },
+    { kw: "MTS prezzo", cluster: "MTS", priority: "P1", lang: "IT", page: "MTS pricing" },
+    { kw: "CAE without meshing", cluster: "Problem-aware", priority: "P1", lang: "EN", page: "Pillar no mesh" },
+    { kw: "SimSolid alternative", cluster: "Comparison", priority: "P1", lang: "EN", page: "Alternative hub" },
+    { kw: "MeshFree accuracy", cluster: "Trust", priority: "P2", lang: "EN", page: "NAFEMS trust" },
+    { kw: "CAE per progettisti", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Solution designers" },
+    { kw: "MTS CAE package", cluster: "MTS", priority: "P2", lang: "EN", page: "MTS page" }
   ];
 
-  // Keyword filter state
-  const state = {
-    search: '',
-    priority: 'all',
-    lang: 'all',
-    cluster: 'all'
-  };
-
+  // 6. Render Keywords
   const kwBody = document.getElementById('kw-body');
-  const kwCount = document.getElementById('kw-count');
+  let currentPriority = 'all';
+  let currentSearch = '';
 
   function renderKeywords() {
     const filtered = KEYWORDS.filter(k => {
-      if (state.priority !== 'all' && k.priority !== state.priority) return false;
-      if (state.lang !== 'all' && k.lang !== state.lang) return false;
-      if (state.cluster !== 'all' && k.cluster !== state.cluster) return false;
-      if (state.search && !k.kw.toLowerCase().includes(state.search.toLowerCase())) return false;
+      if (currentPriority !== 'all' && k.priority !== currentPriority) return false;
+      if (currentSearch && !k.kw.toLowerCase().includes(currentSearch.toLowerCase())) return false;
       return true;
     });
 
-    kwCount.textContent = filtered.length + ' keyword' + (filtered.length === 1 ? '' : 's');
-
     if (filtered.length === 0) {
-      kwBody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:48px; color:#6e6e73;">No keywords match these filters.</td></tr>';
+      kwBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:32px; color:#6e6e73;">No keywords match.</td></tr>';
       return;
     }
 
@@ -1303,49 +591,29 @@
         <td>${k.cluster}</td>
         <td><span class="tag tag-${k.priority.toLowerCase()}">${k.priority}</span></td>
         <td><span class="tag tag-${k.lang.toLowerCase()}">${k.lang}</span></td>
-        <td>${k.intent}</td>
         <td>${k.page}</td>
       </tr>
     `).join('');
   }
 
-  // Search input
+  // Event Listeners for Keyword Filters
   document.getElementById('kw-search').addEventListener('input', (e) => {
-    state.search = e.target.value;
+    currentSearch = e.target.value;
     renderKeywords();
   });
 
-  // Priority pills
   document.querySelectorAll('#kw-priority-pills .pill').forEach(pill => {
     pill.addEventListener('click', () => {
       document.querySelectorAll('#kw-priority-pills .pill').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
-      state.priority = pill.dataset.priority;
+      currentPriority = pill.dataset.priority;
       renderKeywords();
     });
   });
 
-  // Language pills
-  document.querySelectorAll('#kw-lang-pills .pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('#kw-lang-pills .pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      state.lang = pill.dataset.lang;
-      renderKeywords();
-    });
-  });
-
-  // Cluster pills
-  document.querySelectorAll('#kw-cluster-pills .pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('#kw-cluster-pills .pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      state.cluster = pill.dataset.cluster;
-      renderKeywords();
-    });
-  });
-
+  // Init
   renderKeywords();
+
 </script>
 </body>
 </html>
