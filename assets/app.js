@@ -10,6 +10,14 @@
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const strip = s => { const d = document.createElement('div'); d.innerHTML = s; return d.textContent || ''; };
   const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const IT = document.documentElement.lang === 'it';
+  const L = (en, it) => IT ? it : en;
+  const catIT = { 'Core Product': 'Prodotto core', 'Competitor & Comparison': 'Concorrenti e confronti', 'Problem-Aware': 'Consapevolezza del problema', 'Trust & Industry': 'Fiducia e settore', 'Migration & Branded': 'Migrazione e brand' };
+  const typeIT = { 'Linear Static': 'Statica lineare', 'Modal': 'Modale', 'Thermal': 'Termica' };
+  const catL = c => IT ? (catIT[c] || c) : c;
+  const typeL = t => IT ? (typeIT[t] || t) : t;
+  const langBtn = document.getElementById('lang-btn');
+  if (langBtn) langBtn.addEventListener('click', e => { e.preventDefault(); location.href = langBtn.getAttribute('href') + location.hash; });
 
   function toast(msg) {
     const t = $('#toast'); t.textContent = msg; t.classList.add('show');
@@ -21,8 +29,8 @@
       const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
       try { document.execCommand('copy'); } catch (_) {} ta.remove();
     }
-    if (btn) { const o = btn.textContent; btn.textContent = 'Copied'; btn.classList.add('done'); setTimeout(() => { btn.textContent = o; btn.classList.remove('done'); }, 1500); }
-    toast('Copied to clipboard');
+    if (btn) { const o = btn.textContent; btn.textContent = L('Copied', 'Copiato'); btn.classList.add('done'); setTimeout(() => { btn.textContent = o; btn.classList.remove('done'); }, 1500); }
+    toast(L('Copied to clipboard', 'Copiato negli appunti'));
   }
   $$('[data-copy]').forEach(b => b.addEventListener('click', () => copy($('#' + b.dataset.copy).innerText, b)));
 
@@ -33,7 +41,7 @@
     if (a) return a;
     return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
-  function paintThemeLabel() { $('#theme-lbl').textContent = currentTheme() === 'dark' ? 'Light' : 'Dark'; }
+  function paintThemeLabel() { $('#theme-lbl').textContent = currentTheme() === 'dark' ? L('Light', 'Chiaro') : L('Dark', 'Scuro'); }
   $('#theme-btn').addEventListener('click', () => {
     const next = currentTheme() === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next); store.set('efem-theme-v', next);
@@ -73,7 +81,7 @@
       const abs = Math.abs(parseFloat(r.delta));
       return `<tr>
         <td class="mono strong">${esc(r.id)}<span class="sub">${esc(r.desc)}</span></td>
-        <td>${esc(r.type)}</td>
+        <td>${esc(typeL(r.type))}</td>
         <td class="mono">${esc(r.ref)}</td>
         <td class="mono strong">${esc(r.ibm)}</td>
         <td><span class="delta">${esc(r.delta)}</span></td>
@@ -82,7 +90,7 @@
     }).join('');
     const errs = rows.map(r => Math.abs(parseFloat(r.delta)));
     const mean = errs.reduce((a, b) => a + b, 0) / (errs.length || 1);
-    $('#nafems-summary').innerHTML = `${rows.length} benchmark${rows.length === 1 ? '' : 's'} · mean |error| <b>${mean.toFixed(2)}%</b> · worst <b>${Math.max(...errs).toFixed(2)}%</b>. Bar scale: 4% = full width.`;
+    $('#nafems-summary').innerHTML = IT ? `${rows.length} benchmark · errore medio |e| <b>${mean.toFixed(2)}%</b> · peggiore <b>${Math.max(...errs).toFixed(2)}%</b>. Scala barre: 4% = larghezza piena.` : `${rows.length} benchmark${rows.length === 1 ? '' : 's'} · mean |error| <b>${mean.toFixed(2)}%</b> · worst <b>${Math.max(...errs).toFixed(2)}%</b>. Bar scale: 4% = full width.`;
   }
   $('#nafems-filter').addEventListener('change', renderNafems);
 
@@ -94,7 +102,7 @@
     allKeywords.forEach(k => { cats[k.cat] = cats[k.cat] || { EN: 0, IT: 0 }; cats[k.cat][k.lang === 'Italian' ? 'IT' : 'EN']++; });
     $('#kw-mix').innerHTML = Object.entries(cats).map(([c, v]) => `
       <button class="total" data-cat="${esc(c)}" style="text-align:left;cursor:pointer;font:inherit;color:inherit">
-        <div class="k">${esc(c)}</div>
+        <div class="k">${esc(catL(c))}</div>
         <div class="v">${v.EN + v.IT}</div>
         <div class="meta" style="margin-top:6px">EN ${v.EN} · IT ${v.IT}</div>
       </button>`).join('');
@@ -106,7 +114,7 @@
     const q = $('#kw-search-input').value.toLowerCase().trim();
     const lang = $('#kw-lang-select').value, cat = $('#kw-cat-select').value;
     kwFiltered = allKeywords.filter(k =>
-      (!q || k.term.toLowerCase().includes(q) || k.intent.toLowerCase().includes(q) || k.hub.toLowerCase().includes(q)) &&
+      (!q || k.term.toLowerCase().includes(q) || (k.intentLabel || k.intent).toLowerCase().includes(q) || k.hub.toLowerCase().includes(q)) &&
       (lang === 'ALL' || k.lang === lang) && (cat === 'ALL' || k.cat === cat));
     $('#kw-visible-badge').textContent = `${kwFiltered.length} / ${allKeywords.length}`;
     $$('#kw-mix [data-cat]').forEach(b => b.style.borderColor = b.dataset.cat === cat ? 'var(--signal)' : '');
@@ -115,10 +123,10 @@
       <td class="mono" style="color:var(--muted)">${k.id}</td>
       <td class="strong">${hl(k.term)}</td>
       <td><span class="lang ${k.lang === 'Italian' ? 'it' : 'en'}">${k.lang === 'Italian' ? 'IT' : 'EN'}</span></td>
-      <td>${esc(k.cat)}</td>
-      <td style="color:var(--muted)">${esc(k.intent)}</td>
+      <td>${esc(catL(k.cat))}</td>
+      <td style="color:var(--muted)">${esc(k.intentLabel || k.intent)}</td>
       <td class="mono" style="color:var(--signal)">${esc(k.hub)}</td></tr>`).join('')
-      : `<tr><td colspan="6" class="empty">No keywords match. Clear the filters to see all ${allKeywords.length}.</td></tr>`;
+      : `<tr><td colspan="6" class="empty">${L('No keywords match. Clear the filters to see all', 'Nessuna keyword corrisponde. Azzera i filtri per vederle tutte e')} ${allKeywords.length}.</td></tr>`;
   }
   ['#kw-search-input', '#kw-lang-select', '#kw-cat-select'].forEach(s => $(s).addEventListener('input', filterKw));
   $('#kw-csv').addEventListener('click', () => {
@@ -127,7 +135,7 @@
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
     a.download = 'efem-keywords.csv'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    toast(`Exported ${kwFiltered.length} keywords`);
+    toast(L(`Exported ${kwFiltered.length} keywords`, `Esportate ${kwFiltered.length} keyword`));
   });
 
   /* ---------- FAQs ---------- */
@@ -137,13 +145,13 @@
     const q = $('#faq-search-input').value.toLowerCase().trim();
     const lang = $('#faq-lang-filter').value;
     faqFiltered = faqData.filter(i => (!q || i.q.toLowerCase().includes(q) || i.a.toLowerCase().includes(q) || String(i.id) === q) && (lang === 'ALL' || i.lang === lang));
-    $('#faq-counter-label').textContent = `Showing ${faqFiltered.length} of ${faqData.length} technical Q&As`;
+    $('#faq-counter-label').textContent = L(`Showing ${faqFiltered.length} of ${faqData.length} technical Q&As`, `${faqFiltered.length} di ${faqData.length} domande tecniche visualizzate`);
     const hl = s => q ? esc(s).replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), m => `<mark>${m}</mark>`) : esc(s);
     $('#faq-accordion-list').innerHTML = faqFiltered.length ? faqFiltered.map(i => `
       <details class="faq" id="faq-${i.id}"${q ? ' open' : ''}>
         <summary><span class="id">#${String(i.id).padStart(3, '0')}</span><span class="lang ${i.lang === 'IT' ? 'it' : 'en'}">${i.lang}</span><span class="q">${hl(i.q)}</span>${chev}</summary>
         <div class="a">${hl(i.a)}</div>
-      </details>`).join('') : '<div class="empty">No questions match that search.</div>';
+      </details>`).join('') : `<div class="empty">${L('No questions match that search.', 'Nessuna domanda corrisponde alla ricerca.')}</div>`;
   }
   $('#faq-search-input').addEventListener('input', renderFaqs);
   $('#faq-lang-filter').addEventListener('change', renderFaqs);
@@ -155,7 +163,7 @@
       mainEntity: faqFiltered.map(i => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } }))
     };
     copy(JSON.stringify(json, null, 2), e.currentTarget);
-    toast(`FAQPage JSON-LD for ${faqFiltered.length} questions copied`);
+    toast(L(`FAQPage JSON-LD for ${faqFiltered.length} questions copied`, `FAQPage JSON-LD copiato per ${faqFiltered.length} domande`));
   });
 
   /* ---------- Roadmap ---------- */
@@ -185,7 +193,7 @@
     const boxes = $$('#roadmap-grid input');
     const done = boxes.filter(b => b.checked).length;
     const pct = boxes.length ? Math.round(done / boxes.length * 100) : 0;
-    $('#roadmap-pct-text').textContent = `${pct}% Complete (${done} / ${boxes.length})`;
+    $('#roadmap-pct-text').textContent = L(`${pct}% Complete (${done} / ${boxes.length})`, `${pct}% completato (${done} / ${boxes.length})`);
     $('#rm-meter').style.width = pct + '%';
     $('#rail-rm').textContent = pct + '%';
     $$('#roadmap-grid .phase').forEach(ph => {
@@ -193,7 +201,7 @@
       $('[data-pct]', ph).textContent = `${d}/${b.length}`; $('[data-bar]', ph).style.width = p + '%';
     });
   }
-  $('#rm-reset').addEventListener('click', () => { if (confirm('Clear all roadmap checkmarks in this browser?')) { rmState = {}; store.set(RM_KEY, rmState); renderRoadmap(); } });
+  $('#rm-reset').addEventListener('click', () => { if (confirm(L('Clear all roadmap checkmarks in this browser?', 'Azzerare tutte le spunte della roadmap in questo browser?'))) { rmState = {}; store.set(RM_KEY, rmState); renderRoadmap(); } });
 
   /* ---------- Charts ---------- */
   let reviewChart, tcoChart;
@@ -207,13 +215,13 @@
   function reviewColors() { return [css('--bad'), css('--bad'), css('--warn'), css('--info'), css('--muted')]; }
   function tcoColors() { return [css('--signal'), css('--warn'), css('--muted')]; }
   function initCharts() {
-    if (!window.Chart) { $$('.chart').forEach(c => c.innerHTML = '<div class="empty">Chart library did not load. The data table shows the same numbers.</div>'); return; }
+    if (!window.Chart) { $$('.chart').forEach(c => c.innerHTML = `<div class="empty">${L('Chart library did not load. The data table shows the same numbers.', 'La libreria dei grafici non si è caricata. La tabella mostra gli stessi dati.')}</div>`); return; }
     chartDefaults();
     reviewChart = new Chart($('#reviewGateChart'), {
       type: 'bar',
       data: {
-        labels: ['midas MeshFree (Current)', 'midas NFX (Current)', 'AI LLM Inclusion Gate', 'Simcenter Simsolid', 'Ansys Mechanical'],
-        datasets: [{ label: 'Verified B2B Reviews', data: [0.6, 1, 10, 34, 707], backgroundColor: reviewColors(), borderRadius: 4, barThickness: 22 }]
+        labels: [L('midas MeshFree (Current)', 'midas MeshFree (attuale)'), L('midas NFX (Current)', 'midas NFX (attuale)'), L('AI LLM Inclusion Gate', 'Soglia di inclusione LLM'), 'Simcenter Simsolid', 'Ansys Mechanical'],
+        datasets: [{ label: L('Verified B2B Reviews', 'Recensioni B2B verificate'), data: [0.6, 1, 10, 34, 707], backgroundColor: reviewColors(), borderRadius: 4, barThickness: 22 }]
       },
       options: {
         indexAxis: 'y', responsive: true, maintainAspectRatio: false, layout: { padding: { left: 8 } },
@@ -223,18 +231,18 @@
         },
         plugins: {
           legend: { display: false },
-          tooltip: { callbacks: { label: ctx => ctx.dataIndex === 0 ? ' 0 Verified Reviews (Critical Gap)' : ` ${ctx.raw} Verified Reviews` } }
+          tooltip: { callbacks: { label: ctx => ctx.dataIndex === 0 ? L(' 0 Verified Reviews (Critical Gap)', ' 0 recensioni verificate (gap critico)') : ` ${ctx.raw} ${L('Verified Reviews', 'recensioni verificate')}` } }
         }
       }
     });
     tcoChart = new Chart($('#tcoChartCanvas'), {
       type: 'bar',
       data: {
-        labels: ['MIDAS MTS (All-in-One)', 'Simcenter Simsolid + CFD', 'Ansys / Abaqus Suite'],
+        labels: [L('MIDAS MTS (All-in-One)', 'MIDAS MTS (tutto in uno)'), 'Simcenter Simsolid + CFD', L('Ansys / Abaqus Suite', 'Suite Ansys / Abaqus')],
         datasets: [
-          { label: 'Software Licenses (€k)', data: [81, 252, 468], backgroundColor: tcoColors()[0], borderRadius: 3 },
-          { label: 'HPC / CPU Core Tax (€k)', data: [0, 15, 36], backgroundColor: tcoColors()[1], borderRadius: 3 },
-          { label: 'Meshing & Cleanup Labor (€k)', data: [92, 92, 263], backgroundColor: tcoColors()[2], borderRadius: 3 }
+          { label: L('Software Licenses (€k)', 'Licenze software (k€)'), data: [81, 252, 468], backgroundColor: tcoColors()[0], borderRadius: 3 },
+          { label: L('HPC / CPU Core Tax (€k)', 'Costi HPC / core CPU (k€)'), data: [0, 15, 36], backgroundColor: tcoColors()[1], borderRadius: 3 },
+          { label: L('Meshing & Cleanup Labor (€k)', 'Lavoro di meshing e pulizia (k€)'), data: [92, 92, 263], backgroundColor: tcoColors()[2], borderRadius: 3 }
         ]
       },
       options: {
@@ -266,9 +274,9 @@
   /* ---------- TCO (model identical to the original hub) ---------- */
   function updateTCO() {
     const engineers = +$('#tco-engineers').value, cores = +$('#tco-cores').value, hours = +$('#tco-hours').value, needCfd = $('#tco-cfd').checked;
-    $('#lbl-engineers').textContent = `${engineers} Engineer${engineers === 1 ? '' : 's'}`;
-    $('#lbl-cores').textContent = `${cores} Cores`;
-    $('#lbl-hours').textContent = `${hours} hrs/wk`;
+    $('#lbl-engineers').textContent = IT ? `${engineers} ingegner${engineers === 1 ? 'e' : 'i'}` : `${engineers} Engineer${engineers === 1 ? '' : 's'}`;
+    $('#lbl-cores').textContent = `${cores} core`;
+    $('#lbl-hours').textContent = L(`${hours} hrs/wk`, `${hours} h/sett`);
     const extraCorePacks = Math.max(0, Math.ceil((cores - 8) / 8));
     const annualMeshingLaborTrad = (engineers * hours * 46 * 55) / 1000;
     const annualMeshingLaborMidas = annualMeshingLaborTrad * 0.35;
@@ -281,8 +289,12 @@
     $('#stat-midas-total').textContent = `€${midasTotal}k`;
     $('#stat-simsolid-total').textContent = `€${simsolidTotal}k`;
     $('#stat-ansys-total').textContent = `€${ansysTotal}k`;
-    $('#tco-savings-banner').innerHTML = `<b>3-Year Net Savings: €${ansysTotal - midasTotal}k vs. Ansys/Abaqus · €${simsolidTotal - midasTotal}k vs. SimSolid</b>
-      <p>Includes €0 CPU/GPU core fees and €${Math.round((annualMeshingLaborTrad - annualMeshingLaborMidas) * 3)}k in reclaimed engineering hours.</p>`;
+    const reclaimed = Math.round((annualMeshingLaborTrad - annualMeshingLaborMidas) * 3);
+    $('#tco-savings-banner').innerHTML = IT
+      ? `<b>Risparmio netto a 3 anni: €${ansysTotal - midasTotal}k vs. Ansys/Abaqus · €${simsolidTotal - midasTotal}k vs. SimSolid</b>
+      <p>Include €0 di costi per core CPU/GPU e €${reclaimed}k di ore di ingegneria recuperate.</p>`
+      : `<b>3-Year Net Savings: €${ansysTotal - midasTotal}k vs. Ansys/Abaqus · €${simsolidTotal - midasTotal}k vs. SimSolid</b>
+      <p>Includes €0 CPU/GPU core fees and €${reclaimed}k in reclaimed engineering hours.</p>`;
     if (tcoChart) {
       tcoChart.data.datasets[0].data = [midasLic, simsolidLic, ansysLic];
       tcoChart.data.datasets[1].data = [midasHpc, simsolidHpc, ansysHpc];
@@ -295,22 +307,22 @@
   /* ---------- Command palette ---------- */
   const index = [];
   function buildIndex() {
-    $$('.sec').forEach(s => { const h = $('h2', s); if (h) index.push({ t: 'Section', x: h.textContent, sub: ($('.sec-kicker', s) || {}).textContent || '', href: '#' + s.id }); });
-    $$('.report .rp-h2, .report .rp-h3').forEach((h, i) => { if (!h.id) h.id = 'rph-' + i; index.push({ t: 'Report', x: h.textContent.replace(/^\d+\s*/, ''), sub: 'Full audit report', href: '#' + h.id }); });
+    $$('.sec').forEach(s => { const h = $('h2', s); if (h) index.push({ t: L('Section', 'Sezione'), sec: true, x: h.textContent, sub: ($('.sec-kicker', s) || {}).textContent || '', href: '#' + s.id }); });
+    $$('.report .rp-h2, .report .rp-h3').forEach((h, i) => { if (!h.id) h.id = 'rph-' + i; index.push({ t: 'Report', x: h.textContent.replace(/^\d+\s*/, ''), sub: L('Full audit report', 'Report completo'), href: '#' + h.id }); });
     $$('.report p, .report li, .report td').forEach((p, i) => { if (!p.id) p.id = 'rpp-' + i; index.push({ t: 'Report', x: p.textContent, body: true, href: '#' + p.id }); });
     faqData.forEach(f => index.push({ t: 'FAQ ' + f.lang, x: f.q, sub: f.a, href: '#faq-' + f.id, faq: f.id }));
-    allKeywords.forEach(k => index.push({ t: 'Keyword', x: k.term, sub: `${k.cat} · ${k.hub}`, href: '#keywords-db', kw: k.term }));
+    allKeywords.forEach(k => index.push({ t: 'Keyword', x: k.term, sub: `${catL(k.cat)} · ${k.hub}`, href: '#keywords-db', kw: k.term }));
   }
   let sel = 0, results = [];
   function search(q) {
     q = q.toLowerCase().trim();
-    if (!q) { results = index.filter(r => r.t === 'Section'); }
+    if (!q) { results = index.filter(r => r.sec); }
     else {
       const words = q.split(/\s+/);
       results = index.map(r => {
         const hay = (r.x + ' ' + (r.sub || '')).toLowerCase();
         if (!words.every(w => hay.includes(w))) return null;
-        let s = r.x.toLowerCase().includes(q) ? 3 : 1; if (r.t === 'Section') s += 3; if (r.body) s -= 1;
+        let s = r.x.toLowerCase().includes(q) ? 3 : 1; if (r.sec) s += 3; if (r.body) s -= 1;
         return [s, r];
       }).filter(Boolean).sort((a, b) => b[0] - a[0]).slice(0, 40).map(x => x[1]);
     }
@@ -326,7 +338,7 @@
       <a class="pr${i === sel ? ' sel' : ''}" href="${r.href}" data-i="${i}">
         <span class="t">${esc(r.t)}</span>
         <span class="x">${r.body ? snippet(r.x, q) : esc(r.x)}${r.sub && !r.body ? `<small>${snippet(r.sub, q)}</small>` : ''}</span>
-      </a>`).join('') : '<div class="empty">Nothing found.</div>';
+      </a>`).join('') : `<div class="empty">${L('Nothing found.', 'Nessun risultato.')}</div>`;
     $$('#palette-res .pr').forEach(a => a.addEventListener('click', e => { e.preventDefault(); go(results[+a.dataset.i]); }));
   }
   function go(r) {
@@ -360,5 +372,8 @@
 
   /* ---------- Boot ---------- */
   renderNafems(); renderKwMix(); filterKw(); renderFaqs(); renderRoadmap(); buildIndex();
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const jump = () => { const t = location.hash && document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); };
+  jump(); addEventListener('load', jump); if (document.fonts) document.fonts.ready.then(jump);
   if (document.readyState === 'complete') initCharts(); else addEventListener('load', initCharts);
 })();

@@ -14,6 +14,8 @@
 <script>
   try { var t = localStorage.getItem('efem-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 </script>
+<link rel="alternate" hreflang="en" href="https://sai-kanagat.github.io/seomidas/">
+<link rel="alternate" hreflang="it" href="https://sai-kanagat.github.io/seomidas/it/">
 </head>
 <body>
 
@@ -30,6 +32,7 @@
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg>
     <span class="lbl">Search</span><kbd>/</kbd>
   </button>
+  <a class="tb-btn" id="lang-btn" href="it/" hreflang="it" lang="it" aria-label="Versione italiana"><span>IT</span></a>
   <button class="tb-btn" id="theme-btn" aria-label="Toggle light or dark theme">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>
     <span class="lbl" id="theme-lbl">Theme</span>
