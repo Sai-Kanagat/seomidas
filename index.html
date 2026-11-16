@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EFEM IT × Midas Mechanical — Strategia</title>
+<title>EFEM IT × Midas — Master Strategy Bible</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -18,66 +18,37 @@
     --text-2: #a1a1a6;
     --text-3: #6e6e73;
     --accent: #0a84ff;
-    --red: #ff6961;
-    --orange: #ffb340;
-    --blue: #4da3ff;
-    --green: #5ee085;
+    --red: #ff453a;
+    --orange: #ff9f0a;
+    --blue: #0a84ff;
+    --green: #32d74b;
+    --purple: #bf5af2;
     --radius: 12px;
   }
 
   html { -webkit-font-smoothing: antialiased; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 15px;
-    line-height: 1.5;
-    letter-spacing: -0.01em;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.5; letter-spacing: -0.01em;
     min-height: 100vh;
   }
 
-  /* HEADER & PROMINENT LANG TOGGLE */
-  .header {
-    max-width: 1120px; margin: 0 auto; padding: 60px 24px 30px;
-    display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px;
-  }
+  /* HEADER */
+  .header { max-width: 1120px; margin: 0 auto; padding: 60px 24px 30px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px; }
   .header-content { max-width: 720px; }
-  .kicker {
-    font-size: 12px; font-weight: 700; color: var(--accent);
-    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;
-  }
+  .kicker { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
   h1 { font-size: 44px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 16px; }
   .lead { font-size: 19px; color: var(--text-2); line-height: 1.4; letter-spacing: -0.015em; }
 
-  .lang-switch {
-    display: flex; background: var(--surface-2); border: 1px solid var(--border-strong);
-    border-radius: 99px; padding: 4px; gap: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  }
-  .lang-switch button {
-    background: none; border: none; color: var(--text-2);
-    font-size: 14px; font-weight: 700; padding: 8px 16px; border-radius: 99px;
-    transition: all 0.2s ease;
-  }
-  .lang-switch button.active {
-    background: var(--text); color: var(--bg);
-  }
+  .lang-switch { display: flex; background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: 99px; padding: 4px; gap: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+  .lang-switch button { background: none; border: none; color: var(--text-2); font-size: 14px; font-weight: 700; padding: 8px 16px; border-radius: 99px; transition: all 0.2s ease; cursor: pointer; }
+  .lang-switch button.active { background: var(--text); color: var(--bg); }
 
   /* NAV */
-  .nav {
-    position: sticky; top: 0; z-index: 100;
-    background: #000000; border-bottom: 1px solid var(--border);
-  }
-  .nav-inner {
-    max-width: 1120px; margin: 0 auto; padding: 0 24px;
-    display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
-  }
+  .nav { position: sticky; top: 0; z-index: 100; background: #000000; border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1120px; margin: 0 auto; padding: 0 24px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
   .nav-inner::-webkit-scrollbar { display: none; }
-  .nav-tab {
-    background: none; border: none; color: var(--text-3);
-    font-size: 14px; font-weight: 600; padding: 18px 16px;
-    border-bottom: 2px solid transparent; margin-bottom: -1px;
-    white-space: nowrap; transition: color 0.15s ease;
-  }
+  .nav-tab { background: none; border: none; color: var(--text-3); font-size: 14px; font-weight: 600; padding: 18px 16px; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; transition: color 0.15s ease; cursor: pointer; }
   .nav-tab:hover { color: var(--text); }
   .nav-tab.active { color: var(--text); border-bottom-color: var(--accent); }
 
@@ -85,102 +56,63 @@
   .section { display: none; max-width: 1120px; margin: 0 auto; padding: 48px 24px 100px; }
   .section.active { display: block; animation: fadeIn 0.3s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
   .section-heading { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
   .section-sub { font-size: 17px; color: var(--text-2); margin-bottom: 40px; max-width: 720px; }
 
   /* VISUALS GRID */
   .visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
-  .visual-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 32px; position: relative; overflow: hidden;
-  }
+  .visual-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; position: relative; overflow: hidden; }
   .visual-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 24px; color: var(--text); }
-  
-  /* 1. COMMAND CENTER MATRIX */
+
+  /* 1. MATRIX */
   .matrix { display: grid; grid-template-columns: 60px 1fr 1fr 1fr; gap: 8px; }
   .matrix-label { font-size: 11px; font-weight: 700; color: var(--text-3); text-transform: uppercase; display: flex; align-items: center; justify-content: center; }
-  .matrix-cell {
-    background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
-    padding: 12px; font-size: 12px; font-weight: 500; color: var(--text-2); text-align: center;
-    display: flex; align-items: center; justify-content: center; min-height: 60px;
-  }
+  .matrix-cell { background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 12px; font-weight: 500; color: var(--text-2); text-align: center; display: flex; align-items: center; justify-content: center; min-height: 70px; }
   .matrix-cell.highlight { border-color: var(--accent); background: rgba(10, 132, 255, 0.1); color: var(--text); }
 
   /* 2. FLYWHEEL */
   .flywheel-container { display: flex; justify-content: center; align-items: center; height: 220px; position: relative; }
-  .flywheel-ring {
-    width: 180px; height: 180px; border-radius: 50%; border: 2px dashed var(--border-strong);
-    position: relative; display: flex; justify-content: center; align-items: center;
-  }
-  .flywheel-center {
-    background: var(--surface-3); padding: 12px 20px; border-radius: 99px;
-    font-size: 13px; font-weight: 700; z-index: 2; border: 1px solid var(--border-strong);
-  }
-  .flywheel-node {
-    position: absolute; background: var(--surface); border: 1px solid var(--border);
-    padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 700;
-  }
+  .flywheel-ring { width: 180px; height: 180px; border-radius: 50%; border: 2px dashed var(--border-strong); position: relative; display: flex; justify-content: center; align-items: center; }
+  .flywheel-center { background: var(--surface-3); padding: 12px 20px; border-radius: 99px; font-size: 13px; font-weight: 700; z-index: 2; border: 1px solid var(--border-strong); }
+  .flywheel-node { position: absolute; background: var(--surface); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; }
   .flywheel-node.n1 { top: -12px; left: 50%; transform: translateX(-50%); color: var(--blue); }
   .flywheel-node.n2 { bottom: 20px; right: -20px; color: var(--orange); }
   .flywheel-node.n3 { bottom: 20px; left: -20px; color: var(--green); }
 
-  /* 3. ORBITAL HUB */
+  /* 3. ORBITAL */
   .orbital-container { display: flex; justify-content: center; align-items: center; height: 220px; position: relative; }
   .orbit { position: absolute; border-radius: 50%; border: 1px solid var(--border); display: flex; justify-content: center; align-items: center; }
   .orbit-1 { width: 100px; height: 100px; background: var(--surface-3); border-color: var(--accent); }
   .orbit-1 span { font-size: 12px; font-weight: 800; text-align: center; color: var(--text); }
   .orbit-2 { width: 180px; height: 180px; border-style: dashed; }
-  .orbit-2-node { position: absolute; background: var(--surface-2); padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+  .orbit-2-node { position: absolute; background: var(--surface-2); padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; border: 1px solid var(--border); }
   .orbit-2-node.top { top: -10px; color: var(--blue); }
   .orbit-2-node.left { left: -20px; top: 50%; color: var(--orange); }
   .orbit-2-node.right { right: -20px; top: 50%; color: var(--green); }
 
-  /* 4. SUBWAY MAP */
+  /* 4. SUBWAY */
   .subway { position: relative; padding: 20px 0; }
   .subway-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: var(--border-strong); }
   .subway-stop { position: relative; padding-left: 50px; margin-bottom: 24px; }
-  .subway-stop::before {
-    content: ''; position: absolute; left: 14px; top: 4px; width: 14px; height: 14px;
-    border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); z-index: 2;
-  }
+  .subway-stop::before { content: ''; position: absolute; left: 14px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); z-index: 2; }
   .subway-stop h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
   .subway-stop p { font-size: 12px; color: var(--text-3); }
 
-  /* STRATEGY CARDS */
-  .segmented {
-    display: inline-flex; background: var(--surface-2); padding: 4px;
-    border-radius: 99px; gap: 4px; margin-bottom: 32px; border: 1px solid var(--border-strong);
-  }
-  .segmented button {
-    background: none; border: none; color: var(--text-2);
-    font-size: 14px; font-weight: 700; padding: 10px 24px; border-radius: 99px; transition: all 0.15s ease;
-  }
+  /* CARDS & ACCORDIONS */
+  .segmented { display: inline-flex; background: var(--surface-2); padding: 4px; border-radius: 99px; gap: 4px; margin-bottom: 32px; border: 1px solid var(--border-strong); }
+  .segmented button { background: none; border: none; color: var(--text-2); font-size: 14px; font-weight: 700; padding: 10px 24px; border-radius: 99px; transition: all 0.15s ease; cursor: pointer; }
   .segmented button.active { background: var(--text); color: var(--bg); }
 
   .panel { display: none; }
   .panel.active { display: block; animation: fadeIn 0.3s ease; }
 
-  details.card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); margin-bottom: 16px; overflow: hidden;
-  }
-  details.card summary {
-    padding: 24px; cursor: pointer; list-style: none;
-    display: flex; align-items: center; justify-content: space-between;
-    font-size: 17px; font-weight: 600; color: var(--text);
-    transition: background 0.15s ease;
-  }
+  details.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; }
+  details.card summary { padding: 24px; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; font-size: 17px; font-weight: 600; color: var(--text); transition: background 0.15s ease; }
   details.card summary::-webkit-details-marker { display: none; }
   details.card summary:hover { background: var(--surface-2); }
-  details.card summary::after {
-    content: ''; width: 10px; height: 10px;
-    border-right: 2px solid var(--text-3); border-bottom: 2px solid var(--text-3);
-    transform: rotate(-45deg); transition: transform 0.2s ease; margin-top: -4px;
-  }
+  details.card summary::after { content: ''; width: 10px; height: 10px; border-right: 2px solid var(--text-3); border-bottom: 2px solid var(--text-3); transform: rotate(-45deg); transition: transform 0.2s ease; margin-top: -4px; }
   details.card[open] summary::after { transform: rotate(45deg); margin-top: 0; }
   details.card[open] summary { border-bottom: 1px solid var(--border); }
-  
   .card-body { padding: 8px 24px 24px; }
   .field { display: grid; grid-template-columns: 140px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border); }
   .field:last-child { border-bottom: none; padding-bottom: 0; }
@@ -188,46 +120,26 @@
   .field-value { color: var(--text-2); font-size: 15px; line-height: 1.6; }
   .field-value strong { color: var(--text); font-weight: 600; }
 
-  /* KEYWORDS */
-  .kw-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
-  .kw-search {
-    flex: 1; min-width: 200px; background: var(--surface); border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm); padding: 14px 20px; font-size: 15px; color: var(--text); outline: none;
-  }
-  .kw-search:focus { border-color: var(--accent); }
-  .pills { display: flex; gap: 8px; flex-wrap: wrap; }
-  .pill {
-    background: var(--surface); border: 1px solid var(--border-strong); border-radius: 99px;
-    padding: 10px 20px; font-size: 14px; font-weight: 600; color: var(--text-2); transition: all 0.15s ease;
-  }
-  .pill:hover { border-color: var(--text-3); color: var(--text); }
-  .pill.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+  /* TAGS */
+  .tag { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; display: inline-block; }
+  .tag-p1 { background: rgba(255, 69, 58, 0.15); color: var(--red); }
+  .tag-p2 { background: rgba(255, 159, 10, 0.15); color: var(--orange); }
+  .tag-p3 { background: rgba(10, 132, 255, 0.15); color: var(--blue); }
+  .tag-free { background: rgba(50, 215, 75, 0.15); color: var(--green); }
+  .tag-paid { background: rgba(191, 90, 242, 0.15); color: var(--purple); }
 
-  .kw-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; overflow-x: auto; }
-  .kw-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 700px; }
-  .kw-table th { text-align: left; padding: 16px 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); background: var(--surface-2); border-bottom: 1px solid var(--border); }
-  .kw-table td { padding: 16px 20px; border-bottom: 1px solid var(--border); color: var(--text-2); }
-  .kw-table tr:last-child td { border-bottom: none; }
-  .kw-table tr:hover td { background: rgba(255,255,255,0.02); }
-  .kw-table .kw-name { color: var(--text); font-weight: 600; }
-  .tag { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
-  .tag-p1 { background: rgba(255, 105, 97, 0.15); color: var(--red); }
-  .tag-p2 { background: rgba(255, 179, 64, 0.15); color: var(--orange); }
-  .tag-p3 { background: rgba(77, 163, 255, 0.15); color: var(--blue); }
-  .tag-en { background: rgba(255, 255, 255, 0.1); color: var(--text); }
-  .tag-it { background: rgba(94, 224, 133, 0.15); color: var(--green); }
-
-  /* BLOG SAMPLES */
-  .blog-sample { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; margin-bottom: 32px; }
-  .blog-sample h1 { font-size: 28px; margin-bottom: 16px; }
-  .blog-sample h2 { font-size: 20px; margin: 32px 0 16px; color: var(--text); }
-  .blog-sample p { font-size: 16px; color: var(--text-2); margin-bottom: 16px; line-height: 1.6; }
-  .blog-sample ul { margin: 0 0 16px 24px; color: var(--text-2); font-size: 16px; line-height: 1.6; }
-  .blog-sample table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 15px; }
-  .blog-sample th, .blog-sample td { padding: 14px; border: 1px solid var(--border); text-align: left; }
-  .blog-sample th { background: var(--surface-2); color: var(--text); }
-  .blog-sample td { color: var(--text-2); }
-  .answer-capsule { background: rgba(10, 132, 255, 0.1); border-left: 4px solid var(--accent); padding: 24px; border-radius: 0 8px 8px 0; margin-bottom: 32px; font-size: 17px; font-weight: 500; color: var(--text); line-height: 1.6; }
+  /* PASSWORD OVERLAY */
+  #kill-sheet-lock {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    display: none; justify-content: center; align-items: center; z-index: 1000;
+  }
+  .lock-box { background: var(--surface); padding: 40px; border-radius: 16px; border: 1px solid var(--border-strong); text-align: center; max-width: 400px; width: 90%; }
+  .lock-box h3 { font-size: 22px; margin-bottom: 12px; }
+  .lock-box p { color: var(--text-2); font-size: 14px; margin-bottom: 24px; }
+  .lock-box input { width: 100%; padding: 14px; background: var(--bg); border: 1px solid var(--border-strong); border-radius: 8px; color: var(--text); font-size: 20px; text-align: center; letter-spacing: 4px; margin-bottom: 16px; outline: none; }
+  .lock-box input:focus { border-color: var(--accent); }
+  .lock-box button { width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; }
 
   @media (max-width: 800px) {
     .visual-grid { grid-template-columns: 1fr; }
@@ -238,11 +150,21 @@
 </head>
 <body>
 
+<!-- PASSWORD OVERLAY -->
+<div id="kill-sheet-lock">
+  <div class="lock-box">
+    <h3 data-i18n="lock.title">Restricted Access</h3>
+    <p data-i18n="lock.desc">Enter password to view competitor intelligence.</p>
+    <input type="password" id="lock-input" placeholder="****" maxlength="4" autocomplete="off">
+    <button onclick="checkPassword()" data-i18n="lock.btn">Unlock</button>
+  </div>
+</div>
+
 <header class="header">
   <div class="header-content">
     <div class="kicker" data-i18n="header.kicker">EFEM IT × Midas Mechanical</div>
-    <h1 data-i18n="header.title">Strategia di Visibilità.</h1>
-    <p class="lead" data-i18n="header.lead">Un sistema unificato per il posizionamento organico, le citazioni AI e le raccomandazioni generative nei mercati italiano e inglese.</p>
+    <h1 data-i18n="header.title">Master Strategy Bible.</h1>
+    <p class="lead" data-i18n="header.lead">The definitive operational manual for SEO, AEO, and GEO. Built for long-term compounding.</p>
   </div>
   <div class="lang-switch">
     <button onclick="setLang('en')" id="btn-en">EN</button>
@@ -253,23 +175,24 @@
 <nav class="nav">
   <div class="nav-inner">
     <button class="nav-tab" data-target="map" data-i18n="nav.map">Strategy Map</button>
-    <button class="nav-tab active" data-target="seo" data-i18n="nav.seo">SEO</button>
-    <button class="nav-tab" data-target="aeo" data-i18n="nav.aeo">AEO</button>
-    <button class="nav-tab" data-target="geo" data-i18n="nav.geo">GEO</button>
-    <button class="nav-tab" data-target="keywords" data-i18n="nav.keywords">Keywords</button>
-    <button class="nav-tab" data-target="samples" data-i18n="nav.samples">Content Samples</button>
+    <button class="nav-tab active" data-target="tactics" data-i18n="nav.tactics">Core Tactics</button>
+    <button class="nav-tab" data-target="unconventional" data-i18n="nav.unconventional">Unconventional</button>
+    <button class="nav-tab" data-target="technical" data-i18n="nav.technical">Technical</button>
+    <button class="nav-tab" data-target="content" data-i18n="nav.content">Content Ops</button>
+    <button class="nav-tab" data-target="extras" data-i18n="nav.extras">Extras (PR/Sales)</button>
+    <button class="nav-tab" data-target="killsheet" data-i18n="nav.kill">Kill Sheet 🔒</button>
   </div>
 </nav>
 
 <main>
 
-  <!-- STRATEGY MAP (VISUALS) -->
+  <!-- 1. STRATEGY MAP -->
   <section class="section" id="map">
-    <h2 class="section-heading" data-i18n="map.title">Positioning Roadmap</h2>
-    <p class="section-sub" data-i18n="map.sub">A comprehensive mapping of how the three pillars compound to capture demand and defeat the incumbents.</p>
+    <h2 class="section-heading" data-i18n="map.title">Positioning Architecture</h2>
+    <p class="section-sub" data-i18n="map.sub">How the strategy compounds. We move from building the foundation to engineering tools, to leveraging third-party authority.</p>
 
     <div class="visual-grid">
-      <!-- 1. Command Center Matrix -->
+      <!-- Matrix -->
       <div class="visual-card">
         <h3 data-i18n="map.v1_title">1. Command Center Matrix</h3>
         <div class="matrix">
@@ -280,17 +203,17 @@
           
           <div class="matrix-label" data-i18n="map.free">Free</div>
           <div class="matrix-cell">Bilingual Blogs<br>Entity Graph</div>
-          <div class="matrix-cell">Answer Capsules<br>FAQ Schema</div>
-          <div class="matrix-cell highlight">Benchmarks<br>Case Studies</div>
+          <div class="matrix-cell">Answer Capsules<br>Schema Markup</div>
+          <div class="matrix-cell highlight">Parasite SEO<br>Benchmarks</div>
           
           <div class="matrix-label" data-i18n="map.paid">Paid</div>
-          <div class="matrix-cell">Comparison Ads<br>LinkedIn Docs</div>
-          <div class="matrix-cell">Sponsored AI<br>Listicles</div>
-          <div class="matrix-cell">Paid Community<br>Review Gen</div>
+          <div class="matrix-cell">Comparison Ads</div>
+          <div class="matrix-cell">Sponsored AI</div>
+          <div class="matrix-cell">Review Gen</div>
         </div>
       </div>
 
-      <!-- 2. The Flywheel -->
+      <!-- Flywheel -->
       <div class="visual-card">
         <h3 data-i18n="map.v2_title">2. The Compounding Flywheel</h3>
         <div class="flywheel-container">
@@ -298,12 +221,12 @@
             <div class="flywheel-node n1">SEO Ranks</div>
             <div class="flywheel-node n2">GEO Cites</div>
             <div class="flywheel-node n3">AEO Answers</div>
-            <div class="flywheel-center">Brand Authority</div>
+            <div class="flywheel-center">Brand Trust</div>
           </div>
         </div>
       </div>
 
-      <!-- 3. Orbital Hub -->
+      <!-- Orbital -->
       <div class="visual-card">
         <h3 data-i18n="map.v3_title">3. The Orbital Hub</h3>
         <div class="orbital-container">
@@ -312,15 +235,13 @@
             <div class="orbit-2-node left">SEO</div>
             <div class="orbit-2-node right">GEO</div>
           </div>
-          <div class="orbit orbit-1">
-            <span>EFEM /<br>Midas</span>
-          </div>
+          <div class="orbit orbit-1"><span>EFEM /<br>Midas</span></div>
         </div>
       </div>
 
-      <!-- 4. Subway Map -->
+      <!-- Subway -->
       <div class="visual-card">
-        <h3 data-i18n="map.v4_title">4. Execution Subway Map</h3>
+        <h3 data-i18n="map.v4_title">4. Execution Subway</h3>
         <div class="subway">
           <div class="subway-line"></div>
           <div class="subway-stop">
@@ -329,406 +250,318 @@
           </div>
           <div class="subway-stop">
             <h4 data-i18n="map.sub2">Phase 2: Content Engine</h4>
-            <p>Benchmarks, Bilingual Blogs, Named Authors</p>
+            <p>Benchmarks, Bilingual Blogs, Parasite SEO</p>
           </div>
           <div class="subway-stop">
             <h4 data-i18n="map.sub3">Phase 3: Amplification</h4>
-            <p>Google Ads, LinkedIn Retargeting, AI Prompting</p>
+            <p>Paid Retargeting, Review Sites</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SEO -->
-  <section class="section active" id="seo">
-    <h2 class="section-heading" data-i18n="seo.title">Search Engine Optimization</h2>
-    <p class="section-sub" data-i18n="seo.sub">Posizionati per le query che gli ingegneri cercano quando stanno già scegliendo.</p>
+  <!-- 2. CORE TACTICS -->
+  <section class="section active" id="tactics">
+    <h2 class="section-heading" data-i18n="tactics.title">Core Tactics</h2>
+    <p class="section-sub" data-i18n="tactics.sub">The fundamental building blocks of the SEO, AEO, and GEO strategy.</p>
 
-    <div class="segmented" data-container="seo">
-      <button class="active" data-value="free" data-i18n="btn.free">Gratuito</button>
-      <button data-value="paid" data-i18n="btn.paid">A Pagamento</button>
+    <div class="segmented" data-container="core">
+      <button class="active" data-value="seo">SEO</button>
+      <button data-value="aeo">AEO</button>
+      <button data-value="geo">GEO</button>
     </div>
 
-    <div class="panel active" data-group="seo" data-value="free">
-      <!-- SEO FREE CARDS -->
-      <details class="card">
-        <summary data-i18n="seo.s1.title">Motore di blog tecnico bilingue</summary>
+    <!-- SEO PANEL -->
+    <div class="panel active" data-group="core" data-value="seo">
+      <details class="card" open>
+        <summary data-i18n="seo.s1.title">Bilingual Technical Blog Engine</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label" data-i18n="lbl.intent">Intent</div><div class="field-value" data-i18n="seo.s1.intent">Catturare query di commercial-investigation e problem-aware da ingegneri di design e progettisti meccanici italiani.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.prop">Proposition</div><div class="field-value" data-i18n="seo.s1.prop">Da due a quattro post al mese per brand, basati su AnswerThePublic, AlsoAsked e reali obiezioni di vendita. Ogni post contiene un dato proprietario che i concorrenti non possono copiare.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.best">Best Case</div><div class="field-value" data-i18n="seo.s1.best">Un post di benchmark si posiziona nei top-3 entro sei mesi e diventa la fonte citata per <strong>MeshFree vs SimSolid</strong> sia nelle AI Overviews che in Perplexity.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.ex">Example</div><div class="field-value" data-i18n="seo.s1.ex">"MeshFree vs SimSolid: Benchmark su un Telaio Industriale a 12 Parti" — metodologia completa, tabella comparativa above the fold, invito aperto a riprodurre il risultato.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.why">Why</div><div class="field-value" data-i18n="seo.s1.why">Il blog è l'unica superficie gratuita dove EFEM IT può dimostrare <strong>Information Gain</strong> — un fatto che Ansys non può replicare sulla stessa query senza eseguire lo stesso test.</div></div>
+          <div class="field"><div class="field-label">Intent</div><div class="field-value" data-i18n="seo.s1.intent">Capture commercial-investigation and problem-aware queries from design engineers.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value" data-i18n="seo.s1.prop">2-4 posts/month. Every post carries one proprietary data point competitors cannot copy.</div></div>
+          <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="seo.s1.why">Demonstrates <strong>Information Gain</strong> — a fact Ansys cannot replicate without running the same test.</div></div>
         </div>
       </details>
-
       <details class="card">
-        <summary data-i18n="seo.s2.title">Intercettazione keyword native italiane</summary>
+        <summary data-i18n="seo.s2.title">Italian-native Keyword Intercept</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label" data-i18n="lbl.intent">Intent</div><div class="field-value" data-i18n="seo.s2.intent">Possedere il vocabolario di valutazione italiano già stabilito dal distributore SimSolid, invece di tradurre keyword inglesi.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.prop">Proposition</div><div class="field-value" data-i18n="seo.s2.prop">Mappa dedicata di keyword italiane attorno a <strong>software CAE senza mesh</strong>, <strong>analisi FEM senza meshing</strong>, <strong>simulazione meshless</strong>. Copy nativo, mai tradotto automaticamente.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.best">Best Case</div><div class="field-value" data-i18n="seo.s2.best">Sia EFEM IT che Midas Mechanical si posizionano nei top-5 per ogni query "senza mesh". Il volume di ricerca branded italiano per <strong>MeshFree</strong> e <strong>Midas MTS</strong> cresce misurabilmente entro sei mesi.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.ex">Example</div><div class="field-value" data-i18n="seo.s2.ex">La pagina di confronto italiana apre con una capsula di 60 parole: <em>"MeshFree e SimSolid eliminano entrambi il meshing, ma con metodi diversi. MeshFree è validato NAFEMS con uno scostamento di circa il 4% rispetto al FEM tradizionale."</em></div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.why">Why</div><div class="field-value" data-i18n="seo.s2.why">La conversazione italiana esiste già ed è già incorniciata commercialmente dai concorrenti. Intercettare la domanda esistente con un'alternativa validata è un percorso diretto verso traffico ad alta intenzione.</div></div>
+          <div class="field"><div class="field-label">Intent</div><div class="field-value" data-i18n="seo.s2.intent">Own the Italian evaluation vocabulary established by competitors.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value" data-i18n="seo.s2.prop">Target <strong>software CAE senza mesh</strong> and <strong>simulazione meshless</strong> natively. Do not translate English keywords.</div></div>
         </div>
       </details>
     </div>
 
-    <div class="panel" data-group="seo" data-value="paid">
-      <!-- SEO PAID CARDS -->
-      <details class="card">
-        <summary data-i18n="seo.p1.title">Annunci search di confronto</summary>
+    <!-- AEO PANEL -->
+    <div class="panel" data-group="core" data-value="aeo">
+      <details class="card" open>
+        <summary data-i18n="aeo.s1.title">Direct-Answer Capsules</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label" data-i18n="lbl.intent">Intent</div><div class="field-value" data-i18n="seo.p1.intent">Acquistare il momento esatto in cui un ingegnere sta già confrontando strumenti, e alimentare le sessioni engage nel loop organico.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.prop">Proposition</div><div class="field-value" data-i18n="seo.p1.prop">Exact e phrase match su <strong>MeshFree vs SimSolid</strong>, <strong>SimSolid alternative</strong>, <strong>Abaqus alternative</strong>, <strong>software CAE senza mesh</strong>. Sempre inviati alla pagina di confronto dedicata.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.best">Best Case</div><div class="field-value" data-i18n="seo.p1.best">Conversione dal quattro al sei percento in trial o demo. Le sessioni paid engage sollevano il ranking organico della stessa pagina di confronto entro 60-90 giorni.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.ex">Example</div><div class="field-value" data-i18n="seo.p1.ex">Search Ad italiana per "software CAE senza mesh" atterra sulla pagina di confronto italiana — capsula di risposta above the fold, tabella above the fold, CTA trial in fondo.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.why">Why</div><div class="field-value" data-i18n="seo.p1.why">Paid e organico sono lo stesso signal loop nel 2026. Il traffico paid crea sessioni engage. NavBoost usa quelle sessioni per giudicare se la pagina soddisfa la query.</div></div>
-        </div>
-      </details>
-    </div>
-  </section>
-
-  <!-- AEO -->
-  <section class="section" id="aeo">
-    <h2 class="section-heading" data-i18n="aeo.title">Answer Engine Optimization</h2>
-    <p class="section-sub" data-i18n="aeo.sub">Sii la risposta citata nelle AI Overviews di Google e in Perplexity.</p>
-    
-    <div class="segmented" data-container="aeo">
-      <button class="active" data-value="free" data-i18n="btn.free">Gratuito</button>
-      <button data-value="paid" data-i18n="btn.paid">A Pagamento</button>
-    </div>
-
-    <div class="panel active" data-group="aeo" data-value="free">
-      <details class="card">
-        <summary data-i18n="aeo.s1.title">Capsule di risposta diretta</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label" data-i18n="lbl.intent">Intent</div><div class="field-value" data-i18n="aeo.s1.intent">Rendere ogni pagina di alto valore facilmente estraibile dai sommatori AI in modo che possa essere citata senza contesto circostante.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.prop">Proposition</div><div class="field-value" data-i18n="aeo.s1.prop">Ogni pagina apre con una capsula di risposta di 60-100 parole. La risposta prima, dettagli specifici inline, phrasing esatto della query nella prima frase.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.best">Best Case</div><div class="field-value" data-i18n="aeo.s1.best">Pagine di confronto citate da Google AI Overviews e Perplexity per le loro query di confronto esatte, guidando traffico qualificato da ingegneri già in valutazione.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.ex">Example</div><div class="field-value" data-i18n="aeo.s1.ex">"MeshFree e SimSolid eliminano entrambi il meshing, ma risolvono diversamente. MeshFree usa l'Implicit Boundary Method ed è validato NAFEMS entro il 4% del FEM tradizionale."</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.why">Why</div><div class="field-value" data-i18n="aeo.s1.why">Le AI Overviews citano pagine che risolvono la query letterale in un breve passaggio vicino alla cima. Le pagine che iniziano con "dipende" non vengono quasi mai citate.</div></div>
+          <div class="field"><div class="field-label">Intent</div><div class="field-value" data-i18n="aeo.s1.intent">Make every high-value page trivially extractable by AI summarizers.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value" data-i18n="aeo.s1.prop">Every page opens with a 60-100 word answer capsule. The answer first, specifics inline.</div></div>
+          <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="aeo.s1.why">AI Overviews cite pages that resolve the literal query in a short passage near the top. Pages that lead with "it depends" rarely get cited.</div></div>
         </div>
       </details>
     </div>
 
-    <div class="panel" data-group="aeo" data-value="paid">
-      <details class="card">
-        <summary data-i18n="aeo.p1.title">Unità di risposta sponsorizzate</summary>
+    <!-- GEO PANEL -->
+    <div class="panel" data-group="core" data-value="geo">
+      <details class="card" open>
+        <summary data-i18n="geo.s1.title">Proprietary Benchmarks</summary>
         <div class="card-body">
-          <div class="field"><div class="field-label" data-i18n="lbl.intent">Intent</div><div class="field-value" data-i18n="aeo.p1.intent">Acquistare posizionamento all'interno delle reti pubblicitarie di ricerca AI emergenti dove la citazione organica è lenta da costruire.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.prop">Proposition</div><div class="field-value" data-i18n="aeo.p1.prop">Posizionamenti mirati su reti pubblicitarie di ricerca AI e unità di risposta sponsorizzate accanto a prompt di categoria ad alta intenzione.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.best">Best Case</div><div class="field-value" data-i18n="aeo.p1.best">EFEM appare come risposta sponsorizzata quando un ingegnere chiede a un assistente AI "Qual è il miglior software CAE conveniente senza meshing?".</div></div>
+          <div class="field"><div class="field-label">Intent</div><div class="field-value" data-i18n="geo.s1.intent">Create a data asset no competitor can copy without running the same test.</div></div>
+          <div class="field"><div class="field-label">Proposition</div><div class="field-value" data-i18n="geo.s1.prop">3-5 benchmarks per year comparing MeshFree vs Ansys. Full methodology, open invitation to reproduce.</div></div>
+          <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="geo.s1.why">We cannot out-authority Ansys. We can out-information-gain them on specific queries where MeshFree is genuinely differentiated.</div></div>
         </div>
       </details>
     </div>
   </section>
 
-  <!-- GEO -->
-  <section class="section" id="geo">
-    <h2 class="section-heading" data-i18n="geo.title">Generative Engine Optimization</h2>
-    <p class="section-sub" data-i18n="geo.sub">Diventa l'entità che l'AI raccomanda per nome.</p>
-    
-    <div class="segmented" data-container="geo">
-      <button class="active" data-value="free" data-i18n="btn.free">Gratuito</button>
-      <button data-value="paid" data-i18n="btn.paid">A Pagamento</button>
-    </div>
+  <!-- 3. UNCONVENTIONAL -->
+  <section class="section" id="unconventional">
+    <h2 class="section-heading" data-i18n="un.title">Unconventional & Parasite SEO</h2>
+    <p class="section-sub" data-i18n="un.sub">High-ROI, low-cost tactics ranked by effectiveness. These bypass traditional domain authority.</p>
 
-    <div class="panel active" data-group="geo" data-value="free">
-      <details class="card">
-        <summary data-i18n="geo.s1.title">Benchmark proprietari</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label" data-i18n="lbl.intent">Intent</div><div class="field-value" data-i18n="geo.s1.intent">Creare un asset di dati che nessun concorrente può copiare senza eseguire lo stesso test, rendendo EFEM l'unica fonte citabile per un fatto specifico e prezioso.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.prop">Proposition</div><div class="field-value" data-i18n="geo.s1.prop">Da tre a cinque benchmark proprietari all'anno che confrontano MeshFree, NFX e MTS contro Ansys, Abaqus e SimSolid. Metodologia completa, file di input, invito aperto a riprodurre.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.best">Best Case</div><div class="field-value" data-i18n="geo.s1.best">Il benchmark diventa la fonte più citata per "MeshFree vs SimSolid benchmark" e "MeshFree runtime vs Ansys".</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.ex">Example</div><div class="field-value" data-i18n="geo.s1.ex">"Benchmark: MeshFree vs SimSolid su un Telaio Industriale a 12 Parti" — geometria, runtime, deviazione, file di input scaricabile, invito aperto per risultati indipendenti.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.why">Why</div><div class="field-value" data-i18n="geo.s1.why">Non possiamo superare Ansys in autorità. Possiamo superarli in information gain sulle query specifiche dove MeshFree è genuinamente differenziato.</div></div>
-        </div>
-      </details>
-    </div>
-
-    <div class="panel" data-group="geo" data-value="paid">
-      <details class="card">
-        <summary data-i18n="geo.p1.title">Amplificazione community a pagamento</summary>
-        <div class="card-body">
-          <div class="field"><div class="field-label" data-i18n="lbl.intent">Intent</div><div class="field-value" data-i18n="geo.p1.intent">Amplificare la partecipazione organica alla community con promozione a pagamento che rispetta le norme della piattaforma.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.prop">Proposition</div><div class="field-value" data-i18n="geo.p1.prop">Amplificazione a pagamento su LinkedIn dei migliori post organici degli ingegneri. Reddit Ads che promuovono un benchmark o un caso di studio genuinamente utile su r/fea e r/CFD.</div></div>
-          <div class="field"><div class="field-label" data-i18n="lbl.best">Best Case</div><div class="field-value" data-i18n="geo.p1.best">Un singolo post di un ingegnere, amplificato con Reddit Ads, raggiunge oltre 10.000 ingegneri di design e genera oltre 50 iscrizioni al trial.</div></div>
-        </div>
-      </details>
-    </div>
-  </section>
-
-  <!-- KEYWORDS -->
-  <section class="section" id="keywords">
-    <h2 class="section-heading" data-i18n="kw.title">Inventario Keyword</h2>
-    <p class="section-sub" data-i18n="kw.sub">Ogni query che contestiamo, taggata e filtrata.</p>
-    
-    <div class="kw-controls">
-      <input type="text" class="kw-search" id="kw-search" placeholder="Cerca keyword...">
-      <div class="pills" id="kw-priority-pills">
-        <button class="pill active" data-priority="all" data-i18n="kw.all">Tutte</button>
-        <button class="pill" data-priority="P1">P1</button>
-        <button class="pill" data-priority="P2">P2</button>
-        <button class="pill" data-priority="P3">P3</button>
+    <details class="card" open>
+      <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐⭐</span> <span data-i18n="un.s1.title">Parasite SEO (Barnacle SEO)</span></summary>
+      <div class="card-body">
+        <div class="field"><div class="field-label">Method</div><div class="field-value" data-i18n="un.s1.method">Publish optimized content on high-authority platforms (LinkedIn Pulse, Reddit, Medium, GitHub READMEs) to borrow their domain authority and rank quickly.</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="un.s1.why">Google and AI engines crawl these platforms constantly. A LinkedIn article can rank in 24 hours and be cited by Perplexity instantly.</div></div>
       </div>
-    </div>
+    </details>
 
-    <div class="kw-table-wrap">
-      <table class="kw-table">
-        <thead>
-          <tr>
-            <th data-i18n="kw.th1">Keyword</th>
-            <th data-i18n="kw.th2">Cluster</th>
-            <th data-i18n="kw.th3">Priorità</th>
-            <th data-i18n="kw.th4">Lingua</th>
-            <th data-i18n="kw.th5">Pagina Target</th>
-          </tr>
-        </thead>
-        <tbody id="kw-body"></tbody>
-      </table>
-    </div>
+    <details class="card">
+      <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐⭐</span> <span data-i18n="un.s2.title">Engineering as Marketing (Free Tools)</span></summary>
+      <div class="card-body">
+        <div class="field"><div class="field-label">Method</div><div class="field-value" data-i18n="un.s2.method">Build a free web tool (e.g., "CAE Time-Savings Calculator" or "NAFEMS Validation Lookup") that engineers actually want to use.</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="un.s2.why">People link to tools, not sales pages. It attracts permanent, high-quality backlinks from universities and engineering blogs.</div></div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐</span> <span data-i18n="un.s3.title">Reddit & Community Stealth Seeding</span></summary>
+      <div class="card-body">
+        <div class="field"><div class="field-label">Method</div><div class="field-value" data-i18n="un.s3.method">Have a real EFEM engineer participate in r/fea and r/CFD. Answer technical questions, disclose affiliation, and link only when relevant.</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="un.s3.why">A single upvoted Reddit comment can become a cited source for AI models for months.</div></div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span style="color:var(--green); margin-right:8px;">⭐⭐⭐⭐</span> <span data-i18n="un.s4.title">Unlinked Mentions Outreach</span></summary>
+      <div class="card-body">
+        <div class="field"><div class="field-label">Method</div><div class="field-value" data-i18n="un.s4.method">Find sites mentioning "EFEM" or "Midas" without a link. Send a polite email asking to add the URL.</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="un.s4.why">15-20% success rate. Fastest way to acquire authoritative backlinks without paying.</div></div>
+      </div>
+    </details>
   </section>
 
-  <!-- CONTENT SAMPLES -->
-  <section class="section" id="samples">
-    <h2 class="section-heading" data-i18n="samples.title">Esempi di Contenuto</h2>
-    <p class="section-sub" data-i18n="samples.sub">Dimostrazione del framework Answer-First e Information Gain.</p>
+  <!-- 4. TECHNICAL -->
+  <section class="section" id="technical">
+    <h2 class="section-heading" data-i18n="tech.title">Technical Infrastructure</h2>
+    <p class="section-sub" data-i18n="tech.sub">The engine room. How we feed the machines.</p>
 
-    <!-- EN Sample -->
-    <div class="blog-sample">
-      <h1>MeshFree vs SimSolid: The 12-Part Industrial Frame Benchmark</h1>
-      <div class="answer-capsule">
-        MeshFree and SimSolid both eliminate meshing, but they solve differently. MeshFree uses the Implicit Boundary Method and is NAFEMS-validated within 4% of traditional FEM. On our 12-part industrial frame benchmark, MeshFree produced a design-ready result in 47 minutes on a standard workstation, without geometry cleanup.
+    <details class="card" open>
+      <summary data-i18n="tech.s1.title">llms.txt Implementation</summary>
+      <div class="card-body">
+        <div class="field"><div class="field-label">Action</div><div class="field-value" data-i18n="tech.s1.action">Create an <code>llms.txt</code> file in the root directory. It tells AI bots (ChatGPT, Perplexity) exactly where your authoritative content is located.</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="tech.s1.why">Standard robots.txt blocks AI. llms.txt guides them. It is the cutting edge of GEO.</div></div>
       </div>
-      
-      <h2>The Comparison Matrix</h2>
-      <table>
-        <thead>
-          <tr><th>Feature</th><th>MeshFree</th><th>SimSolid</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Method</td><td>Implicit Boundary Method</td><td>External Approximations</td></tr>
-          <tr><td>NAFEMS Validation</td><td>Yes (~4% deviation)</td><td>Not publicly disclosed</td></tr>
-          <tr><td>Transparency</td><td>High — documented math</td><td>Low — opaque solver</td></tr>
-        </tbody>
-      </table>
+    </details>
 
-      <h2>Why this matters for design engineers</h2>
-      <p>When you are validating a design iteration, waiting 3 hours for a traditional meshed FEM workflow kills momentum. MeshFree removes the meshing bottleneck entirely, allowing you to validate CAD directly and move to fabrication faster.</p>
-    </div>
-
-    <!-- IT Sample -->
-    <div class="blog-sample" lang="it">
-      <h1>Software CAE senza mesh: La Guida Completa</h1>
-      <div class="answer-capsule">
-        MeshFree e SimSolid eliminano entrambi il meshing, ma con metodi diversi. MeshFree usa l'Implicit Boundary Method ed è validato NAFEMS con uno scostamento inferiore al 4% rispetto al FEM tradizionale. È ideale per la validazione in fase di progettazione, mentre SimSolid è più rapido su assiemi molto grandi ma con un modello matematico meno trasparente.
+    <details class="card">
+      <summary data-i18n="tech.s2.title">Hreflang Matrix (EN/IT)</summary>
+      <div class="card-body">
+        <div class="field"><div class="field-label">Action</div><div class="field-value" data-i18n="tech.s2.action">Ensure every English page on efem.it has an <code>hreflang="it"</code> pointing to its exact equivalent on midasmechanical.it, and vice versa.</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="tech.s2.why">Prevents the Italian and English pages from cannibalizing each other's rankings.</div></div>
       </div>
+    </details>
+  </section>
 
-      <h2>Perché il meshing è un collo di bottiglia</h2>
-      <p>Per un progettista meccanico, il tempo speso a ripulire la geometria e creare la mesh è tempo sottratto all'innovazione. La simulazione meshless rimuove questo passaggio, permettendoti di analizzare direttamente il modello CAD.</p>
+  <!-- 5. CONTENT OPS -->
+  <section class="section" id="content">
+    <h2 class="section-heading" data-i18n="ops.title">Content Operations</h2>
+    <p class="section-sub" data-i18n="ops.sub">The rules of engagement for the content team.</p>
 
-      <h2>MeshFree vs SimSolid: Quale scegliere?</h2>
-      <ul>
-        <li><strong>Scegli MeshFree se:</strong> Hai bisogno di trasparenza matematica, validazione NAFEMS e un workflow integrato per strutture e fluidi (tramite MTS).</li>
-        <li><strong>Scegli SimSolid se:</strong> Lavori esclusivamente su assiemi enormi con geometrie difettose e necessiti solo di analisi esplorative rapide.</li>
-      </ul>
+    <details class="card" open>
+      <summary data-i18n="ops.s1.title">The Answer-First Template</summary>
+      <div class="card-body">
+        <div class="field"><div class="field-label">Rule</div><div class="field-value" data-i18n="ops.s1.rule"><strong>H1:</strong> The exact question. <strong>First 100 words:</strong> The direct, standalone answer with numbers. <strong>H2s:</strong> Question-shaped. <strong>Bottom:</strong> FAQPage schema.</div></div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary data-i18n="ops.s2.title">The Italian Translation Rulebook</summary>
+      <div class="card-body">
+        <div class="field"><div class="field-label">Rule</div><div class="field-value" data-i18n="ops.s2.rule">Never use Google Translate. Use native Italian engineering phrasing. "Meshing" stays "meshing" in IT tech contexts, but "meshing bottleneck" becomes "collo di bottiglia".</div></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- 6. EXTRAS (PR & SALES) -->
+  <section class="section" id="extras">
+    <h2 class="section-heading" data-i18n="ext.title">PR & Sales Enablement</h2>
+    <p class="section-sub" data-i18n="ext.sub">How SEO feeds the rest of the company.</p>
+
+    <details class="card" open>
+      <summary data-i18n="ext.s1.title">Digital PR (HARO / Qwoted)</summary>
+      <div class="card-body">
+        <div class="field"><div class="field-label">Action</div><div class="field-value" data-i18n="ext.s1.action">Subscribe to journalist requests. Respond to queries about "manufacturing software trends" or "future of CAE."</div></div>
+        <div class="field"><div class="field-label">Why</div><div class="field-value" data-i18n="ext.s1.why">Earns Tier-1 media backlinks (Forbes, TechCrunch Italy) which massively boosts domain authority.</div></div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary data-i18n="ext.s2.title">Sales Battlecards for Midas Mechanical</summary>
+      <div class="card-body">
+        <div class="field"><div class="field-label">Action</div><div class="field-value" data-i18n="ext.s2.action">Turn the "Kill Sheet" (competitor weaknesses) into a one-page PDF for the sales team to use during demos against SimSolid or Ansys.</div></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- 7. KILL SHEET (PASSWORD PROTECTED) -->
+  <section class="section" id="killsheet">
+    <h2 class="section-heading" data-i18n="kill.title">Competitor Kill Sheet</h2>
+    <p class="section-sub" data-i18n="kill.sub">Classified. Internal use only.</p>
+
+    <div id="kill-content" style="display:none;">
+      <details class="card" open>
+        <summary>vs. SimSolid (Altair)</summary>
+        <div class="card-body">
+          <div class="field"><div class="field-label">Weakness</div><div class="field-value">Mathematical model is opaque. Not good for fluid dynamics.</div></div>
+          <div class="field"><div class="field-label">Attack</div><div class="field-value">Highlight MeshFree's <strong>NAFEMS validation (~4%)</strong> and the fact that MTS combines structural (MeshFree) AND CFD (NFX) in one package.</div></div>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>vs. Ansys / Abaqus</summary>
+        <div class="card-body">
+          <div class="field"><div class="field-label">Weakness</div><div class="field-value">Extremely high cost, massive learning curve, requires specialized simulation analysts.</div></div>
+          <div class="field"><div class="field-label">Attack</div><div class="field-value">Target "CAE for design engineers". MeshFree empowers the <strong>progettista</strong> to validate their own designs instantly without waiting for the CAE department.</div></div>
+        </div>
+      </details>
     </div>
   </section>
 
 </main>
 
 <script>
-  // --- 1. TRANSLATION DICTIONARY ---
+  // --- 1. TRANSLATIONS ---
   const i18n = {
     en: {
       "header.kicker": "EFEM IT × Midas Mechanical",
-      "header.title": "Search Visibility Strategy.",
-      "header.lead": "A unified system for organic rankings, AI citation, and generative recommendation across English and Italian markets.",
-      "nav.map": "Strategy Map",
-      "nav.seo": "SEO",
-      "nav.aeo": "AEO",
-      "nav.geo": "GEO",
-      "nav.keywords": "Keywords",
-      "nav.samples": "Content Samples",
-      "map.title": "Positioning Roadmap",
-      "map.sub": "A comprehensive mapping of how the three pillars compound to capture demand and defeat the incumbents.",
-      "map.v1_title": "1. Command Center Matrix",
-      "map.v2_title": "2. The Compounding Flywheel",
-      "map.v3_title": "3. The Orbital Hub",
-      "map.v4_title": "4. Execution Subway Map",
-      "map.free": "Free",
-      "map.paid": "Paid",
-      "map.sub1": "Phase 1: Foundation",
-      "map.sub2": "Phase 2: Content Engine",
-      "map.sub3": "Phase 3: Amplification",
-      "btn.free": "Free",
-      "btn.paid": "Paid",
-      "lbl.intent": "Intent", "lbl.prop": "Proposition", "lbl.best": "Best Case", "lbl.ex": "Example", "lbl.why": "Why",
-      "seo.title": "Search Engine Optimization",
-      "seo.sub": "Rank for the queries engineers search when they are already choosing.",
-      "seo.s1.title": "Bilingual technical blog engine",
-      "seo.s1.intent": "Capture commercial-investigation and problem-aware queries from design engineers and Italian progettisti meccanici.",
-      "seo.s1.prop": "Two to four posts per month per brand, sourced from AnswerThePublic, AlsoAsked, and real sales objections. Every post carries one proprietary data point that competitors cannot copy.",
-      "seo.s1.best": "A benchmark post ranks top-3 within six months and becomes the cited source for MeshFree vs SimSolid in both AI Overviews and Perplexity.",
-      "seo.s1.ex": "\"MeshFree vs SimSolid: Benchmark su un Telaio Industriale a 12 Parti\" — full methodology, comparison table above the fold, open invitation to reproduce the result.",
-      "seo.s1.why": "Blog content is the only free surface where EFEM IT can demonstrate Information Gain — a fact Ansys cannot replicate on the same query without running the same test.",
-      "seo.s2.title": "Italian-native keyword intercept",
-      "seo.s2.intent": "Own the Italian evaluation vocabulary that SimSolid's distributor already established, instead of translating English keywords.",
-      "seo.s2.prop": "Dedicated Italian keyword map around software CAE senza mesh, analisi FEM senza meshing, simulazione meshless. Native copy, never machine-translated.",
-      "seo.s2.best": "Both EFEM IT and Midas Mechanical rank top-5 for every 'senza mesh' query. Italian branded search volume for MeshFree and Midas MTS rises measurably within six months.",
-      "seo.s2.ex": "Italian comparison page opens with a 60-word capsule: \"MeshFree e SimSolid eliminano entrambi il meshing, ma con metodi diversi. MeshFree è validato NAFEMS con uno scostamento di circa il 4% rispetto al FEM tradizionale.\"",
-      "seo.s2.why": "The Italian conversation already exists and is already commercially framed by competitors. Intercepting existing demand with a validated alternative is a direct path to high-intent traffic.",
-      "seo.p1.title": "Comparison search ads",
-      "seo.p1.intent": "Buy the exact moment an engineer is already comparing tools, and feed engaged sessions back into the organic ranking signal loop.",
-      "seo.p1.prop": "Exact and phrase match on MeshFree vs SimSolid, SimSolid alternative, Abaqus alternative, software CAE senza mesh. Always sent to the dedicated comparison page.",
-      "seo.p1.best": "Four to six percent conversion to trial or demo. Engaged paid sessions lift the organic ranking of the same comparison page within 60 to 90 days.",
-      "seo.p1.ex": "Italian Search Ad for 'software CAE senza mesh' lands on the Italian comparison page — answer capsule above the fold, table above the fold, trial CTA at the bottom.",
-      "seo.p1.why": "Paid and organic are the same signal loop in 2026. Paid traffic creates engaged sessions. NavBoost uses those sessions to judge whether the page satisfies the query.",
-      "aeo.title": "Answer Engine Optimization",
-      "aeo.sub": "Be the quoted answer inside Google AI Overviews and Perplexity.",
-      "aeo.s1.title": "Direct-answer capsules",
-      "aeo.s1.intent": "Make every high-value page trivially extractable by AI summarizers so it can be quoted without surrounding context.",
-      "aeo.s1.prop": "Every page opens with a 60 to 100 word answer capsule. The answer first, specifics inline, exact query phrasing in the first sentence, deeper explanation after.",
-      "aeo.s1.best": "Comparison pages cited by Google AI Overviews and Perplexity for their exact comparison queries, driving qualified traffic from engineers already in evaluation.",
-      "aeo.s1.ex": "\"MeshFree and SimSolid both eliminate meshing, but they solve differently. MeshFree uses the Implicit Boundary Method and is NAFEMS-validated within roughly 4% of traditional FEM.\"",
-      "aeo.s1.why": "AI Overviews cite pages that resolve the literal query in a short passage near the top. Pages that lead with 'it depends' almost never get cited.",
-      "aeo.p1.title": "Sponsored answer units",
-      "aeo.p1.intent": "Buy placement inside emerging AI search networks where organic citation is slow to build.",
-      "aeo.p1.prop": "Targeted placements on AI search ad networks and sponsored answer units alongside high-intent category prompts.",
-      "aeo.p1.best": "EFEM appears as the sponsored answer when an engineer asks an AI assistant 'What is the best affordable CAE software without meshing?'",
-      "geo.title": "Generative Engine Optimization",
-      "geo.sub": "Become the entity AI recommends by name.",
-      "geo.s1.title": "Proprietary benchmarks",
-      "geo.s1.intent": "Create a data asset no competitor can copy without running the same test, making EFEM the only citable source for a specific, valuable fact.",
-      "geo.s1.prop": "Three to five proprietary benchmarks per year comparing MeshFree, NFX, and MTS against Ansys, Abaqus, and SimSolid. Full methodology, input files, open invitation to reproduce.",
-      "geo.s1.best": "The benchmark becomes the most-cited source for 'MeshFree vs SimSolid benchmark' and 'MeshFree runtime vs Ansys'.",
-      "geo.s1.ex": "\"Benchmark: MeshFree vs SimSolid on a 12-Part Industrial Frame\" — geometry, runtime, deviation, downloadable input file, open submission for independent results.",
-      "geo.s1.why": "We cannot out-authority Ansys. We can out-information-gain them on the specific queries where MeshFree is genuinely differentiated.",
-      "geo.p1.title": "Paid community amplification",
-      "geo.p1.intent": "Amplify the organic community participation with paid promotion that respects platform norms.",
-      "geo.p1.prop": "LinkedIn paid amplification of the best organic engineer posts. Reddit Ads promoting a genuinely helpful benchmark or case study to r/fea and r/CFD.",
-      "geo.p1.best": "A single engineer post, amplified with Reddit Ads, reaches 10,000+ design engineers and generates 50+ trial sign-ups.",
-      "kw.title": "Keyword Inventory",
-      "kw.sub": "Every query we contest, tagged and filtered.",
-      "kw.th1": "Keyword", "kw.th2": "Cluster", "kw.th3": "Priority", "kw.th4": "Lang", "kw.th5": "Target Page", "kw.all": "All",
-      "samples.title": "Sample Content",
-      "samples.sub": "Demonstration of the Answer-First and Information Gain framework."
+      "header.title": "Master Strategy Bible.",
+      "header.lead": "The definitive operational manual for SEO, AEO, and GEO. Built for long-term compounding.",
+      "nav.map": "Strategy Map", "nav.tactics": "Core Tactics", "nav.unconventional": "Unconventional", "nav.technical": "Technical", "nav.content": "Content Ops", "nav.extras": "Extras", "nav.kill": "Kill Sheet 🔒",
+      "lock.title": "Restricted Access", "lock.desc": "Enter password to view competitor intelligence.", "lock.btn": "Unlock",
+      
+      "map.title": "Positioning Architecture", "map.sub": "How the strategy compounds. We move from building the foundation to engineering tools, to leveraging third-party authority.",
+      "map.v1_title": "1. Command Center Matrix", "map.v2_title": "2. The Compounding Flywheel", "map.v3_title": "3. The Orbital Hub", "map.v4_title": "4. Execution Subway",
+      "map.free": "Free", "map.paid": "Paid", "map.sub1": "Phase 1: Foundation", "map.sub2": "Phase 2: Content Engine", "map.sub3": "Phase 3: Amplification",
+
+      "tactics.title": "Core Tactics", "tactics.sub": "The fundamental building blocks of the SEO, AEO, and GEO strategy.",
+      "seo.s1.title": "Bilingual Technical Blog Engine", "seo.s1.intent": "Capture commercial-investigation and problem-aware queries.", "seo.s1.prop": "2-4 posts/month. Every post carries one proprietary data point competitors cannot copy.", "seo.s1.why": "Demonstrates Information Gain — a fact Ansys cannot replicate without running the same test.",
+      "seo.s2.title": "Italian-native Keyword Intercept", "seo.s2.intent": "Own the Italian evaluation vocabulary established by competitors.", "seo.s2.prop": "Target software CAE senza mesh and simulazione meshless natively.",
+      "aeo.s1.title": "Direct-Answer Capsules", "aeo.s1.intent": "Make every high-value page trivially extractable by AI.", "aeo.s1.prop": "Every page opens with a 60-100 word answer capsule.", "aeo.s1.why": "AI Overviews cite pages that resolve the literal query near the top.",
+      "geo.s1.title": "Proprietary Benchmarks", "geo.s1.intent": "Create a data asset no competitor can copy.", "geo.s1.prop": "3-5 benchmarks per year comparing MeshFree vs Ansys.", "geo.s1.why": "We out-information-gain them on specific queries where MeshFree is differentiated.",
+
+      "un.title": "Unconventional & Parasite SEO", "un.sub": "High-ROI, low-cost tactics ranked by effectiveness.",
+      "un.s1.title": "Parasite SEO (Barnacle SEO)", "un.s1.method": "Publish optimized content on high-authority platforms (LinkedIn, Reddit, Medium) to borrow their domain authority.", "un.s1.why": "Google and AI engines crawl these platforms constantly. Ranks in 24 hours.",
+      "un.s2.title": "Engineering as Marketing (Free Tools)", "un.s2.method": "Build a free web tool that engineers want to use.", "un.s2.why": "People link to tools, not sales pages. Attracts permanent backlinks.",
+      "un.s3.title": "Reddit & Community Stealth Seeding", "un.s3.method": "Real EFEM engineer participates in r/fea. Answers questions, discloses affiliation.", "un.s3.why": "A single upvoted comment can become a cited source for AI models.",
+      "un.s4.title": "Unlinked Mentions Outreach", "un.s4.method": "Find sites mentioning EFEM without a link. Send a polite email asking to add the URL.", "un.s4.why": "15-20% success rate. Fastest way to acquire authoritative backlinks.",
+
+      "tech.title": "Technical Infrastructure", "tech.sub": "The engine room. How we feed the machines.",
+      "tech.s1.title": "llms.txt Implementation", "tech.s1.action": "Create an llms.txt file in the root directory to guide AI bots.", "tech.s1.why": "Standard robots.txt blocks AI. llms.txt guides them. Cutting edge.",
+      "tech.s2.title": "Hreflang Matrix (EN/IT)", "tech.s2.action": "Ensure every EN page links to its exact IT equivalent.", "tech.s2.why": "Prevents cannibalizing rankings.",
+
+      "ops.title": "Content Operations", "ops.sub": "The rules of engagement for the content team.",
+      "ops.s1.title": "The Answer-First Template", "ops.s1.rule": "H1: Exact question. First 100 words: Direct answer. H2s: Question-shaped. Bottom: FAQPage schema.",
+      "ops.s2.title": "The Italian Translation Rulebook", "ops.s2.rule": "Never use Google Translate. Use native Italian engineering phrasing.",
+
+      "ext.title": "PR & Sales Enablement", "ext.sub": "How SEO feeds the rest of the company.",
+      "ext.s1.title": "Digital PR (HARO / Qwoted)", "ext.s1.action": "Subscribe to journalist requests. Respond to queries about manufacturing software.", "ext.s1.why": "Earns Tier-1 media backlinks.",
+      "ext.s2.title": "Sales Battlecards for Midas", "ext.s2.action": "Turn the Kill Sheet into a one-page PDF for the sales team.",
+
+      "kill.title": "Competitor Kill Sheet", "kill.sub": "Classified. Internal use only."
     },
     it: {
       "header.kicker": "EFEM IT × Midas Mechanical",
-      "header.title": "Strategia di Visibilità.",
-      "header.lead": "Un sistema unificato per il posizionamento organico, le citazioni AI e le raccomandazioni generative nei mercati italiano e inglese.",
-      "nav.map": "Strategy Map",
-      "nav.seo": "SEO",
-      "nav.aeo": "AEO",
-      "nav.geo": "GEO",
-      "nav.keywords": "Parole Chiave",
-      "nav.samples": "Esempi di Contenuto",
-      "map.title": "Roadmap di Posizionamento",
-      "map.sub": "Una mappatura completa di come i tre pilastri si compongono per catturare la domanda e sconfiggere gli incumbent.",
-      "map.v1_title": "1. Matrice Command Center",
-      "map.v2_title": "2. Il Flywheel Composto",
-      "map.v3_title": "3. L'Hub Orbitale",
-      "map.v4_title": "4. Mappa Metropolitana di Esecuzione",
-      "map.free": "Gratis",
-      "map.paid": "Pagato",
-      "map.sub1": "Fase 1: Fondamenta",
-      "map.sub2": "Fase 2: Motore di Contenuto",
-      "map.sub3": "Fase 3: Amplificazione",
-      "btn.free": "Gratuito",
-      "btn.paid": "A Pagamento",
-      "lbl.intent": "Intento", "lbl.prop": "Proposizione", "lbl.best": "Scenario Migliore", "lbl.ex": "Esempio", "lbl.why": "Perché",
-      "seo.title": "Ottimizzazione per i Motori di Ricerca",
-      "seo.sub": "Posizionati per le query che gli ingegneri cercano quando stanno già scegliendo.",
-      "seo.s1.title": "Motore di blog tecnico bilingue",
-      "seo.s1.intent": "Catturare query di commercial-investigation e problem-aware da ingegneri di design e progettisti meccanici italiani.",
-      "seo.s1.prop": "Da due a quattro post al mese per brand, basati su AnswerThePublic, AlsoAsked e reali obiezioni di vendita. Ogni post contiene un dato proprietario che i concorrenti non possono copiare.",
-      "seo.s1.best": "Un post di benchmark si posiziona nei top-3 entro sei mesi e diventa la fonte citata per MeshFree vs SimSolid sia nelle AI Overviews che in Perplexity.",
-      "seo.s1.ex": "\"MeshFree vs SimSolid: Benchmark su un Telaio Industriale a 12 Parti\" — metodologia completa, tabella comparativa above the fold, invito aperto a riprodurre il risultato.",
-      "seo.s1.why": "Il blog è l'unica superficie gratuita dove EFEM IT può dimostrare Information Gain — un fatto che Ansys non può replicare sulla stessa query senza eseguire lo stesso test.",
-      "seo.s2.title": "Intercettazione keyword native italiane",
-      "seo.s2.intent": "Possedere il vocabolario di valutazione italiano già stabilito dal distributore SimSolid, invece di tradurre keyword inglesi.",
-      "seo.s2.prop": "Mappa dedicata di keyword italiane attorno a software CAE senza mesh, analisi FEM senza meshing, simulazione meshless. Copy nativo, mai tradotto automaticamente.",
-      "seo.s2.best": "Sia EFEM IT che Midas Mechanical si posizionano nei top-5 per ogni query 'senza mesh'. Il volume di ricerca branded italiano per MeshFree e Midas MTS cresce misurabilmente entro sei mesi.",
-      "seo.s2.ex": "La pagina di confronto italiana apre con una capsula di 60 parole: \"MeshFree e SimSolid eliminano entrambi il meshing, ma con metodi diversi. MeshFree è validato NAFEMS con uno scostamento di circa il 4% rispetto al FEM tradizionale.\"",
-      "seo.s2.why": "La conversazione italiana esiste già ed è già incorniciata commercialmente dai concorrenti. Intercettare la domanda esistente con un'alternativa validata è un percorso diretto verso traffico ad alta intenzione.",
-      "seo.p1.title": "Annunci search di confronto",
-      "seo.p1.intent": "Acquistare il momento esatto in cui un ingegnere sta già confrontando strumenti, e alimentare le sessioni engage nel loop organico.",
-      "seo.p1.prop": "Exact e phrase match su MeshFree vs SimSolid, SimSolid alternative, Abaqus alternative, software CAE senza mesh. Sempre inviati alla pagina di confronto dedicata.",
-      "seo.p1.best": "Conversione dal quattro al sei percento in trial o demo. Le sessioni paid engage sollevano il ranking organico della stessa pagina di confronto entro 60-90 giorni.",
-      "seo.p1.ex": "Search Ad italiana per 'software CAE senza mesh' atterra sulla pagina di confronto italiana — capsula di risposta above the fold, tabella above the fold, CTA trial in fondo.",
-      "seo.p1.why": "Paid e organico sono lo stesso signal loop nel 2026. Il traffico paid crea sessioni engage. NavBoost usa quelle sessioni per giudicare se la pagina soddisfa la query.",
-      "aeo.title": "Ottimizzazione per i Motori di Risposta",
-      "aeo.sub": "Sii la risposta citata nelle AI Overviews di Google e in Perplexity.",
-      "aeo.s1.title": "Capsule di risposta diretta",
-      "aeo.s1.intent": "Rendere ogni pagina di alto valore facilmente estraibile dai sommatori AI in modo che possa essere citata senza contesto circostante.",
-      "aeo.s1.prop": "Ogni pagina apre con una capsula di risposta di 60-100 parole. La risposta prima, dettagli specifici inline, phrasing esatto della query nella prima frase.",
-      "aeo.s1.best": "Pagine di confronto citate da Google AI Overviews e Perplexity per le loro query di confronto esatte, guidando traffico qualificato da ingegneri già in valutazione.",
-      "aeo.s1.ex": "\"MeshFree e SimSolid eliminano entrambi il meshing, ma risolvono diversamente. MeshFree usa l'Implicit Boundary Method ed è validato NAFEMS entro il 4% del FEM tradizionale.\"",
-      "aeo.s1.why": "Le AI Overviews citano pagine che risolvono la query letterale in un breve passaggio vicino alla cima. Le pagine che iniziano con 'dipende' non vengono quasi mai citate.",
-      "aeo.p1.title": "Unità di risposta sponsorizzate",
-      "aeo.p1.intent": "Acquistare posizionamento all'interno delle reti pubblicitarie di ricerca AI emergenti dove la citazione organica è lenta da costruire.",
-      "aeo.p1.prop": "Posizionamenti mirati su reti pubblicitarie di ricerca AI e unità di risposta sponsorizzate accanto a prompt di categoria ad alta intenzione.",
-      "aeo.p1.best": "EFEM appare come risposta sponsorizzata quando un ingegnere chiede a un assistente AI 'Qual è il miglior software CAE conveniente senza meshing?'.",
-      "geo.title": "Ottimizzazione per i Motori Generativi",
-      "geo.sub": "Diventa l'entità che l'AI raccomanda per nome.",
-      "geo.s1.title": "Benchmark proprietari",
-      "geo.s1.intent": "Creare un asset di dati che nessun concorrente può copiare senza eseguire lo stesso test, rendendo EFEM l'unica fonte citabile per un fatto specifico e prezioso.",
-      "geo.s1.prop": "Da tre a cinque benchmark proprietari all'anno che confrontano MeshFree, NFX e MTS contro Ansys, Abaqus e SimSolid. Metodologia completa, file di input, invito aperto a riprodurre.",
-      "geo.s1.best": "Il benchmark diventa la fonte più citata per 'MeshFree vs SimSolid benchmark' e 'MeshFree runtime vs Ansys'.",
-      "geo.s1.ex": "\"Benchmark: MeshFree vs SimSolid su un Telaio Industriale a 12 Parti\" — geometria, runtime, deviazione, file di input scaricabile, invito aperto per risultati indipendenti.",
-      "geo.s1.why": "Non possiamo superare Ansys in autorità. Possiamo superarli in information gain sulle query specifiche dove MeshFree è genuinamente differenziato.",
-      "geo.p1.title": "Amplificazione community a pagamento",
-      "geo.p1.intent": "Amplificare la partecipazione organica alla community con promozione a pagamento che rispetta le norme della piattaforma.",
-      "geo.p1.prop": "Amplificazione a pagamento su LinkedIn dei migliori post organici degli ingegneri. Reddit Ads che promuovono un benchmark o un caso di studio genuinamente utile su r/fea e r/CFD.",
-      "geo.p1.best": "Un singolo post di un ingegnere, amplificato con Reddit Ads, raggiunge oltre 10.000 ingegneri di design e genera oltre 50 iscrizioni al trial.",
-      "kw.title": "Inventario Keyword",
-      "kw.sub": "Ogni query che contestiamo, taggata e filtrata.",
-      "kw.th1": "Keyword", "kw.th2": "Cluster", "kw.th3": "Priorità", "kw.th4": "Lingua", "kw.th5": "Pagina Target", "kw.all": "Tutte",
-      "samples.title": "Esempi di Contenuto",
-      "samples.sub": "Dimostrazione del framework Answer-First e Information Gain."
+      "header.title": "Master Strategy Bible.",
+      "header.lead": "Il manuale operativo definitivo per SEO, AEO e GEO. Costruito per il compounding a lungo termine.",
+      "nav.map": "Strategy Map", "nav.tactics": "Tattiche Core", "nav.unconventional": "Non Convenzionali", "nav.technical": "Tecnico", "nav.content": "Content Ops", "nav.extras": "Extra", "nav.kill": "Kill Sheet 🔒",
+      "lock.title": "Accesso Riservato", "lock.desc": "Inserisci la password per visualizzare le informazioni sui concorrenti.", "lock.btn": "Sblocca",
+      
+      "map.title": "Architettura di Posizionamento", "map.sub": "Come la strategia si compone. Dalle fondamenta agli strumenti di ingegneria, fino all'autorità di terze parti.",
+      "map.v1_title": "1. Matrice Command Center", "map.v2_title": "2. Il Flywheel Composto", "map.v3_title": "3. L'Hub Orbitale", "map.v4_title": "4. Mappa Metropolitana",
+      "map.free": "Gratis", "map.paid": "Pagato", "map.sub1": "Fase 1: Fondamenta", "map.sub2": "Fase 2: Motore di Contenuto", "map.sub3": "Fase 3: Amplificazione",
+
+      "tactics.title": "Tattiche Core", "tactics.sub": "I blocchi fondamentali della strategia SEO, AEO e GEO.",
+      "seo.s1.title": "Motore di Blog Tecnico Bilingue", "seo.s1.intent": "Catturare query di commercial-investigation e problem-aware.", "seo.s1.prop": "2-4 post al mese. Ogni post contiene un dato proprietario.", "seo.s1.why": "Dimostra Information Gain — un fatto che Ansys non può replicare.",
+      "seo.s2.title": "Intercettazione Keyword Native IT", "seo.s2.intent": "Possedere il vocabolario di valutazione italiano.", "seo.s2.prop": "Target software CAE senza mesh e simulazione meshless in modo nativo.",
+      "aeo.s1.title": "Capsule di Risposta Diretta", "aeo.s1.intent": "Rendere ogni pagina estraibile dalle AI.", "aeo.s1.prop": "Ogni pagina apre con una capsula di 60-100 parole.", "aeo.s1.why": "Le AI Overviews citano pagine che risolvono la query vicino alla cima.",
+      "geo.s1.title": "Benchmark Proprietari", "geo.s1.intent": "Creare un asset che nessun concorrente può copiare.", "geo.s1.prop": "3-5 benchmark all'anno che confrontano MeshFree vs Ansys.", "geo.s1.why": "Superiamo Ansys in information gain.",
+
+      "un.title": "SEO Non Convenzionale e Parasite", "un.sub": "Tattiche ad alto ROI e basso costo, classificate per efficacia.",
+      "un.s1.title": "Parasite SEO (Barnacle SEO)", "un.s1.method": "Pubblica contenuti su piattaforme ad alta autorità (LinkedIn, Reddit) per prendere in prestito la loro autorità.", "un.s1.why": "Google e le AI scansionano queste piattaforme. Ranka in 24 ore.",
+      "un.s2.title": "Engineering as Marketing (Strumenti Gratuiti)", "un.s2.method": "Costruisci uno strumento web gratuito che gli ingegneri vogliono usare.", "un.s2.why": "Le persone linkano strumenti, non pagine di vendita.",
+      "un.s3.title": "Community Stealth Seeding (Reddit)", "un.s3.method": "Un vero ingegnere EFEM partecipa su r/fea, risponde e dichiara l'affiliazione.", "un.s3.why": "Un singolo commento upvotato diventa una fonte citata dalle AI.",
+      "un.s4.title": "Unlinked Mentions Outreach", "un.s4.method": "Trova siti che menzionano EFEM senza link. Invia un'email educata.", "un.s4.why": "Tasso di successo del 15-20%. Modo più veloce per ottenere backlink.",
+
+      "tech.title": "Infrastruttura Tecnica", "tech.sub": "La sala macchine. Come nutriamo i motori.",
+      "tech.s1.title": "Implementazione llms.txt", "tech.s1.action": "Crea un file llms.txt nella root directory per guidare i bot AI.", "tech.s1.why": "Il robots.txt standard blocca l'AI. llms.txt la guida. All'avanguardia.",
+      "tech.s2.title": "Matrice Hreflang (EN/IT)", "tech.s2.action": "Assicurati che ogni pagina EN sia linkata alla sua esatta equivalente IT.", "tech.s2.why": "Previene la cannibalizzazione dei ranking.",
+
+      "ops.title": "Operazioni di Contenuto", "ops.sub": "Le regole di ingaggio per il team di contenuti.",
+      "ops.s1.title": "Il Template Answer-First", "ops.s1.rule": "H1: Domanda esatta. Prime 100 parole: Risposta diretta. H2s: A forma di domanda. In fondo: schema FAQPage.",
+      "ops.s2.title": "Il Regolamento di Traduzione IT", "ops.s2.rule": "Mai usare Google Translate. Usa la fraseologia nativa dell'ingegneria italiana.",
+
+      "ext.title": "PR e Abilitazione Vendite", "ext.sub": "Come la SEO alimenta il resto dell'azienda.",
+      "ext.s1.title": "Digital PR (HARO / Qwoted)", "ext.s1.action": "Iscriviti alle richieste dei giornalisti. Rispondi a query sul software manifatturiero.", "ext.s1.why": "Guadagna backlink dai media Tier-1.",
+      "ext.s2.title": "Battlecards per Midas", "ext.s2.action": "Trasforma il Kill Sheet in un PDF per il team di vendita.",
+
+      "kill.title": "Kill Sheet Concorrenti", "kill.sub": "Classificato. Solo per uso interno."
     }
   };
 
-  // --- 2. SETUP & NAVIGATION ---
-  let currentLang = 'it'; // Default to Italian
+  let currentLang = 'it';
+  let isKillSheetUnlocked = false;
 
   function setLang(lang) {
     currentLang = lang;
     document.documentElement.lang = lang;
-    
-    // Translate all text nodes
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (i18n[lang] && i18n[lang][key]) {
         el.innerHTML = i18n[lang][key];
       }
     });
-
-    // Update Toggle UI
     document.getElementById('btn-en').classList.remove('active');
     document.getElementById('btn-it').classList.remove('active');
     document.getElementById(`btn-${lang}`).classList.add('active');
   }
 
-  // Run translation on load
-  setLang('it');
+  setLang('it'); // Default to Italian
 
   // Tabs Navigation
   const navTabs = document.querySelectorAll('.nav-tab');
   const sections = document.querySelectorAll('.section');
   navTabs.forEach(tab => {
     tab.addEventListener('click', () => {
+      const targetId = tab.dataset.target;
+      
+      // Handle Kill Sheet Password Logic
+      if (targetId === 'killsheet' && !isKillSheetUnlocked) {
+        document.getElementById('kill-sheet-lock').style.display = 'flex';
+        return; // Stop tab switch
+      }
+
       navTabs.forEach(t => t.classList.remove('active'));
       sections.forEach(s => s.classList.remove('active'));
       tab.classList.add('active');
-      document.getElementById(tab.dataset.target).classList.add('active');
+      document.getElementById(targetId).classList.add('active');
     });
   });
 
-  // Segmented Controls (Free/Paid)
+  // Segmented Controls (Core Tactics)
   document.querySelectorAll('.segmented').forEach(seg => {
     const container = seg.dataset.container;
     const buttons = seg.querySelectorAll('button');
@@ -743,67 +576,29 @@
     });
   });
 
-  // --- 3. KEYWORDS DATA & RENDERING ---
-  const KEYWORDS = [
-    { kw: "software CAE senza mesh", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Pillar senza mesh" },
-    { kw: "analisi FEM senza meshing", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Pillar senza mesh" },
-    { kw: "confronto MeshFree SimSolid", cluster: "Comparison", priority: "P1", lang: "IT", page: "Pillar confronto" },
-    { kw: "MeshFree vs SimSolid", cluster: "Comparison", priority: "P1", lang: "EN", page: "Comparison hub" },
-    { kw: "MeshFree NAFEMS validation", cluster: "Trust", priority: "P1", lang: "EN", page: "NAFEMS trust" },
-    { kw: "MeshFree prova gratuita", cluster: "MeshFree", priority: "P1", lang: "IT", page: "MeshFree trial" },
-    { kw: "alternativa ad Ansys", cluster: "Comparison", priority: "P2", lang: "IT", page: "Alternative hub" },
-    { kw: "NFX vs Fluent", cluster: "NFX", priority: "P2", lang: "EN", page: "NFX vs Fluent" },
-    { kw: "MTS prezzo", cluster: "MTS", priority: "P1", lang: "IT", page: "MTS pricing" },
-    { kw: "CAE without meshing", cluster: "Problem-aware", priority: "P1", lang: "EN", page: "Pillar no mesh" },
-    { kw: "SimSolid alternative", cluster: "Comparison", priority: "P1", lang: "EN", page: "Alternative hub" },
-    { kw: "MeshFree accuracy", cluster: "Trust", priority: "P2", lang: "EN", page: "NAFEMS trust" },
-    { kw: "CAE per progettisti", cluster: "Problem-aware", priority: "P1", lang: "IT", page: "Solution designers" },
-    { kw: "MTS CAE package", cluster: "MTS", priority: "P2", lang: "EN", page: "MTS page" }
-  ];
-
-  const kwBody = document.getElementById('kw-body');
-  let currentPriority = 'all';
-  let currentSearch = '';
-
-  function renderKeywords() {
-    const filtered = KEYWORDS.filter(k => {
-      if (currentPriority !== 'all' && k.priority !== currentPriority) return false;
-      if (currentSearch && !k.kw.toLowerCase().includes(currentSearch.toLowerCase())) return false;
-      return true;
-    });
-
-    if (filtered.length === 0) {
-      kwBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:32px; color:var(--text-3);">${currentLang === 'it' ? 'Nessuna keyword trovata.' : 'No keywords found.'}</td></tr>`;
-      return;
+  // Password Logic
+  function checkPassword() {
+    const input = document.getElementById('lock-input').value;
+    if (input === '0000') {
+      isKillSheetUnlocked = true;
+      document.getElementById('kill-sheet-lock').style.display = 'none';
+      document.getElementById('kill-content').style.display = 'block';
+      
+      // Manually trigger the tab switch now that it's unlocked
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelector(`.nav-tab[data-target="killsheet"]`).classList.add('active');
+      document.getElementById('killsheet').classList.add('active');
+      
+    } else {
+      alert(currentLang === 'it' ? 'Password errata.' : 'Incorrect password.');
     }
-
-    kwBody.innerHTML = filtered.map(k => `
-      <tr>
-        <td class="kw-name">${k.kw}</td>
-        <td>${k.cluster}</td>
-        <td><span class="tag tag-${k.priority.toLowerCase()}">${k.priority}</span></td>
-        <td><span class="tag tag-${k.lang.toLowerCase()}">${k.lang}</span></td>
-        <td>${k.page}</td>
-      </tr>
-    `).join('');
   }
 
-  document.getElementById('kw-search').addEventListener('input', (e) => {
-    currentSearch = e.target.value;
-    renderKeywords();
+  // Allow Enter key for password
+  document.getElementById('lock-input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') checkPassword();
   });
-
-  document.querySelectorAll('#kw-priority-pills .pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('#kw-priority-pills .pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      currentPriority = pill.dataset.priority;
-      renderKeywords();
-    });
-  });
-
-  // Init Keywords
-  renderKeywords();
 </script>
 </body>
 </html>
