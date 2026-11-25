@@ -1,3 +1,5 @@
+<a href="https://sai-kanagat.github.io/seomidas/"><img src=".github/assets/banner.svg" width="100%" alt="e-FEM x MIDAS. A beam mesh bends and recovers."></a>
+
 # e-FEM x MIDAS Strategy Hub
 
 A static site that merges the original interactive hub with the full "EFEM CAE SEO GEO Strategy" audit PDF. It has no build dependencies.
